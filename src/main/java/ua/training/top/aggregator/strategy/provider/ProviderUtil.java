@@ -13,7 +13,6 @@ import static ua.training.top.util.AutoRefreshUtil.mapStrategies;
 
 public class ProviderUtil {
     public static final Logger log = LoggerFactory.getLogger(ProviderUtil.class);
-    public static final  String ERROR_MESSAGE = "Attention! There is error due to";
 
     public static AggregatorRepository getAllProviders(){
         if (testProvider) {
@@ -35,7 +34,6 @@ public class ProviderUtil {
 //                    new Provider(new LinkedinStrategy()),    /*нет удаленно*/
                     new Provider(new RabotaStrategy()),         /*оч мало - до 10*/
                     new Provider(new WorkStrategy())         /*нет за_рубежем*/
-//                    new Provider(new YandexStrategy())        /*нет за_рубежем*/
             );
         }
     }

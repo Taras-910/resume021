@@ -79,10 +79,10 @@
                             </button>
                         </div>
                     </div>
-                    <div class="row justify-content-md-center count1">
+                   <%-- <div class="row justify-content-md-center count1">
                         <em class="btn-outline-info"><label class="count1" id="count1"> Сегодня опубликовано новых резюме :   </label></em>
                         <em><output class="count" id="count"><h7 class="btn-outline-info">  ${count}</h7></output></em>
-                    </div>
+                    </div>--%>
 
                 </div>
             </div>
@@ -110,13 +110,13 @@
                     <th hidden>id</th>
                     <th hidden>link</th>
                     <th class="col-auto" style="text-align: center;">Позиция</th>
-                    <th class="col-auto">Имя</th>
-                    <th class="col-auto">Возраст</th>
-                    <th class="col-auto" style="width: 5%!important;">Город</th>
-                    <th class="col-auto"><h7>$</h7></th>
+                    <th class="col-auto"></th>
+                    <th class="col-auto"></th>
+                    <th class="col-auto"></th>
+                    <th class="col-auto"><h7>cent $usd</h7></th>
                     <th class="col-auto" style="text-align: center;">Навыки</th>
                     <th class="col-auto" style="text-align: center;"><h7>Предыдущая работа</h7></th>
-                    <th class="col-auto text-nowrap">Дата</th>
+                    <th class="col-auto text-nowrap"></th>
                     <th class="toVote"></th>
                     <th hidden>work place</th>
                     <th hidden>language</th>

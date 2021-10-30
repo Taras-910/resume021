@@ -267,7 +267,7 @@ false Antarctica/Vostok
 true Arctic/Longyearbyen
 false Asia/Aden
 false Asia/Almaty
-true Asia/Amman
+false Asia/Amman
 false Asia/Anadyr
 false Asia/Aqtau
 false Asia/Aqtobe
@@ -289,7 +289,7 @@ false Asia/Chongqing
 false Asia/Chungking
 false Asia/Colombo
 false Asia/Dacca
-true Asia/Damascus
+false Asia/Damascus
 false Asia/Dhaka
 false Asia/Dili
 false Asia/Dubai
@@ -800,7 +800,7 @@ true posixrules
     <database id="4" parent="1" name="resume">
       <ObjectId>440023</ObjectId>
       <Owner>user</Owner>
-      <IntrospectionStateNumber>221218</IntrospectionStateNumber>
+      <IntrospectionStateNumber>221297</IntrospectionStateNumber>
       <Current>1</Current>
     </database>
     <database id="5" parent="1" name="topjava">
@@ -881,7 +881,7 @@ U/10
 </Acl>
       <StateNumber>281</StateNumber>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>221219</IntrospectionStateNumber>
+      <IntrospectionStateNumber>221298</IntrospectionStateNumber>
     </schema>
     <schema id="22" parent="4" name="pg_catalog">
       <ObjectId>11</ObjectId>
@@ -891,7 +891,7 @@ U/10
 </Acl>
       <StateNumber>274</StateNumber>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>221220</IntrospectionStateNumber>
+      <IntrospectionStateNumber>221299</IntrospectionStateNumber>
     </schema>
     <schema id="23" parent="4" name="public">
       <ObjectId>2200</ObjectId>
@@ -901,7 +901,7 @@ UC/10
 </Acl>
       <StateNumber>275</StateNumber>
       <Owner>postgres</Owner>
-      <IntrospectionStateNumber>221221</IntrospectionStateNumber>
+      <IntrospectionStateNumber>221300</IntrospectionStateNumber>
       <Current>1</Current>
     </schema>
     <extension id="24" parent="4" name="plpgsql">
@@ -62011,7 +62011,7 @@ r/10
     <sequence id="5283" parent="23" name="global_seq">
       <ObjectId>441875</ObjectId>
       <Owner>user</Owner>
-      <StateNumber>221216</StateNumber>
+      <StateNumber>221295</StateNumber>
       <DataType>bigint|0s</DataType>
     </sequence>
     <table id="5284" parent="23" name="freshen">

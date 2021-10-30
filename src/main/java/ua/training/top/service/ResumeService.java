@@ -9,14 +9,15 @@ import ua.training.top.model.Resume;
 import ua.training.top.repository.ResumeRepository;
 import ua.training.top.to.ResumeTo;
 import ua.training.top.util.ResumeUtil;
+
 import java.util.Collections;
 import java.util.List;
+
 import static ua.training.top.SecurityUtil.authUserId;
 import static ua.training.top.model.Goal.FILTER;
 import static ua.training.top.util.FreshenUtil.getFreshenFromTo;
 import static ua.training.top.util.ResumeCheckUtil.*;
 import static ua.training.top.util.ResumeUtil.*;
-import static ua.training.top.util.UserUtil.asAdmin;
 import static ua.training.top.util.ValidationUtil.checkNotFoundWithId;
 import static ua.training.top.util.ValidationUtil.checkValidUrl;
 
@@ -106,8 +107,8 @@ public class ResumeService {
 
     @Transactional
     public void deleteList(List<Resume> listToDelete) {
-        log.info("deleteList");
         if (!listToDelete.isEmpty()) {
+            log.info("deleteList {}", listToDelete.size());
             repository.deleteList(listToDelete);
         }
     }

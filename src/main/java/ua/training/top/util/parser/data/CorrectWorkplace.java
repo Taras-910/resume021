@@ -1,45 +1,19 @@
 package ua.training.top.util.parser.data;
 
-import java.util.Arrays;
-import java.util.List;
 import static ua.training.top.util.parser.data.CommonUtil.*;
 
 public class CorrectWorkplace {
 
-    public static final List<String> UA_CITIES = Arrays.asList("ukraine", "украина", "україна", "kyiv", "kiev", "київ",
-            "киев", "дніпро", "днепр", "dnipro", "харків", "харьков", "kharkiv", "одесса", "odesa", "львів", "львов",
-            "lviv", "mykolaiv", "vinnitsia", "zaporizhzhya", "chernivtsi", "камянецьподільський","миколаїв", "николаев",
-            "вінниця", "винница", "запоріжжя", "запорожье", "чернівці", "черновцы", "чернігів", "чернигов", "chernigiv",
-            "іванофранківськ", "иванофранковск", "ivanofrankivsk","івано-франківськ","ивано-франковск", "луцк", "луцьк",
-            "ivano-frankivsk", "ужгород", "одеса", "каменецподольский", "каменец-подольский","жовті-води", "жовтіводи",
-            "камянець-подільський", "кривойрог", "кривийріг", "кривой-рог", "кривий-ріг", "желтые-воды", "желтыеводы",
-            "тернопіль", "тернополь", "кропивницкий", "кропивницький", "кировоград", "кіровоград", "желтые", "кривой");
-    public static final List<String> RU_CITIES = Arrays.asList("санктпетербург", "санкт-петербург", "москва","россия",
-            "новосибирск", "нижний новгород", "казань", "екатеринбург", "краснодар", "пермь", "ростовнадону", "russia",
-            "ростов-на-дону", "томск", "самара", "ульяновск", "воронеж");
-    public static final List<String> BY_CITIES = Arrays.asList("minsk", "минск", "гомель","гродно", "брест", "витебск");
-    public static final List<String> PL_CITIES = Arrays.asList("wroclaw", "вроцлав", "krakow", "краков", "варшава",
-            "warszawa", "warsaw");
-    public static final List<String> WORLD_CITIES = Arrays.asList("ізраїль", "израиль", "армения", "швейцарія", "оаэ",
-            "швейцария", "франція", "франция", "італія", "италия", "сінгапур", "turkey", "сингапур", "англія", "англия",
-            "канада", "польща", "польша", "молдова", "германия", "чехія", "чехия", "швеція", "швеция", "фінляндія",
-            "финляндия", "finland", "азербайджан", "germany", "norway", "poland", "singapore", "czechia", "france",
-            "киргизстан", "німеччина", "германия", "iran", "israel", "australia", "philippines","uk","estonia", "italy",
-            "netherlands", "узбекістан", "узбекистан", "білорусь", "беларусь", "казахстан");
-
     public static String getRegionDjinni(String workplace) {
-        return workplace.equals("all") ||workplace.equals("санкт-петербург") ||workplace.equals("remote") ||
-                !isMatchesUA(workplace) ?
+        return workplace.equals("all") || !isMatchesUA(workplace) ||workplace.equals("санкт-петербург") ||workplace.equals("remote") ?
                 "" : (isMatchesUA(workplace) || workplace.equals("украина") || workplace.equals("україна") || workplace.equals("ukraine")) ?
-                "&region=ukraine" : isMatchesBy(workplace) ? "&region=belarus" : isMatchesRu(workplace) ?
-                "&region=belarus" : "&region=other";
+                "&region=ukraine" : isMatchesBy(workplace) ? "&region=belarus" : isMatchesRu(workplace) ? "&region=russia" : "&region=other";
     }
 
     public static String getLocationDjinni(String workplace) {
         return workplace.equals("all") ||workplace.equals("украина") ||workplace.equals("foreign") ||workplace.equals("remote") ?
-                "" : isMatchesUA(workplace) || workplace.equals("москва") ?
-                "&location=".concat(translateUACitiesToEn(workplace)) : workplace.equals("санкт-петербург") ?
-                "&keywords=санкт-петербург" : "&keywords=".concat(workplace);
+                "" : isMatchesUA(workplace) || workplace.equals("москва") ? "&location=".concat(translateUACitiesToEn(workplace)) :
+                workplace.equals("санкт-петербург") ? "&keywords=санкт-петербург" : "&keywords=".concat(workplace);
     }
 
     public static String getGrc(String workplace) {
@@ -195,27 +169,6 @@ public class CorrectWorkplace {
             case "remote" -> "remote";
             case "all" -> "all";
             default -> workplace.equals("-1") ? workplace : "other";
-        };
-    }
-
-    public static String getYandex(String workplace) {
-        return switch (workplace) {
-            case "remote" -> "remote";
-            case "киев", "київ", "kyiv" -> "kiev";
-            case "санкт-петербург" -> "sankt-peterburg";
-            case "ростов-на-дону" -> "rostov-na-donu";
-            case "нижний новгород" -> "nizhniy_novgorod";
-            case "екатеринбург" -> "ekaterinburg";
-            case "краснодар" -> "krasnodar";
-            case "ульяновск" -> "ulyanovsk";
-            case "россия" -> "rossiya";
-            case "москва" -> "moskva";
-            case "казань" -> "kazan";
-            case "пермь" -> "perm";
-            case "томск" -> "tomsk";
-            case "самара" -> "samara";
-            case "минск" -> "minsk";
-            default -> "-1";
         };
     }
 }

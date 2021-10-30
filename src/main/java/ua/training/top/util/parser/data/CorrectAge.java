@@ -18,4 +18,8 @@ public class CorrectAge {
         }
         return getMessageIfEmpty(age);
     }
+
+    public static String getToAgeWork(String age) {
+        return isEmpty(age) || !age.matches(".*\\d.*") ?  link : age;
+    }
 }

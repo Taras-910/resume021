@@ -11,21 +11,21 @@ import ua.training.top.model.Vote;
 import ua.training.top.to.ResumeTo;
 
 import java.io.IOException;
-import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
+import java.util.ArrayList;
+import java.util.HashSet;
+import java.util.List;
+import java.util.Set;
 
 import static ua.training.top.SecurityUtil.setTestAuthorizedUser;
 import static ua.training.top.aggregator.installation.InstallationUtil.limitResumesToKeep;
 import static ua.training.top.aggregator.strategy.provider.ProviderUtil.getAllProviders;
-import static ua.training.top.model.Goal.UPGRADE;
-import static ua.training.top.util.AggregatorUtil.*;
-import static ua.training.top.util.AutoRefreshUtil.getKey;
-import static ua.training.top.util.AutoRefreshUtil.mapStrategies;
-import static ua.training.top.util.FreshenUtil.*;
+import static ua.training.top.util.AggregatorUtil.getForCreate;
+import static ua.training.top.util.FreshenUtil.getFreshensOutLimitHeroku;
+import static ua.training.top.util.FreshenUtil.getFreshensOutPeriodToKeep;
 import static ua.training.top.util.ResumeUtil.*;
 import static ua.training.top.util.UserUtil.asAdmin;
 import static ua.training.top.util.VoteUtil.getVotesOutLimitHeroku;
-import static ua.training.top.util.parser.data.CorrectAge.getToAgeRabota;
+import static ua.training.top.util.parser.data.CommonUtil.correctJava_Script;
 
 @Service
 public class AggregatorService {
@@ -95,7 +95,7 @@ public class AggregatorService {
 
     public static void main(String[] args) throws IOException {
         setTestAuthorizedUser(asAdmin());
-//        List<ResumeTo> resumeTos = getAllProviders().selectBy(asNewFreshen("java", "минск", UPGRADE));
+/*//        List<ResumeTo> resumeTos = getAllProviders().selectBy(asNewFreshen("java", "минск", UPGRADE));
 //        List<ResumeTo> resumeTos = getAllProviders().selectBy(asNewFreshen("java", "санкт-петербург", UPGRADE));
 
 //        List<ResumeTo> resumeTos = getAllProviders().selectBy(asNewFreshen("java", "intern", "foreign", UPGRADE));
@@ -125,8 +125,13 @@ public class AggregatorService {
 
         AtomicInteger i = new AtomicInteger(1);
         resumeTos.forEach(vacancyNet -> log.info("\nvacancyNet № {}\n{}\n", i.getAndIncrement(), vacancyNet.toString()));
-        log.info("\n\ncommon = {}", resumeTos.size());
+        log.info("\n\ncommon = {}", resumeTos.size());*/
 
-        System.out.println(mapStrategies.get(getKey(2)));
+        String line = "Берлин, Java Scriptирпень, боярка,  Script ";
+        String text = correctJava_Script(line);
+        System.out.println(text);
+
     }
+
+
 }

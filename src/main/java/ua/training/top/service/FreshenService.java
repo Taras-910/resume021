@@ -13,8 +13,9 @@ import ua.training.top.repository.FreshenRepository;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static ua.training.top.util.DateTimeUtil.*;
-import static ua.training.top.util.MessagesUtil.*;
+import static ua.training.top.util.DateTimeUtil.tomorrow;
+import static ua.training.top.util.DateTimeUtil.yesterday;
+import static ua.training.top.util.MessagesUtil.must_not_null;
 import static ua.training.top.util.ValidationUtil.*;
 
 @Service
@@ -73,8 +74,8 @@ public class FreshenService {
 
     @Transactional
     public void deleteList(List<Freshen> listToDelete) {
-        log.info("deleteList");
         if (!listToDelete.isEmpty()) {
+            log.info("deleteList {}", listToDelete.size());
             repository.deleteList(listToDelete);
         }
     }

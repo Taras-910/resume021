@@ -4,19 +4,17 @@ import org.jsoup.nodes.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static org.springframework.util.StringUtils.hasText;
-import static ua.training.top.util.parser.data.CommonUtil.getLimitation;
-import static ua.training.top.util.parser.data.CommonUtil.isEmpty;
+import static ua.training.top.util.parser.data.CommonUtil.*;
 
 public class CorrectSkills {
     public static final Logger log = LoggerFactory.getLogger(CorrectSkills.class);
 
     public static String getCorrectSkills(String skills) {
         if (isEmpty(skills)) {
-            log.error("skill value is  null");
+            log.error("skills value is null");
             return "";
         }
-        skills = skills.contains("Java Script") ? skills.replaceAll("Java Script", "JavaScript") : skills.trim();
+        skills = correctJava_Script("Java Script");
         return skills.contains("Experience level:") ? skills.substring(skills.indexOf("Experience level:")) : skills;
     }
 

@@ -15,16 +15,18 @@ import java.util.concurrent.atomic.AtomicInteger;
 import static org.springframework.util.StringUtils.hasText;
 import static ua.training.top.aggregator.installation.InstallationUtil.reasonDateToLoad;
 import static ua.training.top.util.ResumeCheckUtil.getMatchesLanguage;
-import static ua.training.top.util.parser.data.CorrectAddress.*;
-import static ua.training.top.util.parser.data.CorrectAge.*;
 import static ua.training.top.util.parser.data.CommonUtil.*;
-import static ua.training.top.util.parser.data.CorrectWorkBefore.*;
+import static ua.training.top.util.parser.data.CorrectAddress.*;
+import static ua.training.top.util.parser.data.CorrectAge.getToAgeRabota;
+import static ua.training.top.util.parser.data.CorrectAge.getToAgeWork;
 import static ua.training.top.util.parser.data.CorrectSkills.*;
-import static ua.training.top.util.parser.data.CorrectTitle.*;
-import static ua.training.top.util.parser.data.CorrectUrl.*;
+import static ua.training.top.util.parser.data.CorrectTitle.getCorrectTitle;
+import static ua.training.top.util.parser.data.CorrectUrl.getCorrectUrl;
+import static ua.training.top.util.parser.data.CorrectWorkBefore.getToWorkBefore;
 import static ua.training.top.util.parser.date.DateUtil.*;
 import static ua.training.top.util.parser.date.ToCorrectDate.getCorrectDate;
-import static ua.training.top.util.parser.salary.MinMax.*;
+import static ua.training.top.util.parser.salary.MinMax.getSalary;
+import static ua.training.top.util.parser.salary.MinMax.getSalaryRabota;
 import static ua.training.top.util.parser.salary.SalaryUtil.getCorrectSalary;
 import static ua.training.top.util.xss.XssUtil.xssClear;
 
@@ -35,7 +37,7 @@ public class ElementUtil {
         List<ResumeTo> list = new ArrayList();
         elements.forEach(element -> {
             try {
-                LocalDate localDate = parseCustom(supportDate(xssClear(element.getElementsByTag("small").text().trim())), element);
+                LocalDate localDate = parseCustom(supportDate(xssClear(element.getElementsByTag("small").text().trim())));
                 if (localDate.isAfter(reasonDateToLoad)) {
                     String skills, workBefore, title = getCorrectTitle(xssClear(element.getElementsByClass("profile").tagName("a").text().trim()));
                     workBefore = getLimitation(xssClear(element.nextElementSibling().ownText()));
@@ -65,7 +67,7 @@ public class ElementUtil {
         List<ResumeTo> list = new ArrayList<>();
         elements.forEach(element -> {
             try {
-                LocalDate localDate = parseCustom(supportDate(prepareGrc(xssClear(element.getElementsByAttributeValueStarting("class", "bloko-text bloko-text_tertiary").text().trim()))), element);
+                LocalDate localDate = parseCustom(supportDate(prepareGrc(xssClear(element.getElementsByAttributeValueStarting("class", "bloko-text bloko-text_tertiary").text().trim()))));
                 if (localDate.isAfter(reasonDateToLoad)) {
                     String workBefore, title = getCorrectTitle(xssClear(element.getElementsByClass("resume-search-item__name").text().trim()));
                     workBefore = getLimitation(xssClear(element.getElementsByAttributeValueStarting("data-qa", "resume-serp_resume-item-content").text()));
@@ -95,7 +97,7 @@ public class ElementUtil {
         List<ResumeTo> list = new ArrayList<>();
         for (Element element : elements) {
             try {
-                LocalDate localDate = parseCustom(xssClear(element.getElementsByClass("basic-date").attr("datetime")), element);
+                LocalDate localDate = parseCustom(xssClear(element.getElementsByClass("basic-date").attr("datetime")));
                 if (localDate.isAfter(reasonDateToLoad)) {
                     String workBefore, skills, title = getCorrectTitle(xssClear(element.getElementsByClass("resume-card__specialization").text()));
                     skills = getSkillsHabr(xssClear(element.getElementsByClass("link-comp link-comp--appearance-dark").text().trim()));
@@ -129,7 +131,7 @@ public class ElementUtil {
             System.out.println(i.getAndIncrement() + "  -------------------------------------------------------------------------------------");
 //            System.out.println("element = " + element + "\n");
             try {
-                LocalDate localDate = parseCustom(xssClear(element.getElementsByTag("time").tagName("time").attr("datetime")), element);
+                LocalDate localDate = parseCustom(xssClear(element.getElementsByTag("time").tagName("time").attr("datetime")));
                 if (localDate.isAfter(reasonDateToLoad)) {
                     String title = getCorrectTitle(xssClear(element.getElementsByClass("base-search-card__title").text().trim()));
                     if (/*title.toLowerCase().matches(".*\\b" + freshen.getLanguage() + "\\b.*")*/ true) {
@@ -137,7 +139,7 @@ public class ElementUtil {
                         rTo.setTitle(title);
                         rTo.setName(link);
                         rTo.setAge(link);
-                        rTo.setAddress(getToAddressFormat(getToAddress(getToAddressLinkedin(xssClear(element.getElementsByClass("job-search-card__location").text().trim())))));
+                        rTo.setAddress(getToAddressFormat(getToAddressLinkedin(xssClear(element.getElementsByClass("job-search-card__location").text().trim()))));
                         rTo.setSalary(1);
                         rTo.setWorkBefore(link);
                         rTo.setUrl(xssClear(element.getElementsByTag("a").first().attr("href")));
@@ -196,7 +198,7 @@ public class ElementUtil {
                         ResumeTo rTo = new ResumeTo();
                         rTo.setTitle(title);
                         rTo.setName(xssClear(element.getElementsByTag("b").text()));
-                        rTo.setAge(getMessageIfEmpty(xssClear(element.getElementsByAttributeValueContaining("data-toggle", "popover").next().next().text().trim())));
+                        rTo.setAge(getToAgeWork(xssClear(element.getElementsByAttributeValueContaining("data-toggle", "popover").next().next().text().trim())));
                         rTo.setAddress(getToAddressFormat(getToAddressWork(xssClear(element.getElementsByAttributeValueContaining("class", "add-bottom").prev().text().trim()))));
                         rTo.setSalary(getSalary(getCorrectSalary(xssClear(element.getElementsByAttributeValueStarting("class", "nowrap").tagName("span").text().trim())), element));
                         rTo.setWorkBefore(workBefore);
@@ -212,69 +214,4 @@ public class ElementUtil {
         }
         return list;
     }
-
-    public static List<ResumeTo> getResumesYandex(Elements elements, Freshen freshen) {
-        List<ResumeTo> list = new ArrayList<>();
-        int i = 1;
-        for (Element element : elements) {
-            System.out.println(i++ + "  -------------------------------------------------------------------------------------");
-            System.out.println("element = " + element + "\n");
-            try {
-                LocalDate localDate = getCorrectDate(xssClear(element.getElementsByClass("serp-vacancy__date").text().trim()));
-                System.out.println("stringDate=" + xssClear(element.getElementsByAttributeValueEnding("class", "pull-right").text().trim()));
-                System.out.println("localDate=" + localDate);
-                if (localDate.isAfter(reasonDateToLoad)) {
-                    String address, skills, title = getCorrectTitle(xssClear(element.getElementsByClass("heading heading_level_3").text().trim()));
-                    skills = getCorrectSkills(xssClear(element.getElementsByClass("serp-vacancy__requirements").text().trim()));
-                    if (getMatchesLanguage(freshen, title, skills) && skills.length() > 2) {
-                        ResumeTo rTo = new ResumeTo();
-                        rTo.setTitle(title);
-                        rTo.setName(link);
-                        rTo.setAge(link);
-                        address = xssClear(element.select("div.address").text().trim());
-                        rTo.setAddress(getToAddressFormat(getToAddress(getToAddressYandex(address, freshen))));
-                        rTo.setSalary(salaryMax(getCorrectSalary(xssClear(element.getElementsByClass("serp-vacancy__salary").text().trim())), element));
-                        rTo.setWorkBefore(link);
-                        rTo.setUrl(getCorrectUrlYandex(xssClear(element.getElementsByTag("a").attr("href"))));
-                        rTo.setSkills(skills);
-                        rTo.setReleaseDate(localDate);
-                        list.add(rTo);
-                    }
-                }
-            } catch (Exception e) {
-                log.error(error, e.getLocalizedMessage(), element);
-            }
-        }
-        return list;
-    }
 }
-/*
-                    System.out.println("------------------------------------------------------------------------------------------");
-                    String line = element.getElementsByTag("a").last().text().trim();
-                    System.out.println("element:\n" + element);
-                    System.out.println("getCorrectEmployerName=" + getCorrectEmployerName(xssClear(line)));
-
-
-                        String salary = element.getElementsByAttributeValueStarting("class", "text-truncate badgy salary").text().trim();
-                        System.out.println("salary="+salary);
-                        String correctSalary = getCorrectSalary(xssClear(salary));
-                        System.out.println("correctSalary="+correctSalary);
-                        int salaryMin = salaryMin(correctSalary, null);
-                        System.out.println("salaryMin="+salaryMin);
-*/
-
-
-/*
-                        System.out.println("............................................");
-                        Element sibling1 = element.nextElementSibling();
-                        System.out.println("lastWork="+sibling1.ownText());
-                        Element sibling2 = element.nextElementSibling().nextElementSibling();
-                        System.out.println("\nskills="+sibling2.ownText());
-*/
-/*                String line = xssClear(element.getElementsByAttributeValueStarting("class", "bloko-text bloko-text_tertiary").text().trim());
-                System.out.println("line ="+line);
-                String prepareGrc = (prepareGrc(line));
-                System.out.println("prepareGrc="+prepareGrc);
-                String supportDate = supportDate(prepareGrc);
-                System.out.println("supportDate="+supportDate);
-*/

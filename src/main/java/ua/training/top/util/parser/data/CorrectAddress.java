@@ -1,12 +1,35 @@
 package ua.training.top.util.parser.data;
 
-import ua.training.top.model.Freshen;
-
 import java.util.Arrays;
+import java.util.List;
 import java.util.stream.Collectors;
+
 import static ua.training.top.util.parser.data.CommonUtil.*;
 
 public class CorrectAddress {
+
+    public static final List<String> UA_CITIES = Arrays.asList("ukraine", "украина", "україна", "kyiv", "kiev", "київ",
+            "киев", "дніпро", "днепр", "dnipro", "харків", "харьков", "kharkiv", "одесса", "odesa", "львів", "львов",
+            "lviv", "mykolaiv", "vinnitsia", "zaporizhzhya", "chernivtsi", "камянецьподільський","миколаїв", "николаев",
+            "вінниця", "винница", "запоріжжя", "запорожье", "чернівці", "черновцы", "чернігів", "чернигов", "chernigiv",
+            "іванофранківськ", "иванофранковск", "ivanofrankivsk","івано-франківськ","ивано-франковск", "луцк", "луцьк",
+            "ivano-frankivsk", "ужгород", "одеса", "каменецподольский", "каменец-подольский","жовті-води", "жовтіводи",
+            "камянець-подільський", "кривойрог", "кривийріг", "кривой-рог", "кривий-ріг", "желтые-воды", "желтыеводы",
+            "тернопіль", "тернополь", "кропивницкий", "кропивницький", "кировоград", "кіровоград", "желтые", "кривой");
+    public static final List<String> RU_CITIES = Arrays.asList("санктпетербург", "санкт-петербург", "москва","россия",
+            "новосибирск", "нижний новгород", "казань", "екатеринбург", "краснодар", "пермь", "ростовнадону", "russia",
+            "ростов-на-дону", "томск", "самара", "ульяновск", "воронеж");
+    public static final List<String> BY_CITIES = Arrays.asList("minsk", "минск", "гомель","гродно", "брест", "витебск");
+    public static final List<String> PL_CITIES = Arrays.asList("wroclaw", "вроцлав", "krakow", "краков", "варшава",
+            "warszawa", "warsaw");
+    public static final List<String> WORLD_CITIES = Arrays.asList("ізраїль", "израиль", "армения", "швейцарія", "оаэ",
+            "швейцария", "франція", "франция", "італія", "италия", "сінгапур", "turkey", "сингапур", "англія", "англия",
+            "канада", "польща", "польша", "молдова", "германия", "чехія", "чехия", "швеція", "швеция", "фінляндія",
+            "финляндия", "finland", "азербайджан", "germany", "norway", "poland", "singapore", "czechia", "france",
+            "киргизстан", "німеччина", "германия", "iran", "israel", "australia", "philippines","uk","estonia", "italy",
+            "netherlands", "узбекістан", "узбекистан", "білорусь", "беларусь", "казахстан", "foreign");
+    public static final List<String> unfit = List.of("будь", "другие", "города", "еще", "-", "Воды", "Рог");
+
     public static String getToAddressLinkedin(String address) {
         String[] addressParts = address.split(",");
         return addressParts.length > 1 && addressParts[0].trim().equalsIgnoreCase(addressParts[1].trim()) ?
@@ -14,7 +37,7 @@ public class CorrectAddress {
     }
 
     public static String getToAddressRabota(String address) {
-        return isEmpty(address) ? "see the card" : address.length() > 1 && address.contains(" ") ?
+        return isEmpty(address) ? link : address.length() > 1 && address.contains(" ") ?
                 address.substring(0, address.indexOf(" ")).trim() : address;
     }
 
@@ -22,27 +45,19 @@ public class CorrectAddress {
         return address.contains("·") ? address.substring(address.lastIndexOf("·") + 1).trim() : address;
     }
 
-    public static String getToAddressYandex(String address, Freshen freshen) {
-        address = address.equalsIgnoreCase(freshen.getWorkplace()) ? address : freshen.getWorkplace().concat(", ").concat(address).trim();
-        if (address.contains(",")) {
-            String[] addressParts = address.split(",");
-            address = addressParts[0].equalsIgnoreCase(addressParts[1]) ? address.substring(address.indexOf("," + 1)).trim() : address;
-        }
-        return address;
-    }
-
-    // Linkedin, Yandex
-    public static String getToAddress(String address) {
-        address = address.contains("Агломерация") ? address.replace("Агломерация", "агломерация") : address;
-        address = address.contains("VIP") ? address.substring(address.indexOf("P") + 3).trim() : address;
-        return cityToFormatDB(address);
-    }
-
-    public static String cityToFormatDB(String address) {
-        return switch (address.toLowerCase()) {
-            case "київ", "kyiv", "kiev" -> "Киев";
-            case "дніпро", "dnipro" -> "Днепр";
-            case "харків", "kharkiv" -> "Харьков";
+    public static String formatAddress(String address) {
+        address = address.toLowerCase();
+        return switch (address) {
+            case "украина", "україна", "ua", "ukraine" -> "Украина";
+            case "foreign" -> "foreign";
+            case "remote" -> "remote";
+            case "киев","київ", "kyiv", "kiev" -> "Киев";
+            case "одесса","одеса", "odesa" -> "Одесса";
+            case "харьков", "харків", "kharkiv" -> "Харьков";
+            case "днепр", "дніпро", "dnipro" -> "Днепр";
+            case "sanktpeterburg" -> "Санкт-петербург";
+            case "минск", "мінськ", "minsk" -> "Минск";
+            case "москва", "moskow" -> "Москва";
             case "миколаїв", "mykolaiv" -> "Николаев";
             case "вінниця", "vinnitsia" -> "Винница";
             case "чернігів", "chernigiv" -> "Чернигов";
@@ -50,18 +65,13 @@ public class CorrectAddress {
             case "чернівці", "chernivtsi" -> "Черновцы";
             case "запоріжжя", "zaporizhzhya" -> "Запорожье";
             case "кировоград", "кіровоград" -> "Кировоград";
-            case "україна", "ua", "ukraine" -> "Украина";
             case "кривийріг", "кривой", "кривойрог" -> "Кривой-Рог";
             case "желтые", "желтыеводы","жовтіводи" -> "Желтые-Воды";
             case "камянецьподільський", "каменецподольский" -> "Каменец-Подольский";
             case "віддалена робота", "віддалено", "no location" -> "remote";
             case "іванофранківськ", "ivanofrankivsk", "иванофранковск" -> "Ивано-Франковск";
-            case "одеса", "odesa" -> "Одесса";
             case "львів", "lviv" -> "Львов";
             case "uzhgorod" -> "Ужгород";
-            case "moskow" -> "Москва";
-            case "мінськ", "minsk" -> "Минск";
-            case "sanktpeterburg" -> "Санкт-петербург";
             case "russia", "росія" -> "Россия";
             case "uk", "англія" -> "Англия";
             case "iran", "Іран" -> "Іран";
@@ -83,83 +93,33 @@ public class CorrectAddress {
             case "philippines" -> "Филипины";
             case "казахстан" -> "Казахстан";
             case "canada" -> "Канада";
+            case "города" -> "города";
             case "usa" -> "США";
             default -> isEmpty(address) ? "" : getStartUpper(address);
         };
     }
 
-    public static String getToAddressFormat(String address) {
-        if(address.equals("all")) {
-            return "see the card";
+    public static List<String> getAddressClearedSet(String address) {
+        for(String s : unfit){
+            address = address.toLowerCase().replaceAll(s, "");
         }
-        address = address.replaceAll("-", "").toLowerCase();
-        String result = Arrays.stream(address.split("[^A-Za-zА-Яа-яҐґЇїІі]"))
-                .map(CorrectAddress::cityToFormatDB)
-                .filter(s -> !isEmpty(s))
-                .filter(s -> !s.equals("будь"))
-                .filter(s -> !s.equals("еще"))
-                .filter(s -> !s.equals("другие"))
-                .filter(s -> !s.equals("города"))
-                .filter(s -> !s.equals("Воды"))
-                .filter(s -> !s.equals("Рог"))
-                .distinct()
-                .collect(Collectors.joining(" ·  "));
-        if (isMatchesUA(address)) {
-            result = result.contains("Украина") ? result : result.concat(" · Украина");
-        } else if (isMatchesRu(address)) {
-            result = result.contains("Россия") ? result : result.concat(" · Россия");
-        } else if (isMatchesBy(address)) {
-            result = result.contains("Беларусь") ? result : result.concat(" · Беларусь");
-        } else if (isMatchesPl(address)) {
-            result = result.toLowerCase().contains("Польша") ? result : result.concat(" · Польша");
-        } else if (isMatchesWorld(address)) {
-            result = result.toLowerCase().contains("foreign") ? result : result.concat(" · foreign");
-        }
-        return result;
+        return List.of(address.split("[^A-Za-zА-Яа-яҐґЇїІі]"));
     }
-    /*public static String translateToUa(String city) {
-        city = city.toLowerCase();
-        switch (city) {
-            case "киев", "kyiv" -> city = "київ";
-            case "днепр", "dnipro" -> city = "дніпро";
-            case "харьков", "kharkiv" -> city = "харьків";
-            case "одесса", "odesa" -> city = "одеса";
-            case "львов", "lviv" -> city = "львів";
-            case "николаев", "mykolaiv" -> city = "миколаїв";
-            case "винница", "vinnitsia" -> city = "вінниця";
-            case "запорожье", "zaporizhzhya" -> city = "запоріжжжя";
-            case "черновцы", "chernivtsi" -> city = "чорновці";
-            case "чернигов", "chernigiv" -> city = "чернігів";
-            case "ивано-франковск", "ivano-frankivsk" -> city = "івано-франківськ";
-            case "uzhgorod" -> city = "ужгород";
-            case "remote", "удаленно" -> city = "віддалено";
-            case "минск", "minsk" -> city = "мінськ";
-            case "moskow" -> city = "москва";
-            case "sankt-peterburg" -> city = "санкт-петербург";
+
+    public static String getToAddressFormat(String address) {
+        if (address.equals("all") || isEmpty(address)) {
+            return link;
         }
-        return city;
-    }*/
-    //(как Work)
-    /*public static String translateToEn(String city) {
-        city = city.toLowerCase();
-        switch (city) {
-            case "київ", "киев" -> city = "kyiv";
-            case "дніпро", "днепр" -> city = "dnipro";
-            case "харків", "харьков" -> city = "kharkiv";
-            case "одеса", "одесса" -> city = "odesa";
-            case "львів", "львов" -> city = "lviv";
-            case "миколаїв", "николаев" -> city = "mykolaiv";
-            case "вінниця", "винница" -> city = "vinnitsia";
-            case "запоріжжя", "запорожье" -> city = "zaporizhzhya";
-            case "чорновці", "черновцы" -> city = "chernivtsi";
-            case "чернігів", "чернигов" -> city = "chernigiv";
-            case "івано-франківськ", "ивано-франковск" -> city = "ivano-frankivsk";
-            case "ужгород" -> city = "uzhgorod";
-            case "віддалено", "удаленно" -> city = "remote";
-            case "минск"-> city = "minsk";
-            case "москва"-> city = "moskow";
-            case "санкт-петербург"-> city = "sankt-petrburg";
-        }
-        return city;
-    }*/
+        String result = getAddressClearedSet(address).stream()
+                .map(CorrectAddress::formatAddress)
+                .filter(s -> !isEmpty(s)).distinct()
+                .collect(Collectors.joining(" · "));
+
+        return isMatchesUA(address) && !result.contains("Украина") ? result.concat(" · Украина") :
+                isMatchesRu(address) && !result.contains("Россия") ? result.concat(" · Россия") :
+                        isMatchesBy(address) && !result.contains("Беларусь") ? result.concat(" · Беларусь") :
+                                isMatchesPl(address) && !result.contains("Польша") ? result.concat(" · Польша") :
+                                        isMatchesWorld(address)
+                                                && !result.contains("foreign") ? result.concat(" · foreign") : result;
+    }
 }

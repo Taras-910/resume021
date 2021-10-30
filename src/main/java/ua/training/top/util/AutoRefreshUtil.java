@@ -12,7 +12,6 @@ import java.util.Random;
 import static java.time.LocalDateTime.now;
 import static java.util.Collections.singleton;
 import static ua.training.top.model.Goal.UPGRADE;
-import static ua.training.top.util.UserUtil.ADMIN_ID;
 import static ua.training.top.util.UserUtil.asAdmin;
 
 public class AutoRefreshUtil {
@@ -41,7 +40,6 @@ public class AutoRefreshUtil {
                     Map.entry(2, new Provider(new WorkStrategy())),
                     Map.entry(3, new Provider(new GrcStrategy())),
                     Map.entry(4, new Provider(new HabrStrategy()))
-                    /*Map.entry(6, new Provider(new YandexStrategy())*/
             );
 
     public static final Map<Integer, String> mapWorkplace =

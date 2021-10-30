@@ -9,13 +9,19 @@ import ua.training.top.to.ResumeTo;
 import ua.training.top.util.parser.DocumentUtil;
 
 import java.io.IOException;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.LinkedHashSet;
+import java.util.List;
+import java.util.Set;
+
 import static java.lang.String.format;
-import static ua.training.top.aggregator.installation.InstallationUtil.*;
+import static ua.training.top.aggregator.installation.InstallationUtil.limitPages;
+import static ua.training.top.aggregator.installation.InstallationUtil.reCall;
 import static ua.training.top.util.parser.ElementUtil.getResumesRabota;
-import static ua.training.top.util.parser.data.CommonUtil.*;
-import static ua.training.top.util.parser.data.CorrectWorkplace.*;
+import static ua.training.top.util.parser.data.CommonUtil.isMatchesRu;
+import static ua.training.top.util.parser.data.CommonUtil.rabota;
 import static ua.training.top.util.parser.data.CorrectLevel.getLevel;
+import static ua.training.top.util.parser.data.CorrectWorkplace.getRabota;
 
 public class RabotaStrategy implements Strategy {
     private final static Logger log = LoggerFactory.getLogger(RabotaStrategy.class);
@@ -48,7 +54,7 @@ public class RabotaStrategy implements Strategy {
             System.out.println("doc page "+ page);
             if (elements == null || elements.size() == 0) break;
             set.addAll(getResumesRabota(elements, freshen));
-            if(page < Math.min(limitCallPages, getRabota(city).equals("украина") ? maxPages : 1)) page++;
+            if(page < Math.min(limitPages, getRabota(city).equals("украина") ? maxPages : 1)) page++;
             else break;
         }
         reCall(set.size(), new RabotaStrategy());

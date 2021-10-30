@@ -55,11 +55,7 @@ public class CorrectLevel {
                 default -> "";
             };
             default -> switch (site) {
-                case grc -> "";
-                case habr -> "";
-                case djinni -> "";
                 case linkedin -> "3";
-                case rabota -> "";
                 case work -> "0+1+164+165+166";
                 case yandex -> "&experience=FROM_1_TO_2";
                 default -> "";

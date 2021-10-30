@@ -145,7 +145,12 @@ $(function () {
                     }
                 },
                 {
-                    "data": "salary"
+                    "data": function (data, type, row) {
+                        if (data.salary === 1) {
+                            return 'see the <a href="' + data.url + '">card</a>'
+                        }
+                        return data.salary;
+                    }
                 },
                 {
                     "data": function (data, type, row) {

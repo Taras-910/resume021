@@ -19,7 +19,7 @@ public class InstallationUtil {
     public static final float RUB_TO_USD_RATE = 72.5f;
 
     public static int repeatToCall = 3;
-    public static int limitCallPages = 100;
+    public static int limitPages = 55;
 //    private static int repeatToCall = 1;
 //    public static int limitCallPages = 2;
     public static LocalDate reasonDateToLoad = LocalDateTime.now().toLocalDate().minusDays(32);

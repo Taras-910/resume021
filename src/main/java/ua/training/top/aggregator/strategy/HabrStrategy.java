@@ -14,14 +14,14 @@ import java.util.List;
 import java.util.Set;
 
 import static java.lang.String.format;
-import static ua.training.top.aggregator.installation.InstallationUtil.limitCallPages;
+import static ua.training.top.aggregator.installation.InstallationUtil.limitPages;
 import static ua.training.top.aggregator.installation.InstallationUtil.reCall;
-import static ua.training.top.aggregator.strategy.provider.ProviderUtil.ERROR_MESSAGE;
 import static ua.training.top.util.parser.ElementUtil.getResumesHabr;
+import static ua.training.top.util.parser.data.CommonUtil.error_message;
 import static ua.training.top.util.parser.data.CommonUtil.habr;
-import static ua.training.top.util.parser.data.CorrectUrl.skillsHabr;
+import static ua.training.top.util.parser.data.CorrectLevel.getLevel;
+import static ua.training.top.util.parser.data.CorrectUrl.getPartUrlsHabr;
 import static ua.training.top.util.parser.data.CorrectWorkplace.getHabr;
-import static ua.training.top.util.parser.data.CorrectLevel.*;
 
 public class HabrStrategy implements Strategy {
     private final static Logger log = LoggerFactory.getLogger(HabrStrategy.class);
@@ -32,7 +32,7 @@ public class HabrStrategy implements Strategy {
         String city = workplace.equals("all") ? "" : "city_ids[]=".concat(workplace).concat("&");
         return DocumentUtil.getDocument(format(URL, city, page.equals("1") ? "" : "&page=".concat(page),
                 "&q=".concat(language), getLevel(habr ,level), workplace.equals("remote") ? "&remote=true" : "",
-                skillsHabr(language)));
+                getPartUrlsHabr(language)));
     }
 
     @Override
@@ -49,11 +49,11 @@ public class HabrStrategy implements Strategy {
                 Elements elements = doc == null ? null : doc.getElementsByClass("resume-card");
                 if (elements == null || elements.size() == 0) break;
                 set.addAll(getResumesHabr(elements, freshen));
-                if(page < Math.min(limitCallPages, maxPages)) page++;
+                if(page < Math.min(limitPages, maxPages)) page++;
                 else break;
             }
         } catch (Exception e) {
-            log.info("{} {} {}", this.getClass().getSimpleName(), ERROR_MESSAGE, e.getMessage());
+            log.info("{} {} {}", this.getClass().getSimpleName(), error_message, e.getMessage());
             return new ArrayList<>(set);
         }
         reCall(set.size(), new HabrStrategy());
