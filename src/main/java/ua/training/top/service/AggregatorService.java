@@ -25,7 +25,6 @@ import static ua.training.top.util.FreshenUtil.getFreshensOutPeriodToKeep;
 import static ua.training.top.util.ResumeUtil.*;
 import static ua.training.top.util.UserUtil.asAdmin;
 import static ua.training.top.util.VoteUtil.getVotesOutLimitHeroku;
-import static ua.training.top.util.parser.data.CommonUtil.correctJava_Script;
 
 @Service
 public class AggregatorService {
@@ -127,9 +126,14 @@ public class AggregatorService {
         resumeTos.forEach(vacancyNet -> log.info("\nvacancyNet № {}\n{}\n", i.getAndIncrement(), vacancyNet.toString()));
         log.info("\n\ncommon = {}", resumeTos.size());*/
 
-        String line = "Берлин, Java Scriptирпень, боярка,  Script ";
-        String text = correctJava_Script(line);
-        System.out.println(text);
+        String myDate = "Обновлено в Сентябре більше";
+
+//        myDate = myDate.toLowerCase();
+        myDate = myDate.toLowerCase().replaceAll("обновлено ", "").replace("більше", "").trim();
+
+//        String line = "Берлин, Java Scriptирпень, боярка,  Script ";
+//        String text = correctJava_Script(line);
+        System.out.println(myDate);
 
     }
 
