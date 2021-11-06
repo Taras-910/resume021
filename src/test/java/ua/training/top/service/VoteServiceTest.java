@@ -10,7 +10,7 @@ import java.util.List;
 
 import static org.junit.Assert.assertThrows;
 import static ua.training.top.SecurityUtil.setTestAuthorizedUser;
-import static ua.training.top.testData.ResumeTestData.RESUME2_ID;
+import static ua.training.top.testData.ResumeTestData.resume2_id;
 import static ua.training.top.testData.UserTestData.*;
 import static ua.training.top.testData.VoteTestData.*;
 import static ua.training.top.util.DateTimeUtil.thisDay;
@@ -23,71 +23,71 @@ public class VoteServiceTest extends AbstractServiceTest {
     @Test
     public void get() throws Exception {
         setTestAuthorizedUser(admin);
-        Vote vote = service.get(VOTE1_ID);
-        VOTE_MATCHER.assertMatch(vote1, vote);
+        Vote vote = service.get(vote1_id);
+        vote_matcher.assertMatch(vote1, vote);
     }
 
     @Test
     public void getNotFound() throws Exception {
         setTestAuthorizedUser(admin);
-        assertThrows(NotFoundException.class, () -> service.get(NOT_FOUND));
+        assertThrows(NotFoundException.class, () -> service.get(not_found));
     }
 
     @Test
     public void getAll() throws Exception {
         setTestAuthorizedUser(admin);
         List<Vote> all = service.getAllForAuth();
-        VOTE_MATCHER.assertMatch(allVotes(), all);
+        vote_matcher.assertMatch(allVotes(), all);
     }
 
     @Test
     public void getAllForAuthUser() throws Exception {
         setTestAuthorizedUser(admin);
         List<Vote> all = service.getAllForAuth();
-        VOTE_MATCHER.assertMatch(List.of(vote1), all);
+        vote_matcher.assertMatch(List.of(vote1), all);
     }
 
     @Test
     public void delete() throws Exception {
         setTestAuthorizedUser(admin);
-        service.delete(VOTE1_ID);
-        assertThrows(NotFoundException.class, () -> service.get(VOTE1_ID));
+        service.delete(vote1_id);
+        assertThrows(NotFoundException.class, () -> service.get(vote1_id));
     }
 
     @Test
     public void deletedNotFound() throws Exception {
         setTestAuthorizedUser(admin);
-        assertThrows(NotFoundException.class, () -> service.delete(NOT_FOUND));
+        assertThrows(NotFoundException.class, () -> service.delete(not_found));
     }
 
     @Test
     public void deleteNotOwn() throws Exception {
         setTestAuthorizedUser(admin);
-        assertThrows(NotFoundException.class, () -> service.delete(VOTE2_ID));
+        assertThrows(NotFoundException.class, () -> service.delete(vote2_id));
     }
 
     @Test
     public void update() throws Exception {
-        service.update(VOTE1_ID, RESUME2_ID);
+        service.update(vote1_id, resume2_id);
         setTestAuthorizedUser(admin);
-        Vote expected = service.get(VOTE1_ID);
-        VOTE_MATCHER.assertMatch(expected, VoteTestData.getUpdated());
+        Vote expected = service.get(vote1_id);
+        vote_matcher.assertMatch(expected, VoteTestData.getUpdated());
     }
 
     @Test
     public void updateIllegalArgument() throws Exception {
         setTestAuthorizedUser(admin);
-        assertThrows(NotFoundException.class, () -> service.update(NOT_FOUND, RESUME2_ID));
+        assertThrows(NotFoundException.class, () -> service.update(not_found, resume2_id));
     }
 
     @Test
     public void create() throws Exception {
         setTestAuthorizedUser(admin);
-        Vote created = service.create(RESUME2_ID);
+        Vote created = service.create(resume2_id);
         int newId = created.id();
-        Vote newVote = new Vote(null, thisDay, RESUME2_ID, ADMIN_ID);
+        Vote newVote = new Vote(null, thisDay, resume2_id, admin_id);
         newVote.setId(newId);
-        VOTE_MATCHER.assertMatch(newVote, created);
-        VOTE_MATCHER.assertMatch(newVote, service.get(newId));
+        vote_matcher.assertMatch(newVote, created);
+        vote_matcher.assertMatch(newVote, service.get(newId));
     }
 }

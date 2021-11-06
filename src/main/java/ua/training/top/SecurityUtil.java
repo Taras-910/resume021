@@ -1,9 +1,11 @@
 package ua.training.top;
+
 import org.springframework.security.core.Authentication;
 import org.springframework.security.core.context.SecurityContextHolder;
 import ua.training.top.model.User;
 
 import static java.util.Objects.requireNonNull;
+import static ua.training.top.util.MessagesUtil.no_authorized_user_found;
 
 public class SecurityUtil {
 
@@ -28,11 +30,11 @@ public class SecurityUtil {
     public static AuthorizedUser get() {
         AuthorizedUser authPrincipal = safeGet();
         AuthorizedUser authUser = authPrincipal == null ? authTest : authPrincipal;
-        return requireNonNull(authUser, "No authorized user found");
+        return requireNonNull(authUser, no_authorized_user_found);
     }
 
     public static int authUserId() {
-        return  get().getUser().id();
+        return get().getUser().id();
     }
 
 }

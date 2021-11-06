@@ -8,22 +8,17 @@ import ua.training.top.aggregator.strategy.Strategy;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import static ua.training.top.repository.AggregatorRepository.allProviders;
+import static ua.training.top.aggregator.dispatcher.Dispatcher.allProviders;
 
 public class InstallationUtil {
     private static final Logger log = LoggerFactory.getLogger(InstallationUtil.class);
-    public static final float HRN_TO_USD_RATE = 26.5f;
-    public static final float PLN_TO_USD_RATE = 4.0f;
-    public static final float EUR_TO_USD_RATE = 1.15f;
-    public static final float GBP_TO_USD_RATE = 1.4f;
-    public static final float RUB_TO_USD_RATE = 72.5f;
 
     public static int repeatToCall = 3;
-    public static int limitPages = 55;
+    public static int limitPages = 50;
 //    private static int repeatToCall = 1;
-//    public static int limitCallPages = 2;
-    public static LocalDate reasonDateToLoad = LocalDateTime.now().toLocalDate().minusDays(32);
-    public static LocalDate reasonPeriodToKeep = LocalDateTime.now().toLocalDate().minusDays(45);
+//    public static int limitPages = 5;
+    public static LocalDate reasonDateToLoad = LocalDateTime.now().toLocalDate().minusDays(120);
+    public static LocalDate reasonPeriodToKeep = LocalDateTime.now().toLocalDate().minusDays(150);
     public static int limitResumesToKeep = 3000;
 
 //    public static boolean testProvider = true;

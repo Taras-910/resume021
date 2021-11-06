@@ -16,40 +16,44 @@ import java.util.Set;
 
 import static java.lang.String.format;
 import static java.lang.String.valueOf;
-import static ua.training.top.aggregator.installation.InstallationUtil.*;
+import static ua.training.top.aggregator.installation.InstallationUtil.reCall;
 import static ua.training.top.util.parser.ElementUtil.getResumesWork;
-import static ua.training.top.util.parser.data.CorrectWorkplace.*;
-import static ua.training.top.util.parser.data.CorrectLevel.*;
-import static ua.training.top.util.parser.data.CorrectUrl.getPartUrlWork;
-import static ua.training.top.util.parser.data.LimitationPages.maxPagesWork;
-import static ua.training.top.util.parser.data.CommonUtil.*;
+import static ua.training.top.util.parser.data.CommonDataUtil.get_resume;
+import static ua.training.top.util.parser.data.CommonDataUtil.work;
+import static ua.training.top.util.parser.data.LevelUtil.getLevel;
+import static ua.training.top.util.parser.data.PagesUtil.getMaxPages;
+import static ua.training.top.util.parser.data.UrlUtil.getPartUrlWork;
+import static ua.training.top.util.parser.data.WorkplaceUtil.getWork;
 
 public class WorkStrategy implements Strategy {
     private final static Logger log = LoggerFactory.getLogger(WorkStrategy.class);
-    private static final String URL = "https://www.work.ua/ru/resumes%s-%s/?%s%s%s";
-// resume ua 150
-// https://www.work.ua/ru/resumes-kyiv-java/?employment=76&experience=0&page=2
+    private final static String
+            period = "period=5",
+            URL = "https://www.work.ua/ru/resumes%s-%s/?%s%s%s%s";
+//      https://www.work.ua/ru/resumes-kyiv-java/?employment=76&experience=0&page=2
 
     protected Document getDocument(String workspace, String language, String level, String page) {
         return DocumentUtil.getDocument(format(URL, getPartUrlWork(workspace), language, workspace.equals("remote") ?
-                "employment=76&" : "", level.equals("all") ? "" : "experience=".concat(getLevel(work,level)),
-                page.equals("1") ? "" : "&page=".concat(page)));
+                        "employment=76&" : "", level.equals("all") ? "" : "experience=" .concat(getLevel(work, level)),
+                page.equals("1") ? period : period.concat("&"), page.equals("1") ? "" : "page=" .concat(page)));
     }
 
     @Override
     public List<ResumeTo> getResumes(Freshen freshen) throws IOException {
+        String city = freshen.getWorkplace(), language = freshen.getLanguage();
+        log.info(get_resume, city, language);
         Set<ResumeTo> set = new LinkedHashSet<>();
-        String city = freshen.getWorkplace();
         if (city.equals("-1")) {
             return new ArrayList<>();
         }
         int page = 1;
         while (true) {
-            Document doc = getDocument(getWork(city), freshen.getLanguage(), freshen.getLevel(), valueOf(page));
-            Elements elements = doc == null ? null : doc.getElementsByClass("card card-hover resume-link card-visited wordwrap");
+            Document doc = getDocument(getWork(city), language, freshen.getLevel(), valueOf(page));
+            Elements elements = doc == null ?
+                    null : doc.getElementsByClass("card card-hover resume-link card-visited wordwrap");
             if (elements == null || elements.size() == 0) break;
             set.addAll(getResumesWork(elements, freshen));
-            if (page < maxPagesWork(city)) page++;
+            if (page < getMaxPages(work, city)) page++;
             else break;
         }
         reCall(set.size(), new WorkStrategy());

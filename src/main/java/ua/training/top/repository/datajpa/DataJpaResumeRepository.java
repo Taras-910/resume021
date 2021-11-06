@@ -9,10 +9,11 @@ import ua.training.top.model.Freshen;
 import ua.training.top.model.Resume;
 import ua.training.top.repository.ResumeRepository;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+
+import static ua.training.top.util.MessagesUtil.*;
 
 @Transactional(readOnly = true)
 @Repository
@@ -28,10 +29,10 @@ public class DataJpaResumeRepository implements ResumeRepository {
     @Transactional
     @Override
     public Resume save(Resume resume) {
-        Resume resumeDouble = getByParams(resume.getTitle(), resume.getSkills());
+        Resume resumeDouble = getByParams(resume.getTitle(), resume.getName(), resume.getWorkBefore());
         if (resumeDouble != null && (resume.isNew() || resumeDouble.getId() != resume.getId())) {
             delete(resumeDouble.getId());
-            log.error("same resume " + resumeDouble + " already existed in the database but was replaced by " + resume);
+            log.error(exist_end_replace, resumeDouble, resume);
         }
         return resumeRepository.save(resume);
     }
@@ -43,8 +44,8 @@ public class DataJpaResumeRepository implements ResumeRepository {
         try {
             resumesDb = resumeRepository.saveAll(resumes);
         } catch (Exception e) {
-            for(Resume r : resumes) {
-                log.error("error " + r + " redirect on method save");
+            for (Resume r : resumes) {
+                log.error(update_error_and_redirect, r);
                 resumesDb.add(save(r));
             }
         }
@@ -55,8 +56,7 @@ public class DataJpaResumeRepository implements ResumeRepository {
     @Override
     public boolean delete(int id) {
         log.info("delete id {}", id);
-        boolean b = Optional.of(resumeRepository.delete(id)).orElse(0) != 0;
-        return b;
+        return Optional.of(resumeRepository.delete(id)).orElse(0) != 0;
     }
 
     @Transactional
@@ -65,9 +65,11 @@ public class DataJpaResumeRepository implements ResumeRepository {
         resumeRepository.deleteAll(listToDelete);
     }
 
-    public Resume getByParams(String title, String skills) {
+    @Transactional
+    @Override
+    public Resume getByParams(String title, String name, String workBefore) {
         try {
-            return resumeRepository.getByParams(title, skills);
+            return resumeRepository.getByParams(title, name, workBefore);
         } catch (Exception e) {
             return null;
         }
@@ -76,18 +78,8 @@ public class DataJpaResumeRepository implements ResumeRepository {
     @Override
     public List<Resume> getByFilter(Freshen freshen) {
         String language = freshen.getLanguage(), workplace = freshen.getWorkplace(), level = freshen.getLevel();
-        return resumeRepository.getByFilter(language.equals("all") ? "" : language, level.equals("all") ? "" : level,
-                workplace.equals("all") ? "" : workplace);
-    }
-
-    @Override
-    public int getCountToday() {
-        return resumeRepository.getCountToday(LocalDate.now()).size();
-    }
-
-    @Override
-    public int getByFreshenId(Integer id) {
-        return resumeRepository.getByFreshenId(id).size();
+        return resumeRepository.getByFilter(language.equals(all) ? "" : language, level.equals(all) ? "" : level,
+                workplace.equals(all) ? "" : workplace);
     }
 
     @Override
@@ -104,6 +96,5 @@ public class DataJpaResumeRepository implements ResumeRepository {
     public List<Resume> getByUserId(int userId) {
         return Optional.of(resumeRepository.getByUserId(userId)).orElse(new ArrayList<>());
     }
-
 }
 

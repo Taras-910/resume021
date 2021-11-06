@@ -12,7 +12,10 @@ import java.util.Random;
 import static java.time.LocalDateTime.now;
 import static java.util.Collections.singleton;
 import static ua.training.top.model.Goal.UPGRADE;
+import static ua.training.top.util.MessagesUtil.all;
+import static ua.training.top.util.MessagesUtil.setting_delay;
 import static ua.training.top.util.UserUtil.asAdmin;
+import static ua.training.top.util.parser.data.CommonDataUtil.*;
 
 public class AutoRefreshUtil {
     private final static Logger log = LoggerFactory.getLogger(AutoRefreshUtil.class);
@@ -21,7 +24,7 @@ public class AutoRefreshUtil {
     public static void setRandomDelay(int bound) {
         try {
             int delay = random.nextInt(bound);
-            log.info("\n------------ delay={} min {} sec ------------", delay/(1000 * 60), delay%(1000 * 60) / 1000);
+            log.info(setting_delay, delay/(1000 * 60), delay%(1000 * 60) / 1000);
             Thread.sleep(delay);
         } catch (InterruptedException e) {
             Thread.currentThread().interrupt();
@@ -35,11 +38,11 @@ public class AutoRefreshUtil {
     public static final Map<Integer, Provider> mapStrategies =
             Map.ofEntries(
                     Map.entry(0, new Provider(new DjinniStrategy())),
-                    Map.entry(1, new Provider(new RabotaStrategy())),
-                    /*Map.entry(3, new Provider(new LinkedinStrategy())),*/
-                    Map.entry(2, new Provider(new WorkStrategy())),
-                    Map.entry(3, new Provider(new GrcStrategy())),
+                    Map.entry(1, new Provider(new GrcStrategy())),
+                    Map.entry(2, new Provider(new RabotaStrategy())),
+                    Map.entry(3, new Provider(new WorkStrategy())),
                     Map.entry(4, new Provider(new HabrStrategy()))
+                    /*Map.entry(3, new Provider(new LinkedinStrategy()))*/
             );
 
     public static final Map<Integer, String> mapWorkplace =
@@ -47,23 +50,23 @@ public class AutoRefreshUtil {
                     0, "all",
                     1, "украина",
                     2, "foreign",
-                    4, "киев",
-                    5, "одесса",
+                    3, "киев",
+                    4, "remote",
+                    5, "минск",
                     6, "харьков",
-                    3, "remote",
-                    7, "минск",
+                    7, "одесса",
                     8, "санкт-петербург",
                     9, "москва"
             );
 
     public static final Map<Integer, String> mapLevel =
             Map.of(
-                    0, "all",
-                    1, "middle",
-                    2, "trainee",
-                    3, "junior",
-                    4, "senior",
-                    5, "expert"
+                    0, middle,
+                    1, senior,
+                    2, trainee,
+                    3, all,
+                    4, junior,
+                    5, expert
                     );
 
     public static Freshen randomFreshen(String workplace, String level) {

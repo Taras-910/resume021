@@ -66,7 +66,7 @@ public class VoteRestController {
         service.delete(id);
     }
 
-    @PostMapping( value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
+    @PostMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     public void setVote(@PathVariable(name = "id") int resumeId, @RequestParam boolean toVote) {
         log.info(toVote ? "enable {}" : "disable {}", resumeId);
         service.setVote(resumeId, toVote);

@@ -1,8 +1,13 @@
-DELETE FROM freshen;
-DELETE FROM vote;
-DELETE FROM user_roles;
-DELETE FROM resume;
-DELETE FROM users;
+DELETE
+FROM freshen;
+DELETE
+FROM vote;
+DELETE
+FROM user_roles;
+DELETE
+FROM resume;
+DELETE
+FROM users;
 
 ALTER SEQUENCE global_seq RESTART WITH 100000;
 
@@ -24,8 +29,11 @@ VALUES ('UPGRADE', 100002),
        ('FILTER', 100003);
 
 INSERT INTO resume (title, name, age, address, salary, work_before, url, skills, release_date, freshen_id)
-VALUES ('Middle Game Developer', 'Василь Васильевич', '21', 'Киев', 3000, 'КСПО, 10 лет и 2 месяца', 'https://grc.ua/vacancy/40006938?query=java', 'Spring, SQL, REST, PHP', '2021-10-20',100002),
-       ('Middle Java-разработчик', 'Виктор Михайлович', '22', 'Днепр', 2000, 'Днепросталь, 4 года и 5 месяцев', 'https://grc.ua/vacancy/40006938?query=java', 'Понимание JVM. Умение отлаживать и профилировать java-приложения', '2021-10-20', 100003);
+VALUES ('Middle Game Developer', 'Василь Васильевич', '21', 'Киев', 3000, 'КСПО, 10 лет и 2 месяца',
+        'https://grc.ua/vacancy/40006938?query=java', 'Spring, SQL, REST, PHP', '2021-10-20', 100002),
+       ('Middle Java-разработчик', 'Виктор Михайлович', '22', 'Днепр', 2000, 'Днепросталь, 4 года и 5 месяцев',
+        'https://grc.ua/vacancy/40006938?query=java',
+        'Понимание JVM. Умение отлаживать и профилировать java-приложения', '2021-10-20', 100003);
 
 INSERT INTO vote (local_date, resume_id, user_id)
 VALUES ('2020-10-25', 100004, 100000),

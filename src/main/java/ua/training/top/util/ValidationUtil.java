@@ -10,6 +10,7 @@ import ua.training.top.util.exception.IllegalRequestDataException;
 import ua.training.top.util.exception.NotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
+
 import static ua.training.top.util.MessagesUtil.*;
 
 public class ValidationUtil {
@@ -71,7 +72,7 @@ public class ValidationUtil {
     public static Throwable logAndGetRootCause(Logger log, HttpServletRequest req, Exception e, boolean logException, ErrorType errorType) {
         Throwable rootCause = ValidationUtil.getRootCause(e);
         if (logException) {
-            log.error(error_request_url, errorType , req.getRequestURL(), rootCause);
+            log.error(error_request_url, errorType, req.getRequestURL(), rootCause);
         } else {
             log.warn(error_request_url, errorType, req.getRequestURL(), rootCause.toString());
         }
@@ -79,19 +80,19 @@ public class ValidationUtil {
     }
 
     public static void checkValidEmail(String email) {
-        if(!email.matches(email_matcher)) {
+        if (!email.matches(email_matcher)) {
             throw new IllegalArgumentException(email_error);
         }
     }
 
     public static void checkValidUrl(String url) {
-        if(!url.matches(url_matcher)) {
+        if (!url.matches(url_matcher)) {
             throw new IllegalArgumentException(url_error);
         }
     }
 
     public static void checkExistThisEmail(User user) {
-        if(user != null) {
+        if (user != null) {
             throw new DataIntegrityViolationException(user_exist_error + user.getEmail());
         }
     }

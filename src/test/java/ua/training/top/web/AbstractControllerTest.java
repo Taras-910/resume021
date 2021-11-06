@@ -25,11 +25,11 @@ import static org.springframework.security.test.web.servlet.setup.SecurityMockMv
 @ActiveProfiles(resolver = ActiveDbProfileResolver.class)
 abstract public class AbstractControllerTest {
 
-    private static final CharacterEncodingFilter CHARACTER_ENCODING_FILTER = new CharacterEncodingFilter();
+    private static final CharacterEncodingFilter character_encoding_filter = new CharacterEncodingFilter();
 
     static {
-        CHARACTER_ENCODING_FILTER.setEncoding("UTF-8");
-        CHARACTER_ENCODING_FILTER.setForceEncoding(true);
+        character_encoding_filter.setEncoding("UTF-8");
+        character_encoding_filter.setForceEncoding(true);
     }
 
     public MockMvc mockMvc;
@@ -41,7 +41,7 @@ abstract public class AbstractControllerTest {
     private void postConstruct() {
         mockMvc = MockMvcBuilders
                 .webAppContextSetup(webApplicationContext)
-                .addFilter(CHARACTER_ENCODING_FILTER)
+                .addFilter(character_encoding_filter)
                 .apply(springSecurity())
                 .build();
     }

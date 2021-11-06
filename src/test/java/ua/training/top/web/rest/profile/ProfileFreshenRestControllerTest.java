@@ -41,12 +41,12 @@ class ProfileFreshenRestControllerTest extends AbstractControllerTest {
 
     @Test
     void get() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + FRESHEN2_ID)
+        perform(MockMvcRequestBuilders.get(REST_URL + freshen2_id)
                 .with(userHttpBasic(user)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(FRESHEN_MATCHER.contentJson(freshen2));
+                .andExpect(freshen_matcher.contentJson(freshen2));
     }
 
     @Test
@@ -56,13 +56,13 @@ class ProfileFreshenRestControllerTest extends AbstractControllerTest {
                 .with(userHttpBasic(user)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(FRESHEN_MATCHER.contentJson(freshens));
+                .andExpect(freshen_matcher.contentJson(freshens));
     }
 
     @Test
     @Transactional
-    void refreshDB() throws Exception  {
-        Freshen freshen = new Freshen(null, null, "Java", "middle", "Киев", Collections.singleton(Goal.UPGRADE),null );
+    void refreshDB() throws Exception {
+        Freshen freshen = new Freshen(null, null, "Java", "middle", "Киев", Collections.singleton(Goal.UPGRADE), null);
         List<Resume> resumesDbBefore = resumeService.getAll();
         List<Freshen> freshensDbBefore = freshenService.getAll();
         setTestProvider();
@@ -81,7 +81,7 @@ class ProfileFreshenRestControllerTest extends AbstractControllerTest {
         freshen.setRecordedDate(newFreshen.getRecordedDate());
         freshen.setUserId(newFreshen.getUserId());
         freshen.setId(newFreshen.getId());
-        FRESHEN_MATCHER.assertMatch(newFreshen, freshen);
+        freshen_matcher.assertMatch(newFreshen, freshen);
 
         List<Resume> resumesTest = fromTos(getTestList());
         List<Resume> allResumes = resumeService.getAll();

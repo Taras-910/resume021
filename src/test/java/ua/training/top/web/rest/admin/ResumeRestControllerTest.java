@@ -15,18 +15,22 @@ import ua.training.top.util.ResumeUtil;
 import ua.training.top.util.exception.NotFoundException;
 import ua.training.top.web.AbstractControllerTest;
 import ua.training.top.web.json.JsonUtil;
+
 import java.util.List;
+
 import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ua.training.top.SecurityUtil.setTestAuthorizedUser;
-import static ua.training.top.testData.ResumeToTestData.RESUME_TO_MATCHER;
+import static ua.training.top.testData.ResumeTestData.*;
+import static ua.training.top.testData.ResumeToTestData.resume_to_matcher;
 import static ua.training.top.testData.TestUtil.readFromJson;
 import static ua.training.top.testData.TestUtil.userHttpBasic;
-import static ua.training.top.testData.UserTestData.*;
-import static ua.training.top.testData.ResumeTestData.*;
-import static ua.training.top.util.ResumeUtil.*;
+import static ua.training.top.testData.UserTestData.admin;
+import static ua.training.top.testData.UserTestData.not_found;
+import static ua.training.top.util.ResumeUtil.fromTo;
+import static ua.training.top.util.ResumeUtil.getTos;
 
 @Transactional
 class ResumeRestControllerTest extends AbstractControllerTest {
@@ -38,17 +42,17 @@ class ResumeRestControllerTest extends AbstractControllerTest {
 
     @Test
     void get() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + RESUME1_ID)
+        perform(MockMvcRequestBuilders.get(REST_URL + resume1_id)
                 .with(userHttpBasic(admin)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(RESUME_TO_MATCHER.contentJson(ResumeUtil.getTo(resume1, voteService.getAllForAuth())));
+                .andExpect(resume_to_matcher.contentJson(ResumeUtil.getTo(resume1, voteService.getAllForAuth())));
     }
 
     @Test
     void getNotFound() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + NOT_FOUND)
+        perform(MockMvcRequestBuilders.get(REST_URL + not_found)
                 .with(userHttpBasic(admin)))
                 .andDo(print())
                 .andExpect(status().isNotFound());
@@ -61,22 +65,22 @@ class ResumeRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(RESUME_TO_MATCHER.contentJson(getTos(List.of(resume1, resume2), voteService.getAllForAuth())));
+                .andExpect(resume_to_matcher.contentJson(getTos(List.of(resume1, resume2), voteService.getAllForAuth())));
     }
 
     @Test
     @Transactional
     void delete() throws Exception {
-        perform(MockMvcRequestBuilders.delete(REST_URL + RESUME1_ID)
+        perform(MockMvcRequestBuilders.delete(REST_URL + resume1_id)
                 .with(userHttpBasic(admin)))
                 .andExpect(status().isNoContent());
         setTestAuthorizedUser(admin);
-        assertThrows(NotFoundException.class, () -> resumeService.delete(RESUME1_ID));
+        assertThrows(NotFoundException.class, () -> resumeService.delete(resume1_id));
     }
 
     @Test
     void deleteNotFound() throws Exception {
-        perform(MockMvcRequestBuilders.delete(REST_URL + NOT_FOUND)
+        perform(MockMvcRequestBuilders.delete(REST_URL + not_found)
                 .with(userHttpBasic(admin)))
                 .andExpect(status().isNotFound());
     }
@@ -86,14 +90,14 @@ class ResumeRestControllerTest extends AbstractControllerTest {
     void update() throws Exception {
         ResumeTo updated = new ResumeTo(ResumeToTestData.getToUpdated());
         perform(MockMvcRequestBuilders
-                .put(REST_URL + RESUME1_ID)
+                .put(REST_URL + resume1_id)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(updated))
                 .with(userHttpBasic(admin)))
                 .andDo(print())
                 .andExpect(status().isNoContent());
         setTestAuthorizedUser(admin);
-        RESUME_MATCHER.assertMatch(fromTo(updated), resumeService.get(RESUME1_ID));
+        resume_matcher.assertMatch(fromTo(updated), resumeService.get(resume1_id));
     }
 
     @Test
@@ -101,7 +105,7 @@ class ResumeRestControllerTest extends AbstractControllerTest {
     void updateInvalid() throws Exception {
         ResumeTo invalid = new ResumeTo(ResumeToTestData.getToUpdated());
         invalid.setTitle(null);
-        perform(MockMvcRequestBuilders.put(REST_URL + RESUME2_ID)
+        perform(MockMvcRequestBuilders.put(REST_URL + resume2_id)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(invalid))
                 .with(userHttpBasic(admin)))
@@ -122,9 +126,9 @@ class ResumeRestControllerTest extends AbstractControllerTest {
         Resume createdResume = readFromJson(action, Resume.class);
         int newIdResume = createdResume.id();
         newResumeTo.setId(newIdResume);
-        RESUME_MATCHER.assertMatch(createdResume, fromTo(newResumeTo));
+        resume_matcher.assertMatch(createdResume, fromTo(newResumeTo));
         setTestAuthorizedUser(admin);
-        RESUME_TO_MATCHER.assertMatch(ResumeUtil.getTo(resumeService.get(newIdResume),
+        resume_to_matcher.assertMatch(ResumeUtil.getTo(resumeService.get(newIdResume),
                 voteService.getAllForAuth()), newResumeTo);
     }
 
@@ -152,7 +156,7 @@ class ResumeRestControllerTest extends AbstractControllerTest {
                 .with(userHttpBasic(admin)))
                 .andExpect(status().isOk())
                 .andDo(print())
-                .andExpect(RESUME_TO_MATCHER.contentJson(getTos(List.of(resume1), voteService.getAllForAuth())));
+                .andExpect(resume_to_matcher.contentJson(getTos(List.of(resume1), voteService.getAllForAuth())));
     }
 
     @Test
@@ -169,7 +173,7 @@ class ResumeRestControllerTest extends AbstractControllerTest {
 
     @Test
     void getUnAuth() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + RESUME1_ID))
+        perform(MockMvcRequestBuilders.get(REST_URL + resume1_id))
                 .andExpect(status().isUnauthorized());
     }
 }

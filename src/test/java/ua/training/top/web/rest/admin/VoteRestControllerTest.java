@@ -21,9 +21,11 @@ import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 import static ua.training.top.SecurityUtil.setTestAuthorizedUser;
-import static ua.training.top.testData.ResumeTestData.RESUME2_ID;
-import static ua.training.top.testData.TestUtil.*;
-import static ua.training.top.testData.UserTestData.*;
+import static ua.training.top.testData.ResumeTestData.resume2_id;
+import static ua.training.top.testData.TestUtil.readFromJson;
+import static ua.training.top.testData.TestUtil.userHttpBasic;
+import static ua.training.top.testData.UserTestData.admin;
+import static ua.training.top.testData.UserTestData.admin_id;
 import static ua.training.top.testData.VoteTestData.*;
 
 class VoteRestControllerTest extends AbstractControllerTest {
@@ -34,13 +36,13 @@ class VoteRestControllerTest extends AbstractControllerTest {
 
     @Test
     void get() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + VOTE1_ID)
+        perform(MockMvcRequestBuilders.get(REST_URL + vote1_id)
                 .with(userHttpBasic(admin)))
                 .andDo(print())
                 .andExpect(status().isOk())
                 // https://jira.spring.io/browse/SPR-14472
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(VOTE_MATCHER.contentJson(vote1));
+                .andExpect(vote_matcher.contentJson(vote1));
     }
 
     @Test
@@ -50,7 +52,7 @@ class VoteRestControllerTest extends AbstractControllerTest {
                 .with(userHttpBasic(admin)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(VOTE_MATCHER.contentJson(iterable));
+                .andExpect(vote_matcher.contentJson(iterable));
     }
 
     @Test
@@ -59,53 +61,53 @@ class VoteRestControllerTest extends AbstractControllerTest {
                 .with(userHttpBasic(admin)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(VOTE_MATCHER.contentJson(List.of(vote1)));
+                .andExpect(vote_matcher.contentJson(List.of(vote1)));
     }
 
     @Test
     void create() throws Exception {
-        Vote newVote = new Vote(null, LocalDate.now(), RESUME2_ID, ADMIN_ID);
+        Vote newVote = new Vote(null, LocalDate.now(), resume2_id, admin_id);
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
-                .param("resumeId", String.valueOf(RESUME2_ID))
+                .param("resumeId", String.valueOf(resume2_id))
                 .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(admin)))
                 .andExpect(status().isCreated());
         Vote created = readFromJson(action, Vote.class);
         newVote.setId(created.getId());
-        VOTE_MATCHER.assertMatch(created, newVote);
+        vote_matcher.assertMatch(created, newVote);
         setTestAuthorizedUser(admin);
-        VOTE_MATCHER.assertMatch(service.get(created.getId()), newVote);
+        vote_matcher.assertMatch(service.get(created.getId()), newVote);
     }
 
     @Test
     void update() throws Exception {
         Vote updated = new Vote(vote1);
-        updated.setResumeId(RESUME2_ID);
-        perform(MockMvcRequestBuilders.put(REST_URL + VOTE1_ID)
-                .param("resumeId", String.valueOf(RESUME2_ID))
+        updated.setResumeId(resume2_id);
+        perform(MockMvcRequestBuilders.put(REST_URL + vote1_id)
+                .param("resumeId", String.valueOf(resume2_id))
                 .with(userHttpBasic(admin))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(updated)))
                 .andExpect(status().isNoContent());
         setTestAuthorizedUser(admin);
-        VOTE_MATCHER.assertMatch(service.get(VOTE1_ID), updated);
+        vote_matcher.assertMatch(service.get(vote1_id), updated);
     }
 
     @Test
     void delete() throws Exception {
-        perform(MockMvcRequestBuilders.delete(REST_URL + VOTE1_ID)
+        perform(MockMvcRequestBuilders.delete(REST_URL + vote1_id)
                 .with(userHttpBasic(admin)))
                 .andDo(print())
                 .andExpect(status().isNoContent());
         setTestAuthorizedUser(admin);
-        assertThrows(NotFoundException.class, () -> service.get(VOTE1_ID));
+        assertThrows(NotFoundException.class, () -> service.get(vote1_id));
     }
 
     @Test
     void setVote() throws Exception {
-        perform(MockMvcRequestBuilders.post(REST_URL + RESUME2_ID)
-                        .param("toVote", String.valueOf(true))
-                        .contentType(MediaType.APPLICATION_JSON)
+        perform(MockMvcRequestBuilders.post(REST_URL + resume2_id)
+                .param("toVote", String.valueOf(true))
+                .contentType(MediaType.APPLICATION_JSON)
                 .with(userHttpBasic(admin)))
                 .andExpect(status().isOk());
     }

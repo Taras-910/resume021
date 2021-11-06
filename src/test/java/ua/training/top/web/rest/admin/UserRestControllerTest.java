@@ -35,18 +35,18 @@ class UserRestControllerTest extends AbstractControllerTest {
 
     @Test
     void get() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + ADMIN_ID)
+        perform(MockMvcRequestBuilders.get(REST_URL + admin_id)
                 .with(userHttpBasic(admin)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 // https://jira.spring.io/browse/SPR-14472
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(USER_MATCHER.contentJson(admin));
+                .andExpect(user_matcher.contentJson(admin));
     }
 
     @Test
     void getNotFound() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + NOT_FOUND)
+        perform(MockMvcRequestBuilders.get(REST_URL + not_found)
                 .with(userHttpBasic(admin)))
                 .andDo(print())
                 .andExpect(status().isNotFound());
@@ -58,28 +58,28 @@ class UserRestControllerTest extends AbstractControllerTest {
                 .with(userHttpBasic(admin)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(USER_MATCHER.contentJson(admin));
+                .andExpect(user_matcher.contentJson(admin));
     }
 
     @Test
     void delete() throws Exception {
-        perform(MockMvcRequestBuilders.delete(REST_URL + USER_ID)
+        perform(MockMvcRequestBuilders.delete(REST_URL + user_id)
                 .with(userHttpBasic(admin)))
                 .andDo(print())
                 .andExpect(status().isNoContent());
-        assertThrows(NotFoundException.class, () -> service.get(USER_ID));
+        assertThrows(NotFoundException.class, () -> service.get(user_id));
     }
 
     @Test
     @Transactional
     void update() throws Exception {
         User updated = getUpdated();
-        perform(MockMvcRequestBuilders.put(REST_URL + ADMIN_ID)
+        perform(MockMvcRequestBuilders.put(REST_URL + admin_id)
                 .with(userHttpBasic(admin))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(updated)))
                 .andExpect(status().isNoContent());
-        USER_MATCHER.assertMatch(service.get(ADMIN_ID), updated);
+        user_matcher.assertMatch(service.get(admin_id), updated);
     }
 
     @Test
@@ -94,8 +94,8 @@ class UserRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isCreated());
         User created = readFromJson(action, User.class);
         newUser.setId(created.getId());
-        USER_MATCHER.assertMatch(created, newUser);
-        USER_MATCHER.assertMatch(service.get(created.getId()), newUser);
+        user_matcher.assertMatch(created, newUser);
+        user_matcher.assertMatch(service.get(created.getId()), newUser);
     }
 
     @Test
@@ -111,8 +111,8 @@ class UserRestControllerTest extends AbstractControllerTest {
         User created = readFromJson(action, User.class);
         int newId = created.id();
         newUser.setId(newId);
-        USER_MATCHER.assertMatch(created, newUser);
-        USER_MATCHER.assertMatch(service.get(newId), newUser);
+        user_matcher.assertMatch(created, newUser);
+        user_matcher.assertMatch(service.get(newId), newUser);
     }
 
     @Test
@@ -122,23 +122,23 @@ class UserRestControllerTest extends AbstractControllerTest {
                 .with(userHttpBasic(admin)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(USER_MATCHER.contentJson(iterable));
+                .andExpect(user_matcher.contentJson(iterable));
     }
 
     @Test
     void enable() throws Exception {
-        perform(MockMvcRequestBuilders.post(REST_URL + USER_ID)
+        perform(MockMvcRequestBuilders.post(REST_URL + user_id)
                 .param("enabled", "false")
                 .with(userHttpBasic(admin))
                 .contentType(MediaType.APPLICATION_JSON))
                 .andDo(print())
                 .andExpect(status().isNoContent());
-        assertFalse(service.get(USER_ID).isEnabled());
+        assertFalse(service.get(user_id).isEnabled());
     }
 
     @Test
     void getUnAuth() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + ADMIN_ID))
+        perform(MockMvcRequestBuilders.get(REST_URL + admin_id))
                 .andExpect(status().isUnauthorized());
     }
 

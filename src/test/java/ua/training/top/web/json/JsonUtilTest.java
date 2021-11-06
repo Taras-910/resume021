@@ -3,8 +3,8 @@ package ua.training.top.web.json;
 import org.junit.jupiter.api.Test;
 import ua.training.top.model.Resume;
 import ua.training.top.model.User;
-import ua.training.top.testData.UserTestData;
 import ua.training.top.testData.ResumeTestData;
+import ua.training.top.testData.UserTestData;
 
 import java.util.List;
 
@@ -20,7 +20,7 @@ class JsonUtilTest {
         String json = JsonUtil.writeValue(resume1);
         System.out.println(json);
         Resume vacancy = JsonUtil.readValue(json, Resume.class);
-        RESUME_MATCHER.assertMatch(vacancy, resume1);
+        resume_matcher.assertMatch(vacancy, resume1);
     }
 
     @Test
@@ -28,7 +28,7 @@ class JsonUtilTest {
         String json = JsonUtil.writeValue(getListResumes());
         System.out.println(json);
         List<Resume> resumes = JsonUtil.readValues(json, Resume.class);
-        RESUME_MATCHER.assertMatch(resumes, ResumeTestData.getListResumes());
+        resume_matcher.assertMatch(resumes, ResumeTestData.getListResumes());
     }
 
     @Test

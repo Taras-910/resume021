@@ -35,7 +35,7 @@ public class ResumeService {
     }
 
     public Resume get(int id) {
-        log.info("get resume for id {}", id);
+        log.info("get id {}", id);
 
         return checkNotFoundWithId(repository.get(id), id);
     }
@@ -61,24 +61,24 @@ public class ResumeService {
     }
 
     @Transactional
-    public List<ResumeTo> getTosByFilter(Freshen freshen) {
-        log.info("getTosByFilter language={} level={} workplace={}", freshen.getLanguage(), freshen.getLevel(), freshen.getWorkplace());
-        freshen.setGoals(Collections.singleton(FILTER));
-        freshenService.create(freshen);
-        return getTos(getMatchesByFreshen(repository.getByFilter(freshen), freshen), voteService.getAllForAuth());
-//        return getTos(repository.getByFilter(freshen), voteService.getAllForAuth());
+    public List<ResumeTo> getTosByFilter(Freshen f) {
+        log.info("getTosByFilter language={} level={} workplace={}", f.getLanguage(), f.getLevel(), f.getWorkplace());
+        f.setGoals(Collections.singleton(FILTER));
+        freshenService.create(f);
+        return getTos(getFilterLanguage(repository.getByFilter(f), f), voteService.getAllForAuth());
     }
 
     @Transactional
     public Resume updateTo(ResumeTo resumeTo) {
         log.info("update resumeTo {}", resumeTo);
         checkValidUrl(resumeTo.getUrl());
-        Resume resumeDb = repository.get(resumeTo.id());
+        Resume resumeDb = get(resumeTo.id());
+        Resume resume = fromToForUpdate(resumeTo, resumeDb);
         checkNotOwnUpdate(resumeDb.getFreshen().getUserId());
-        if(isNotSimilar(resumeDb, resumeTo)){
+        if (isNotSimilar(resumeDb, resumeTo)) {
             voteService.deleteListByResumeId(resumeTo.id());
         }
-        return repository.save(getForUpdate(resumeTo, resumeDb));
+        return repository.save(resume);
     }
 
     public Resume create(ResumeTo resumeTo) {
@@ -94,12 +94,12 @@ public class ResumeService {
 
     @Transactional
     public List<Resume> createUpdateList(List<Resume> resumes) {
-        log.info("update vacancies size={}", resumes.size());
+        log.info("createUpdateList size={}", resumes.size());
         return repository.saveAll(resumes);
     }
 
     public void delete(int id) {
-        log.info("delete resume {}", id);
+        log.info("delete {}", id);
         int userId = checkNotFoundWithId(repository.get(id), id).getFreshen().getUserId();
         checkNotOwnDelete(userId);
         checkNotFoundWithId(repository.delete(id), id);
@@ -111,17 +111,5 @@ public class ResumeService {
             log.info("deleteList {}", listToDelete.size());
             repository.deleteList(listToDelete);
         }
-    }
-
-    public int getCountToday() {
-        log.info("getCountToday");
-        return repository.getCountToday();
-    }
-
-    @Transactional
-    public int getCountLast() {
-        log.info("getCountLast");
-        Freshen freshen = freshenService.getLast();
-        return repository.getByFreshenId(freshen.getId());
     }
 }

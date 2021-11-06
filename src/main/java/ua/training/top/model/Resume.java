@@ -2,7 +2,6 @@ package ua.training.top.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
 import org.hibernate.annotations.BatchSize;
-import org.hibernate.validator.constraints.Range;
 import org.springframework.format.annotation.DateTimeFormat;
 import org.springframework.lang.Nullable;
 
@@ -15,7 +14,7 @@ import java.util.Objects;
 import static javax.persistence.FetchType.EAGER;
 
 @Entity
-@Table(name = "resume", uniqueConstraints = {@UniqueConstraint(columnNames ={ "title", "skills"}, name = "resume_idx")})
+@Table(name = "resume", uniqueConstraints = {@UniqueConstraint(columnNames = {"title", "work_before"}, name = "resume_idx")})
 public class Resume extends AbstractBaseEntity {
 
     @NotNull
@@ -59,7 +58,8 @@ public class Resume extends AbstractBaseEntity {
     @ManyToOne(fetch = EAGER)
     @BatchSize(size = 800)
     @JoinColumn(name = "freshen_id", nullable = false)
-    @JsonBackReference(value = "freshen-movement")    //https://stackoverflow.com/questions/20119142/jackson-multiple-back-reference-properties-with-name-defaultreference
+    @JsonBackReference(value = "freshen-movement")
+    //https://stackoverflow.com/questions/20119142/jackson-multiple-back-reference-properties-with-name-defaultreference
     private Freshen freshen;
 
     public Resume() {
@@ -96,58 +96,98 @@ public class Resume extends AbstractBaseEntity {
                 r.getWorkBefore(), r.getUrl(), r.getSkills(), r.getReleaseDate());
     }
 
-    public String getTitle() { return title; }
+    public String getTitle() {
+        return title;
+    }
 
-    public void setTitle(String title) { this.title = title; }
+    public void setTitle(String title) {
+        this.title = title;
+    }
 
-    public String getName() { return name; }
+    public String getName() {
+        return name;
+    }
 
-    public void setName(String name) { this.name = name; }
+    public void setName(String name) {
+        this.name = name;
+    }
 
-    public String getAge() { return age; }
+    public String getAge() {
+        return age;
+    }
 
-    public void setAge(String age) { this.age = age; }
+    public void setAge(String age) {
+        this.age = age;
+    }
 
-    public String getAddress() { return address; }
+    public String getAddress() {
+        return address;
+    }
 
-    public void setAddress(String address) { this.address = address; }
+    public void setAddress(String address) {
+        this.address = address;
+    }
 
-    public Integer getSalary() { return salary; }
+    public Integer getSalary() {
+        return salary;
+    }
 
-    public void setSalary(Integer salary) { this.salary = salary; }
+    public void setSalary(Integer salary) {
+        this.salary = salary;
+    }
 
-    public String getWorkBefore() { return workBefore; }
+    public String getWorkBefore() {
+        return workBefore;
+    }
 
-    public void setWorkBefore(String lastWork) { this.workBefore = lastWork; }
+    public void setWorkBefore(String lastWork) {
+        this.workBefore = lastWork;
+    }
 
-    public String getUrl() { return url; }
+    public String getUrl() {
+        return url;
+    }
 
-    public void setUrl(String url) { this.url = url; }
+    public void setUrl(String url) {
+        this.url = url;
+    }
 
-    public String getSkills() { return skills; }
+    public String getSkills() {
+        return skills;
+    }
 
-    public void setSkills(String skills) { this.skills = skills; }
+    public void setSkills(String skills) {
+        this.skills = skills;
+    }
 
-    public LocalDate getReleaseDate() { return releaseDate; }
+    public LocalDate getReleaseDate() {
+        return releaseDate;
+    }
 
-    public void setReleaseDate(LocalDate releaseDate) { this.releaseDate = releaseDate; }
+    public void setReleaseDate(LocalDate releaseDate) {
+        this.releaseDate = releaseDate;
+    }
 
-    public Freshen getFreshen() { return freshen; }
+    public Freshen getFreshen() {
+        return freshen;
+    }
 
-    public void setFreshen(Freshen freshen) { this.freshen = freshen; }
+    public void setFreshen(Freshen freshen) {
+        this.freshen = freshen;
+    }
 
     @Override
     public boolean equals(Object o) {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Resume resume = (Resume) o;
-        return  Objects.equals(title.toLowerCase(), resume.title.toLowerCase()) &&
-                Objects.equals(skills.toLowerCase(), resume.skills.toLowerCase());
+        return Objects.equals(title.toLowerCase(), resume.title.toLowerCase()) &&
+                Objects.equals(workBefore.toLowerCase(), resume.workBefore.toLowerCase());
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title.toLowerCase(), skills.toLowerCase());
+        return Objects.hash(title.toLowerCase(), workBefore.toLowerCase());
     }
 
     @Override

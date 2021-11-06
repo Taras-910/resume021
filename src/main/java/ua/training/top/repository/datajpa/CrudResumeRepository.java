@@ -7,7 +7,6 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import ua.training.top.model.Resume;
 
-import java.time.LocalDate;
 import java.util.List;
 
 @Transactional(readOnly = true)
@@ -24,8 +23,9 @@ public interface CrudResumeRepository extends JpaRepository<Resume, Integer> {
     @Query("SELECT r FROM Resume r ORDER BY r.releaseDate DESC")
     List<Resume> getAll();
 
-    @Query("SELECT r FROM Resume r WHERE r.title=:title AND r.skills=:skills")
-    Resume getByParams(@Param("title")String title, @Param("skills")String skills);
+    @Query("SELECT r FROM Resume r WHERE r.title=:title AND r.name=:name " +
+            "AND LOWER(r.workBefore) LIKE CONCAT(:workBefore, '%')")
+    Resume getByParams(@Param("title") String title, @Param("name") String name, @Param("workBefore") String workBefore);
 
     @Query("SELECT r FROM Resume r WHERE " +
             "(LOWER(r.title) LIKE CONCAT('%',:language,'%') " +
@@ -35,13 +35,7 @@ public interface CrudResumeRepository extends JpaRepository<Resume, Integer> {
             "OR LOWER(r.skills) LIKE CONCAT('%',:level,'%') " +
             "OR LOWER(r.workBefore) LIKE CONCAT('%',:level,'%'))" +
             "AND LOWER(r.address) LIKE CONCAT('%',:workplace,'%')")
-    List<Resume> getByFilter(@Param("language")String language, @Param("level")String level, @Param("workplace")String workplace);
-
-    @Query("SELECT r FROM Resume r WHERE r.releaseDate=:localDate")
-    List<Resume> getCountToday(@Param("localDate")LocalDate localDate);
-
-    @Query("SELECT r FROM Resume r WHERE r.freshen.id=:id")
-    List<Resume> getByFreshenId(@Param("id") Integer id);
+    List<Resume> getByFilter(@Param("language") String language, @Param("level") String level, @Param("workplace") String workplace);
 
     @Query("SELECT r FROM Resume r WHERE r.freshen.userId=:userId")
     List<Resume> getByUserId(@Param("userId") Integer userId);

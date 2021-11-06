@@ -27,7 +27,8 @@ public class Vote extends AbstractBaseEntity {
     @NotNull
     private Integer userId;
 
-    public Vote(){}
+    public Vote() {
+    }
 
     public Vote(Integer id, @NotNull LocalDate localDate, @NotNull Integer resumeId, @NotNull Integer userId) {
         super(id);
@@ -40,17 +41,29 @@ public class Vote extends AbstractBaseEntity {
         this(l.getId(), l.getLocalDate(), l.getResumeId(), l.getUserId());
     }
 
-    public LocalDate getLocalDate() { return localDate; }
+    public LocalDate getLocalDate() {
+        return localDate;
+    }
 
-    public void setLocalDate(LocalDate date) { this.localDate = date; }
+    public void setLocalDate(LocalDate date) {
+        this.localDate = date;
+    }
 
-    public Integer getResumeId() { return resumeId; }
+    public Integer getResumeId() {
+        return resumeId;
+    }
 
-    public void setResumeId(Integer resumeId) { this.resumeId = resumeId; }
+    public void setResumeId(Integer resumeId) {
+        this.resumeId = resumeId;
+    }
 
-    public Integer getUserId() { return userId; }
+    public Integer getUserId() {
+        return userId;
+    }
 
-    public void setUserId(Integer user) { this.userId = user; }
+    public void setUserId(Integer user) {
+        this.userId = user;
+    }
 
     @Override
     public String toString() {

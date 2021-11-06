@@ -20,8 +20,8 @@ import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.
 import static ua.training.top.SecurityUtil.setTestAuthorizedUser;
 import static ua.training.top.testData.TestUtil.readFromJson;
 import static ua.training.top.testData.TestUtil.userHttpBasic;
-import static ua.training.top.testData.UserTestData.USER_MATCHER;
 import static ua.training.top.testData.UserTestData.user;
+import static ua.training.top.testData.UserTestData.user_matcher;
 
 class ProfileUserRestControllerTest extends AbstractControllerTest {
     private static final String REST_URL = ProfileUserRestController.REST_URL;
@@ -39,7 +39,7 @@ class ProfileUserRestControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 // https://jira.spring.io/browse/SPR-14472
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(USER_MATCHER.contentJson(user));
+                .andExpect(user_matcher.contentJson(user));
     }
 
     @Test
@@ -64,7 +64,7 @@ class ProfileUserRestControllerTest extends AbstractControllerTest {
                 .andDo(print())
                 .andExpect(status().isNoContent());
         setTestAuthorizedUser(user);
-        USER_MATCHER.assertMatch(controller.get(), updated);
+        user_matcher.assertMatch(controller.get(), updated);
     }
 
     @Test
@@ -79,7 +79,7 @@ class ProfileUserRestControllerTest extends AbstractControllerTest {
         User created = readFromJson(action, User.class);
         int newId = created.id();
         newUser.setId(newId);
-        USER_MATCHER.assertMatch(created, newUser);
-        USER_MATCHER.assertMatch(service.get(newId), newUser);
+        user_matcher.assertMatch(created, newUser);
+        user_matcher.assertMatch(service.get(newId), newUser);
     }
 }

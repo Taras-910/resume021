@@ -6,24 +6,20 @@ import ua.training.top.model.User;
 
 import java.util.Collections;
 
-import static ua.training.top.model.AbstractBaseEntity.START_SEQ;
-
 public class UserUtil {
-    public static final int ADMIN_ID = START_SEQ;
 
     public static User prepareToSave(User user, PasswordEncoder passwordEncoder, User userDb) {
-        if(user.getRoles() == null) {
+        if (user.getRoles() == null) {
             user.setRoles(Collections.singleton(Role.USER));
         }
         String passwordDb = userDb == null ? null : userDb.getPassword();
         String password = user.getPassword();
-        if(passwordDb == null) {
+        if (passwordDb == null) {
             user.setPassword(passwordEncoder.encode(password));
         } else {
-            if(passwordDb.equals(password)) {
+            if (passwordDb.equals(password)) {
                 user.setPassword(passwordDb);
-            }
-            else {
+            } else {
                 // ToDo: send confirm form to change password ('Are you sure?')
                 user.setPassword(passwordEncoder.encode(password));
             }

@@ -33,7 +33,9 @@ public class DataJpaVoteRepository implements VoteRepository {
 
     @Transactional
     @Override
-    public boolean delete(int id, int userId) { return voteRepository.delete(id, userId) != 0; }
+    public boolean delete(int id, int userId) {
+        return voteRepository.delete(id, userId) != 0;
+    }
 
     @Transactional
     @Override
@@ -65,7 +67,6 @@ public class DataJpaVoteRepository implements VoteRepository {
         } catch (DataIntegrityViolationException e) {
             return false;
         }
-
     }
 
     @Override

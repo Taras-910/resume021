@@ -9,21 +9,19 @@ public interface ResumeRepository {
 
     Resume save(Resume resume);
 
-    List<Resume>  saveAll(List<Resume> resumes);
+    List<Resume> saveAll(List<Resume> resumes);
 
     Resume get(int id);
 
     List<Resume> getAll();
+
+    Resume getByParams(String title, String name, String workBefore);
 
     boolean delete(int id);
 
     void deleteList(List<Resume> listToDelete);
 
     List<Resume> getByFilter(Freshen freshen);
-
-    int getCountToday();
-
-    int getByFreshenId(Integer id);
 
     List<Resume> getByUserId(int userId);
 }

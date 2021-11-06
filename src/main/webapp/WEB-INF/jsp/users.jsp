@@ -75,39 +75,5 @@
     </div>
 </div>
 <jsp:include page="fragments/footer.jsp"/>
-
-<%--
-<div class="content-section content-section--appearance-card-section">
-    <div class="content-section__header content-section__header--appearance-card-section">
-        <h2 class="content-section__title content-section__title--appearance-card-section">
-            Последнее место работы
-        </h2>
-        <div class="content-section__aside">
-        </div>
-    </div>
-    <span class="inline-list">
-        <span class="preserve-line">
-            <a class="link-comp link-comp--appearance-dark" href="/companies/intel">
-            Intel
-            </a>
-            <span class="inline-separator">
-                ·
-            </span>
-        </span>
-        <span class="preserve-line">
-            Software Engineer Intern
-            <span class="inline-separator">
-                ·
-            </span>
-        </span>
-        <span class="preserve-line">
-            2 месяца
-        </span>
-    </span>
-</div>
---%>
-
-
-
 </body>
 </html>

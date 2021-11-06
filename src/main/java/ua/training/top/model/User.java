@@ -55,9 +55,10 @@ public class User extends AbstractNamedEntity implements HasIdAndEmail {
     public User(User u) {
         this(u.getId(), u.getName(), u.getEmail(), u.getPassword(), u.isEnabled(), u.getRegistered(), u.getRoles());
     }
-//
+
+    //
     public User(Integer id, String name, String email, String password, Role role, Role... roles) {
-        this(id, name,email, password, true, new Date(),  EnumSet.of(role, roles));
+        this(id, name, email, password, true, new Date(), EnumSet.of(role, roles));
     }
 
     public User(Integer id, String name, String email, String password, boolean enabled, Date registered, Collection<Role> roles) {
@@ -96,6 +97,7 @@ public class User extends AbstractNamedEntity implements HasIdAndEmail {
     public void setRoles(Collection<Role> roles) {
         this.roles = CollectionUtils.isEmpty(roles) ? EnumSet.noneOf(Role.class) : EnumSet.copyOf(roles);
     }
+
     public void setEmail(String email) {
         this.email = xssClear(email);
     }

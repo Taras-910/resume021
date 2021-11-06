@@ -13,6 +13,7 @@ import static ua.training.top.SecurityUtil.setTestAuthorizedUser;
 import static ua.training.top.aggregator.installation.InstallationUtil.offAutoRefreshProviders;
 import static ua.training.top.aggregator.installation.InstallationUtil.setAutoRefreshProviders;
 import static ua.training.top.util.AutoRefreshUtil.*;
+import static ua.training.top.util.MessagesUtil.delay;
 import static ua.training.top.util.UserUtil.asAdmin;
 
 @Component
@@ -24,14 +25,14 @@ public class AutoRefreshService {
     @Autowired
     private FreshenService service;
 
-//    @Scheduled(cron = "0 0,5,10,15,20,25,30,35,40,45,50,55 6-23 * * *")
+    //    @Scheduled(cron = "0 0,5,10,15,20,25,30,35,40,45,50,55 6-23 * * *")
 //    @Scheduled(cron = "0 0,10,20,30,40,50 6-20 * * MON-SAT")
     @Scheduled(cron = "0 0,20,40 8-20 * * MON-SAT")
     public void weekDay() {
 //        int delayWithinMinutes = 4;
 //        int delayWithinMinutes = 9;
         int delayWithinMinutes = 19;
-        log.info("someTimesByHour delayWithinMinutes={}", delayWithinMinutes);
+        log.info(delay, delayWithinMinutes);
         setRandomDelay(1000 * 60 * delayWithinMinutes);
         setTestAuthorizedUser(asAdmin());
         setAutoRefreshProviders();
@@ -43,23 +44,22 @@ public class AutoRefreshService {
     @Scheduled(cron = "0 0 9-17 * * SUN")
     public void weekEnd() {
         int delayMinutesMax = 59;
-        log.info("someTimesByHour delayMinutesMax={}", delayMinutesMax);
+        log.info(delay, delayMinutesMax);
         setRandomDelay(1000 * 60 * delayMinutesMax);
         setTestAuthorizedUser(asAdmin());
-        service.refreshDB(new Freshen(randomFreshen(mapWorkplace.get(getKey(2)), mapLevel.get(2))));
+        service.refreshDB(new Freshen(randomFreshen(mapWorkplace.get(getKey(3)), mapLevel.get(2))));
     }
 }
-//  	     djinni	grc	  work
-//all	    33		        20		53
-//Украина	23		        20		43
+//	      djinni   grc*10   habr  rabota   work  linkedin  total
+//all	    49	  49(0)	     1	     6	    16	   (100)	121
+//Украина	32	   4(0)	     -	     6	    30	     -	     72
+//foreign	49	   2(0)	     1	     1	     -	     -	     53
+//Киев	    15	   1(0)	     1	     3	    15	     -	     35
+//Москва	 -	  34(0)      1	     -	     -	     -	     35
+//remote 	 -	  17(0)	     1	     3	    12	    (5)	     33
+//Минск	     1	  10(0)	     1	     6	     -	     -	     18
+//Харьков	 5	    -	     -	     2	     5	     -	     12
+//Одесса	 5	    -	     -	     2	     4	     -	     11
+//Санкт-П	 5	   5(0)	     1	     -	     -	     -	     11
+//Львов	     6	    -	     -	     8	     2	     -	      -
 
-
-//foreign	33			        	33
-//Киев	    12		        10		22
-//Одесса	2		        3		 5
-//Харьков	4		        3		 7
-
-//remote    		17	    9		26
-//Санкт-П	5	     5			    10
-//Минск	    3	     3			     6
-//Москва		     8			     8

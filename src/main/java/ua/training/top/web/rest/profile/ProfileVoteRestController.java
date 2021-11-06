@@ -35,7 +35,7 @@ public class ProfileVoteRestController {
         return service.getAllForAuth();
     }
 
-    @PostMapping( value = "/{id}")
+    @PostMapping(value = "/{id}")
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void setVote(@PathVariable(name = "id") int resumeId, @RequestParam boolean enabled) {
         log.info(enabled ? "enable {}" : "disable {}", resumeId);

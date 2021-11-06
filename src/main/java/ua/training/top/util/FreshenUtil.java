@@ -13,27 +13,26 @@ import static java.time.LocalDateTime.now;
 import static java.util.Collections.singleton;
 import static org.springframework.util.StringUtils.hasText;
 import static ua.training.top.SecurityUtil.authUserId;
-import static ua.training.top.aggregator.installation.InstallationUtil.*;
-import static ua.training.top.model.Goal.*;
-import static ua.training.top.util.UserUtil.asAdmin;
+import static ua.training.top.aggregator.installation.InstallationUtil.limitResumesToKeep;
+import static ua.training.top.aggregator.installation.InstallationUtil.reasonPeriodToKeep;
+import static ua.training.top.model.Goal.FILTER;
+import static ua.training.top.model.Goal.UPGRADE;
 
 public class FreshenUtil {
-    public static Logger log = LoggerFactory.getLogger(FreshenUtil.class) ;
-    public static final String FRESHEN_NOT_BE_NULL = "freshen must not be null";
+    public static Logger log = LoggerFactory.getLogger(FreshenUtil.class);
 
-    //2
     public static Freshen getFreshenFromTo(ResumeTo rTo) {
         return new Freshen(null, now(), rTo.getLanguage(), rTo.getLevel(),
-                hasText(rTo.getWorkplace()) ? rTo.getWorkplace() :rTo.getAddress(), singleton(UPGRADE), authUserId());
+                hasText(rTo.getWorkplace()) ? rTo.getWorkplace() : rTo.getAddress(), singleton(UPGRADE), authUserId());
     }
 
-    public static Freshen asNewFreshen(Freshen f){
+    public static Freshen asNewFreshen(Freshen f) {
         return new Freshen(f.getId(), now(), f.getLanguage(), f.getLevel(), f.getWorkplace(),
                 f.getGoals() == null ? singleton(UPGRADE) : f.getGoals(),
                 f.getUserId() == null ? authUserId() : f.getUserId());
     }
 
-    public static Freshen asNewFreshen(String language, String level, String workplace, Goal goal){
+    public static Freshen asNewFreshen(String language, String level, String workplace, Goal goal) {
         return new Freshen(null, now(), language, level, workplace, singleton(goal == null ? UPGRADE : goal), authUserId());
     }
 

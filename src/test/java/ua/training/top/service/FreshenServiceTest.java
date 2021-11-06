@@ -12,10 +12,10 @@ import java.util.List;
 import static org.junit.Assert.assertThrows;
 import static ua.training.top.SecurityUtil.setTestAuthorizedUser;
 import static ua.training.top.testData.FreshenTestData.*;
-import static ua.training.top.testData.UserTestData.NOT_FOUND;
 import static ua.training.top.testData.UserTestData.admin;
+import static ua.training.top.testData.UserTestData.not_found;
 
-public class FreshenServiceTest extends AbstractServiceTest{
+public class FreshenServiceTest extends AbstractServiceTest {
 
     @Autowired
     private FreshenService service;
@@ -27,44 +27,44 @@ public class FreshenServiceTest extends AbstractServiceTest{
         int newId = created.id();
         Freshen newFreshen = FreshenTestData.getNew();
         newFreshen.setId(newId);
-        FRESHEN_MATCHER.assertMatch(created, newFreshen);
-        FRESHEN_MATCHER.assertMatch(service.get(newId), newFreshen);
+        freshen_matcher.assertMatch(created, newFreshen);
+        freshen_matcher.assertMatch(service.get(newId), newFreshen);
     }
 
     @Test
     @Transactional
     public void delete() throws Exception {
-        service.delete(FRESHEN1_ID);
-        assertThrows(NotFoundException.class, () -> service.get(FRESHEN1_ID));
+        service.delete(freshen1_id);
+        assertThrows(NotFoundException.class, () -> service.get(freshen1_id));
     }
 
     @Test
     public void deletedNotFound() throws Exception {
-        assertThrows(NotFoundException.class, () -> service.delete(NOT_FOUND));
+        assertThrows(NotFoundException.class, () -> service.delete(not_found));
     }
 
     @Test
     public void get() throws Exception {
-        Freshen freshen = service.get(FRESHEN1_ID);
-        FRESHEN_MATCHER.assertMatch(freshen, freshen1);
+        Freshen freshen = service.get(freshen1_id);
+        freshen_matcher.assertMatch(freshen, freshen1);
     }
 
     @Test
     public void getNotFound() throws Exception {
-        assertThrows(NotFoundException.class, () -> service.get(NOT_FOUND));
+        assertThrows(NotFoundException.class, () -> service.get(not_found));
     }
 
     @Test
     public void update() throws Exception {
         Freshen updated = FreshenTestData.getUpdated();
-        service.update(updated, FRESHEN1_ID);
-        FRESHEN_MATCHER.assertMatch(service.get(FRESHEN1_ID), FreshenTestData.getUpdated());
+        service.update(updated, freshen1_id);
+        freshen_matcher.assertMatch(service.get(freshen1_id), FreshenTestData.getUpdated());
     }
 
     @Test
     public void getAll() throws Exception {
         List<Freshen> all = service.getAll();
-        FRESHEN_MATCHER.assertMatch(all, freshen1, freshen2);
+        freshen_matcher.assertMatch(all, freshen1, freshen2);
     }
 
 }

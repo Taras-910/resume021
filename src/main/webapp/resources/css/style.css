@@ -24,6 +24,7 @@ header, footer {
 #noty_layout__bottomRight {
     width: 385px !important;
 }
+
 .footer {
     position: absolute;
     bottom: 0;
@@ -51,7 +52,7 @@ tr[data-userEnabled="false"] {
     opacity: 0.3;
 }
 
-.col-12{
+.col-12 {
     flex: 0 0 100%;
     max-width: 100%;
 }
@@ -74,7 +75,7 @@ tr[data-userEnabled="false"] {
     border: 1px solid #9feba6;
 }
 
-.box{
+.box {
     background: #28b7bc;
     display: -webkit-flex;
     width: 100%;
@@ -87,18 +88,20 @@ tr[data-userEnabled="false"] {
     color: aliceblue;
 }
 
-.th{
-    border:1px;
+.th {
+    border: 1px;
     solid: #0397ba;
 }
 
-.spinner-border{
+.spinner-border {
     visibility: hidden;
 }
-.count{
+
+.count {
     visibility: hidden;
 }
-.count1{
+
+.count1 {
     visibility: hidden;
 }
 

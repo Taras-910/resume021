@@ -1,19 +1,42 @@
 package ua.training.top.util.parser.data;
 
-import static ua.training.top.util.parser.data.CommonUtil.*;
+import static java.util.List.of;
+import static ua.training.top.util.parser.data.CommonDataUtil.*;
 
-public class CorrectWorkplace {
+public class WorkplaceUtil {
 
     public static String getRegionDjinni(String workplace) {
-        return workplace.equals("all") || !isMatchesUA(workplace) ||workplace.equals("санкт-петербург") ||workplace.equals("remote") ?
-                "" : (isMatchesUA(workplace) || workplace.equals("украина") || workplace.equals("україна") || workplace.equals("ukraine")) ?
-                "&region=ukraine" : isMatchesBy(workplace) ? "&region=belarus" : isMatchesRu(workplace) ? "&region=russia" : "&region=other";
+        return !isCityUA(workplace) || isEquals(workplace, of("all", "санкт-петербург", "remote")) ?
+                "" : isCityUA(workplace) || isEquals(workplace, of("украина", "україна", "ukraine")) ?
+                "&region=ukraine" : isCityBy(workplace) ? "&region=belarus" : isCityRu(workplace) ?
+                "&region=russia" : "&region=other";
     }
 
     public static String getLocationDjinni(String workplace) {
-        return workplace.equals("all") ||workplace.equals("украина") ||workplace.equals("foreign") ||workplace.equals("remote") ?
-                "" : isMatchesUA(workplace) || workplace.equals("москва") ? "&location=".concat(translateUACitiesToEn(workplace)) :
+        return isEquals(workplace, of("all", "украина", "foreign", "remote")) ?
+                "" : isCityUA(workplace) || workplace.equals("москва") ? "&location=".concat(getDjinni(workplace)) :
                 workplace.equals("санкт-петербург") ? "&keywords=санкт-петербург" : "&keywords=".concat(workplace);
+    }
+
+    public static String getDjinni(String workplace) {
+        workplace = workplace.toLowerCase();
+        return switch (workplace) {
+            case "київ", "киев", "kiev" -> "kyiv";
+            case "дніпро", "днепр", "dnepr" -> "dnipro";
+            case "харків", "харьков" -> "kharkiv";
+            case "одеса", "одесса" -> "odesa";
+            case "львів", "львов" -> "lviv";
+            case "миколаїв", "николаев" -> "mykolaiv";
+            case "вінниця", "винница" -> "vinnitsia";
+            case "запоріжжя", "запорожье" -> "zaporizhzhya";
+            case "чорновці", "черновцы" -> "chernivtsi";
+            case "чернігів", "чернигов" -> "chernigiv";
+            case "івано-франківськ", "ивано-франковск" -> "ivano-frankivsk";
+            case "ужгород" -> "uzhgorod";
+            case "минск" -> "minsk";
+            case "москва" -> "moskow";
+            default -> workplace;
+        };
     }
 
     public static String getGrc(String workplace) {
@@ -46,7 +69,7 @@ public class CorrectWorkplace {
             case "польща", "польша" -> "74";
             case "сша" -> "85";
             case "all" -> "all";
-            default -> workplace.equals("remote") ? "&schedule=remote" : "&area=" .concat(workplace);
+            default -> workplace.equals("remote") ? "&schedule=remote" : "&area=".concat(workplace);
         };
     }
 
@@ -97,7 +120,7 @@ public class CorrectWorkplace {
             case "швеція", "швеция" -> "105117694";
             case "польща", "польша" -> "105072130";
             case "німеччина", "германия" -> "101282230";
-            case "фінляндія","финляндия" -> "100456013";
+            case "фінляндія", "финляндия" -> "100456013";
             case "санкт-петербург" -> "90010184";
             case "нижний новгород" -> "104043205";
             case "мінськ", "минск" -> "105415465";
@@ -118,7 +141,7 @@ public class CorrectWorkplace {
     }
 
     public static String getRabota(String workplace) {
-        workplace = isMatchesWorld(workplace) || workplace.equals("foreign") || workplace.equals("россия") ? "другие_страны" : workplace;
+        workplace = isCityWorld(workplace) || isEquals(workplace, of("foreign", "россия")) ? "другие_страны" : workplace;
         return switch (workplace) {
             case "київ", "киев" -> "киев";
             case "львів", "львов" -> "львов";
@@ -128,33 +151,13 @@ public class CorrectWorkplace {
             default -> workplace.equals("другие_страны") ? workplace : "вся_украина";
         };
     }
-    public static String translateUACitiesToEn(String workplace) {
-        workplace = workplace.toLowerCase();
-        return switch (workplace) {
-            case "київ", "киев", "kiev" -> "kyiv";
-            case "дніпро", "днепр", "dnepr"-> "dnipro";
-            case "харків", "харьков" -> "kharkiv";
-            case "одеса", "одесса" -> "odesa";
-            case "львів", "львов" -> "lviv";
-            case "миколаїв", "николаев" -> "mykolaiv";
-            case "вінниця", "винница" -> "vinnitsia";
-            case "запоріжжя", "запорожье" -> "zaporizhzhya";
-            case "чорновці", "черновцы" -> "chernivtsi";
-            case "чернігів", "чернигов" -> "chernigiv";
-            case "івано-франківськ", "ивано-франковск" -> "ivano-frankivsk";
-            case "ужгород" -> "uzhgorod";
-            case "минск"-> "minsk";
-            case "москва"-> "moskow";
-            default -> workplace;
-        };
-    }
 
     public static String getWork(String workplace) {
-        workplace = isMatchesRu(workplace) ? "-1" : workplace;
+        workplace = isCityRu(workplace) ? "-1" : workplace;
         return switch (workplace) {
             case "україна", "украина" -> "ua";
             case "київ", "киев", "kiev" -> "kyiv";
-            case "запоріжжя","запорожье"-> "zaporizhzhya";
+            case "запоріжжя", "запорожье" -> "zaporizhzhya";
             case "миколаїв", "николаев" -> "mykolaiv";
             case "чорновці", "черновцы" -> "chernivtsi";
             case "чернігів", "чернигов" -> "chernigiv";
@@ -163,11 +166,10 @@ public class CorrectWorkplace {
             case "дніпро", "днепр" -> "dnipro";
             case "одеса", "одесса" -> "odesa";
             case "львів", "львов" -> "lviv";
-            case "івано-франківськ",
-                    "ивано-франковск" -> "ivano-frankivsk";
             case "ужгород" -> "uzhgorod";
             case "remote" -> "remote";
             case "all" -> "all";
+            case "івано-франківськ", "ивано-франковск" -> "ivano-frankivsk";
             default -> workplace.equals("-1") ? workplace : "other";
         };
     }

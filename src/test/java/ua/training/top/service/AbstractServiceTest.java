@@ -32,7 +32,7 @@ public abstract class AbstractServiceTest {
     public static final List<String> listResult = new ArrayList<>();
 
     @Rule
-    public Stopwatch stopwatch = new Stopwatch(){
+    public Stopwatch stopwatch = new Stopwatch() {
         @Override
         protected void finished(long nanos, Description description) {
             String message = String.format("%s%s%d millis", description.getMethodName(), " finished: spent = ", TimeUnit.NANOSECONDS.toMillis(nanos));

@@ -5,6 +5,8 @@ import org.springframework.util.Assert;
 
 import javax.persistence.*;
 
+import static ua.training.top.util.MessagesUtil.must_has_id;
+
 @MappedSuperclass
 // http://stackoverflow.com/questions/594597/hibernate-annotations-which-is-better-field-or-property-access
 @Access(AccessType.FIELD)
@@ -36,7 +38,7 @@ public abstract class AbstractBaseEntity {
 
     // doesn't work for hibernate lazy proxy
     public int id() {
-        Assert.notNull(id, "Entity must has id");
+        Assert.notNull(id, must_has_id);
         return id;
     }
 

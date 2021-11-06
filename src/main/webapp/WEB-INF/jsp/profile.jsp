@@ -11,7 +11,8 @@
         <div class="row">
             <div class="col-5 offset-3">
                 <h3>${register ? 'регистрация' : 'профиль'} ${user.name}</h3>
-                <form:form class="form-group" modelAttribute="user" method="post" action="${register ? 'profile/register' : 'profile'}"
+                <form:form class="form-group" modelAttribute="user" method="post"
+                           action="${register ? 'profile/register' : 'profile'}"
                            charset="utf-8" accept-charset="UTF-8">
                     <vacancy:inputField labelCode="Имя" name="name"/>
                     <vacancy:inputField labelCode="email" name="email"/>

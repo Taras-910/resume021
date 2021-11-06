@@ -52,7 +52,8 @@ public class Freshen extends AbstractBaseEntity implements Serializable {
     private Integer userId;
 
     @OneToMany(fetch = FetchType.LAZY, mappedBy = "freshen"/*, cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.REFRESH}*/)
-    @JsonManagedReference(value="freshen-movement") //https://stackoverflow.com/questions/20119142/jackson-multiple-back-reference-properties-with-name-defaultreference
+    @JsonManagedReference(value = "freshen-movement")
+    //https://stackoverflow.com/questions/20119142/jackson-multiple-back-reference-properties-with-name-defaultreference
     private List<Resume> resumes;
 
     public Freshen(Integer id, LocalDateTime recordedDate, String language, String level, String workplace, Collection<Goal> goals, Integer userId) {
@@ -66,7 +67,7 @@ public class Freshen extends AbstractBaseEntity implements Serializable {
     }
 
 
-    public Freshen(Freshen f){
+    public Freshen(Freshen f) {
         this(f.getId(), f.recordedDate, f.language, f.level, f.workplace, f.getGoals(), f.userId);
     }
 
@@ -89,9 +90,13 @@ public class Freshen extends AbstractBaseEntity implements Serializable {
         this.language = xssClear(language).toLowerCase();
     }
 
-    public String getLevel() { return level; }
+    public String getLevel() {
+        return level;
+    }
 
-    public void setLevel(String level) { this.level = level; }
+    public void setLevel(String level) {
+        this.level = level;
+    }
 
     public String getWorkplace() {
         return workplace;
@@ -145,7 +150,7 @@ public class Freshen extends AbstractBaseEntity implements Serializable {
         Freshen freshen = (Freshen) o;
 
         return language.equalsIgnoreCase(freshen.language)
-                && level.equalsIgnoreCase(freshen.level )
+                && level.equalsIgnoreCase(freshen.level)
                 && workplace.equalsIgnoreCase(freshen.workplace);
     }
 

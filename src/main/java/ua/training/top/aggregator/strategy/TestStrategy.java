@@ -9,12 +9,15 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
+import static ua.training.top.util.parser.data.CommonDataUtil.get_resume;
+
 public class TestStrategy implements Strategy {
     private final static Logger log = LoggerFactory.getLogger(TestStrategy.class);
 
     @Override
     public List<ResumeTo> getResumes(Freshen freshen) throws IOException {
-        log.info("getResumes language={} workplace={}", freshen.getWorkplace(), freshen.getLanguage());
+        String city = freshen.getWorkplace(), language = freshen.getWorkplace();
+        log.info(get_resume, city, language);
         return getTestList();
     }
 
@@ -46,7 +49,6 @@ public class TestStrategy implements Strategy {
                 180000, "GlobalLogic, 2 года и 6 месяцев",
                 "https://example4.com/%D0%BE%D0%BF%D0%B8%D1%81%D0%B0%D0%BD%D0%B8%D0%B5-%D0%B2%D0%B0%D0%BA%D0%B0%D0%BD%D1%81%D0%B8%D0%B8?jk=b25fbd86b8fb297e",
                 " Kubernetes, Oracle-DBA, Perl, Tomcat", LocalDate.now().minusDays(3), "java", "middle", null, false);
-
         return List.of(resumeTo1, resumeTo2, resumeTo3, resumeTo4);
     }
 }

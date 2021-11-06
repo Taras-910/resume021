@@ -90,19 +90,10 @@ $(function () {
                 "url": ajaxUrl,
                 "dataSrc": ""
             },
-
-
-
-
             columnDefs: [{
                 "defaultContent": "-",
                 "targets": "_all"
             }],
-
-
-
-
-
             "pagingType": "full_numbers",
             "info": true,
             "deferRender": true,
@@ -122,7 +113,7 @@ $(function () {
                 },
                 {
                     "data": function (data, type, row) {
-                        if (data.name === "see the card") {
+                        if (data.name === "see the card" && type === "display") {
                             return 'see the <a href="' + data.url + '">card</a>'
                         }
                         return data.name;
@@ -130,31 +121,35 @@ $(function () {
                 },
                 {
                     "data": function (data, type, row) {
-                        if (data.age === "see the card") {
-                            return 'see the <a href="' + data.url + '">card</a>'
+                        if (data.age === "see the card" && type === "display") {
+                            return '<a href="' + data.url + '">card</a>'
                         }
                         return data.age;
                     }
                 },
                 {
                     "data": function (data, type, row) {
-                        if (data.address === "see the card") {
-                            return 'see the <a href="' + data.url + '">card</a>'
+                        if (data.address === "see the card" && type === "display") {
+                            return '<a href="' + data.url + '">card</a>'
                         }
                         return data.address;
                     }
                 },
                 {
                     "data": function (data, type, row) {
-                        if (data.salary === 1) {
-                            return 'see the <a href="' + data.url + '">card</a>'
+                        if (data.salary === 1 && type === "display") {
+                            return '<a href="' + data.url + '">card</a>'
+                        }
+                        if (data.salary > 1 && type === "display") {
+                            return data.salary / 100;
                         }
                         return data.salary;
+
                     }
                 },
                 {
                     "data": function (data, type, row) {
-                        if (data.skills === "see the card") {
+                        if (data.skills === "see the card" && type === "display") {
                             return 'see the <a href="' + data.url + '">card</a>'
                         }
                         return data.skills;

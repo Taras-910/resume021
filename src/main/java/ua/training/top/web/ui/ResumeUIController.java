@@ -9,8 +9,6 @@ import org.springframework.transaction.annotation.Transactional;
 import org.springframework.web.bind.annotation.*;
 import springfox.documentation.annotations.ApiIgnore;
 import ua.training.top.model.Freshen;
-import ua.training.top.model.Resume;
-import ua.training.top.model.User;
 import ua.training.top.service.ResumeService;
 import ua.training.top.service.VoteService;
 import ua.training.top.to.ResumeTo;
@@ -18,11 +16,7 @@ import ua.training.top.to.ResumeTo;
 import javax.validation.Valid;
 import java.util.List;
 
-import static ua.training.top.SecurityUtil.authUserId;
 import static ua.training.top.util.FreshenUtil.asNewFreshen;
-import static ua.training.top.util.FreshenUtil.getFreshenFromTo;
-import static ua.training.top.util.ResumeCheckUtil.*;
-import static ua.training.top.util.UserUtil.asAdmin;
 
 @ApiIgnore
 @RestController
@@ -67,22 +61,6 @@ public class ResumeUIController {
     public List<ResumeTo> getByFilter(@Valid Freshen freshen) {
         log.info("getByFilter language={} level={} workplace={}", freshen.getLanguage(), freshen.getLevel(), freshen.getWorkplace());
         return resumeService.getTosByFilter(asNewFreshen(freshen));
-    }
-
-    @GetMapping(value = "/count")
-    public int getCountToday() {
-        log.info("getCountToday");
-        int count = resumeService.getCountToday();
-        log.info("count {}", count);
-        return count;
-    }
-
-    @GetMapping(value = "/last")
-    public int getCountLastUpgrade() {
-        log.info("getCountLast");
-        int data =  resumeService.getCountLast();
-        log.info("data {}", data);
-        return data;
     }
 
     @PostMapping("/{id}")

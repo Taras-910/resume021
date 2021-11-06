@@ -4,13 +4,15 @@ import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+
 import java.io.IOException;
-import static ua.training.top.util.parser.data.CommonUtil.*;
+
+import static ua.training.top.util.parser.data.CommonDataUtil.*;
 
 public class DocumentUtil {
-    private static Logger log = LoggerFactory.getLogger(DocumentUtil.class);
+    private static final Logger log = LoggerFactory.getLogger(DocumentUtil.class);
     public static Document getDocument(String url){
-        log.info("\ngetDocument url={}\n", url);
+        log.info(document_url, url);
         Document document = null;
         try {
             document = Jsoup.connect(url)

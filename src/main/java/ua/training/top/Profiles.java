@@ -1,5 +1,7 @@
 package ua.training.top;
 
+import static ua.training.top.util.MessagesUtil.not_find_driver;
+
 public class Profiles {
     public static final String
             POSTGRES_DB = "postgres",
@@ -10,7 +12,7 @@ public class Profiles {
         if (isClassExists("org.postgresql.Driver")) {
             return POSTGRES_DB;
         } else {
-            throw new IllegalStateException("Could not find DB driver");
+            throw new IllegalStateException(not_find_driver);
         }
     }
 

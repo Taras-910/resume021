@@ -10,7 +10,6 @@ import org.springframework.util.Assert;
 import ua.training.top.model.Freshen;
 import ua.training.top.repository.FreshenRepository;
 
-import java.time.LocalDateTime;
 import java.util.List;
 
 import static ua.training.top.util.DateTimeUtil.tomorrow;
@@ -56,14 +55,8 @@ public class FreshenService {
         checkNotFoundWithId(repository.save(freshen), freshen.id());
     }
 
-    public List <Freshen> getBetween(LocalDateTime endDate, LocalDateTime startDate) {
-        log.info("getToday endDate {} startDate {}", endDate, startDate);
-        return repository.getBetween(endDate, startDate);
-    }
-
     public void refreshDB(Freshen freshen) {
         log.info("refreshDB freshen {}", freshen);
-//        checkLimitFreshenPerHour(freshen, getBetween(tomorrow, yesterday));
         aggregatorService.refreshDB(freshen);
     }
 

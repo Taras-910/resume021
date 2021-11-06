@@ -15,14 +15,16 @@ import springfox.documentation.annotations.ApiIgnore;
 import ua.training.top.SecurityUtil;
 import ua.training.top.model.User;
 import ua.training.top.service.UserService;
+
 import javax.validation.Valid;
+
 import static ua.training.top.util.MessagesUtil.*;
 
 @ApiIgnore
 @Controller
 @RequestMapping("/profile")
 public class ProfileUIController {
-public static final Logger log = LoggerFactory.getLogger(ProfileUIController.class);
+    public static final Logger log = LoggerFactory.getLogger(ProfileUIController.class);
     @Autowired
     UserService service;
 
@@ -61,7 +63,7 @@ public static final Logger log = LoggerFactory.getLogger(ProfileUIController.cla
             model.addAttribute("register", true);
             return "profile";
         } else {
-            if(!user.getEmail().matches(email_matcher)){
+            if (!user.getEmail().matches(email_matcher)) {
                 result.rejectValue("email", null, email_error);
                 model.addAttribute("register", true);
                 return "profile";

@@ -9,6 +9,8 @@ import ua.training.top.to.ResumeTo;
 import java.io.IOException;
 import java.util.List;
 
+import static ua.training.top.util.MessagesUtil.number_inform;
+
 public class Provider {
     private static final Logger log = LoggerFactory.getLogger(Provider.class);
     private final Strategy strategy;
@@ -19,7 +21,7 @@ public class Provider {
 
     public List<ResumeTo> getResumes(Freshen freshen) throws IOException {
         List<ResumeTo> list = strategy.getResumes(freshen);
-        log.info("\nstrategy {} list.size={}\n", this.strategy.getClass().getCanonicalName(), list.size());
+        log.info(number_inform, this.strategy.getClass().getSimpleName(), list.size());
         return list;
     }
 }

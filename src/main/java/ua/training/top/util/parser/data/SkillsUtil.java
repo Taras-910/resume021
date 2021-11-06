@@ -4,18 +4,14 @@ import org.jsoup.nodes.Element;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-import static ua.training.top.util.parser.data.CommonUtil.*;
+import static ua.training.top.util.parser.data.CommonDataUtil.*;
 
-public class CorrectSkills {
-    public static final Logger log = LoggerFactory.getLogger(CorrectSkills.class);
+public class SkillsUtil {
+    public static final Logger log = LoggerFactory.getLogger(SkillsUtil.class);
 
     public static String getCorrectSkills(String skills) {
-        if (isEmpty(skills)) {
-            log.error("skills value is null");
-            return "";
-        }
-        skills = correctJava_Script("Java Script");
-        return skills.contains("Experience level:") ? skills.substring(skills.indexOf("Experience level:")) : skills;
+        getLinkIfEmpty(skills);
+        return getLimitation(skills.replaceAll("Java Script", "JavaScript").trim(), limitText);
     }
 
     public static String getSkillsDjinni(String title, String profile, Element element) {
@@ -23,12 +19,11 @@ public class CorrectSkills {
         if(element.nextElementSiblings().size() < 1) {
             return title.concat(" · ").concat(skills.substring(skills.indexOf("·") + 1).trim());
         }
-        String text = element.nextElementSibling().nextElementSibling().ownText();
-        return getLimitation(text);
+        return getCorrectSkills(element.nextElementSibling().nextElementSibling().ownText());
     }
 
     public static String getSkillsHabr(String skills) {
         skills = skills.contains(" ") ? skills.substring(skills.indexOf(" ")) : skills;
-        return getCorrectSkills(getLimitation(skills));
+        return getCorrectSkills(skills);
     }
 }

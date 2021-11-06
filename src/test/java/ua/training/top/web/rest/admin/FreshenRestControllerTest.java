@@ -1,8 +1,6 @@
 package ua.training.top.web.rest.admin;
 
 import org.junit.jupiter.api.Test;
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
@@ -28,18 +26,17 @@ import static ua.training.top.testData.UserTestData.admin;
 
 class FreshenRestControllerTest extends AbstractControllerTest {
     private static final String REST_URL = FreshenRestController.REST_URL + '/';
-    private Logger log = LoggerFactory.getLogger(getClass());
     @Autowired
     private FreshenService service;
 
     @Test
     void get() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + FRESHEN1_ID)
+        perform(MockMvcRequestBuilders.get(REST_URL + freshen1_id)
                 .with(userHttpBasic(admin)))
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(FRESHEN_MATCHER.contentJson(freshen1));
+                .andExpect(freshen_matcher.contentJson(freshen1));
     }
 
     @Test
@@ -49,7 +46,7 @@ class FreshenRestControllerTest extends AbstractControllerTest {
                 .with(userHttpBasic(admin)))
                 .andExpect(status().isOk())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(FRESHEN_MATCHER.contentJson(iterable));
+                .andExpect(freshen_matcher.contentJson(iterable));
     }
 
     @Test
@@ -63,27 +60,27 @@ class FreshenRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isCreated());
         Freshen created = readFromJson(action, Freshen.class);
         newFreshen.setId(created.getId());
-        FRESHEN_MATCHER.assertMatch(created, newFreshen);
-        FRESHEN_MATCHER.assertMatch(service.get(created.getId()), newFreshen);
+        freshen_matcher.assertMatch(created, newFreshen);
+        freshen_matcher.assertMatch(service.get(created.getId()), newFreshen);
     }
 
     @Test
     void delete() throws Exception {
-        perform(MockMvcRequestBuilders.delete(REST_URL + FRESHEN1_ID)
+        perform(MockMvcRequestBuilders.delete(REST_URL + freshen1_id)
                 .with(userHttpBasic(admin)))
                 .andDo(print())
                 .andExpect(status().isNoContent());
-        assertThrows(NotFoundException.class, () -> service.get(FRESHEN1_ID));
+        assertThrows(NotFoundException.class, () -> service.get(freshen1_id));
     }
 
     @Test
     void update() throws Exception {
         Freshen updated = new Freshen(getUpdated());
-        perform(MockMvcRequestBuilders.put(REST_URL + FRESHEN1_ID)
+        perform(MockMvcRequestBuilders.put(REST_URL + freshen1_id)
                 .with(userHttpBasic(admin))
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(updated)))
                 .andExpect(status().isNoContent());
-        FRESHEN_MATCHER.assertMatch(service.get(FRESHEN1_ID), updated);
+        freshen_matcher.assertMatch(service.get(freshen1_id), updated);
     }
 }
