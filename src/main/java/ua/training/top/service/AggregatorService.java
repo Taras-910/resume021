@@ -19,8 +19,6 @@ import static ua.training.top.SecurityUtil.setTestAuthorizedUser;
 import static ua.training.top.aggregator.ProviderUtil.getAllProviders;
 import static ua.training.top.aggregator.installation.InstallationUtil.limitResumesToKeep;
 import static ua.training.top.model.Goal.UPGRADE;
-import static ua.training.top.util.AggregatorUtil.getForCreate;
-import static ua.training.top.util.AggregatorUtil.getForUpdate;
 import static ua.training.top.util.FreshenUtil.*;
 import static ua.training.top.util.ResumeUtil.*;
 import static ua.training.top.util.UserUtil.asAdmin;
@@ -39,40 +37,32 @@ public class AggregatorService {
 
     public void refreshDB(Freshen freshen) {
         log.info("refreshDB by freshen {}", freshen);
-        List<ResumeTo> resumeTos = getAllProviders().selectBy(freshen);
-        if (!resumeTos.isEmpty()) {
-
-
-            List<ResumeTo> resumeTosForCreate = new ArrayList<>(resumeTos);
-            List<ResumeTo> resumeTosForUpdate = new ArrayList<>(resumeTos);
-
+        List<Resume> resumes = fromTos(getAllProviders().selectBy(freshen));
+        if (!resumes.isEmpty()) {
+            Freshen newFreshen = freshenService.create(freshen);
+            List<Resume> resumesForCreate = new ArrayList<>();
+            List<Resume> resumesForUpdate = new ArrayList<>();
             List<Resume> resumesDb = resumeService.getAll();
-            List<Vote> votes = voteService.getAll();
-            List<ResumeTo> resumeTosDb = getTos(resumesDb, votes);
-
-            /*https://stackoverflow.com/questions/9933403/subtracting-one-arraylist-from-another-arraylist*/
-            resumeTosDb.forEach(resumeTosForCreate::remove);
-            resumeTosForCreate.forEach(resumeTosForUpdate::remove);
             Map<String, Resume> mapDb = resumesDb.stream()
-                        .collect(Collectors.toMap(r -> getPartWorkBefore(r.getWorkBefore()).toLowerCase(), r -> r));
-            List<ResumeTo> temp = new ArrayList<>();
-            resumeTosForCreate.forEach(rForCreate -> {
-                if(mapDb.containsKey(getPartWorkBefore(rForCreate.getWorkBefore()).toLowerCase())) {
-                    resumeTosForUpdate.add(rForCreate);
-                    temp.add(rForCreate);
+                    .collect(Collectors.toMap(r -> getPartWorkBefore(r.getWorkBefore()).toLowerCase(), r -> r));
+            resumes.forEach(r -> {
+                r.setFreshen(newFreshen);
+                if (mapDb.containsKey(getPartWorkBefore(r.getWorkBefore()).toLowerCase())) {
+                    Resume resumeDb = mapDb.get(getPartWorkBefore(r.getWorkBefore()).toLowerCase());
+                    r.setId(resumeDb.getId());
+                    r.setTitle(resumeDb.getTitle());
+                    r.setWorkBefore(resumeDb.getWorkBefore());
+                    resumesForUpdate.add(r);
+                } else {
+                    resumesForCreate.add(r);
                 }
             });
-            temp.forEach(resumeTosForCreate::remove);
-            refresh(mapDb, resumeTosForCreate, resumeTosForUpdate, freshen, votes);
+            refresh(resumesForCreate, resumesForUpdate, newFreshen);
         }
     }
 
     @Transactional
-    protected void refresh(Map<String, Resume> mapDb, List<ResumeTo> resumeTosForCreate,
-                           List<ResumeTo> resumeTosForUpdate, Freshen freshen, List<Vote> votes) {
-        Freshen freshenCreated = freshenService.create(freshen);
-        List<Resume> resumesForCreate = getForCreate(resumeTosForCreate, freshenCreated);
-        List<Resume> resumesForUpdate = getForUpdate(resumeTosForUpdate, mapDb, freshenCreated);
+    protected void refresh(List<Resume> resumesForCreate, List<Resume> resumesForUpdate, Freshen freshen) {
         Set<Resume> resumes = new HashSet<>(resumesForUpdate);
         resumes.addAll(resumesForCreate);
         if (!resumes.isEmpty()) {
@@ -80,26 +70,9 @@ public class AggregatorService {
         }
         List<Resume> resumesDb = resumeService.getAll();
         List<Freshen> freshensDb = freshenService.getAll();
-        deleteDuplicates(resumesDb);
         deleteOutDate(resumesDb, freshensDb);
-        deleteLimitHeroku(resumesDb, freshensDb, votes);
-        log.info(finish, resumesForCreate.size(), resumesForUpdate.size(), freshenCreated);
-    }
-
-    public void deleteDuplicates(List<Resume> resumesDb) {
-        List<Resume> duplicatesForDelete = new ArrayList<>();
-        Map<String, List<Resume>> map = resumesDb.stream()
-                .collect(Collectors.groupingBy(r -> getPartWorkBefore(r.getWorkBefore()).toLowerCase(), Collectors.toList()));
-        map.values().forEach(list -> {
-            if (list.size() > 1) {
-                duplicatesForDelete.addAll(list.stream()
-                        .sorted((r1, r2) -> -r1.getId().compareTo(r2.getId()))
-                        .skip(1)
-                        .collect(Collectors.toList()));
-            }
-        });
-        duplicatesForDelete.forEach(r -> log.info("{}", r));
-        resumeService.deleteList(duplicatesForDelete);
+        deleteLimitHeroku(resumesDb, freshensDb, voteService.getAll());
+        log.info(finish, resumesForCreate.size(), resumesForUpdate.size(), freshen);
     }
 
     public void deleteOutDate(List<Resume> resumesDb, List<Freshen> freshenDb) {
@@ -120,7 +93,7 @@ public class AggregatorService {
     public static void main(String[] args) throws IOException {
         setTestAuthorizedUser(asAdmin());
 
-        List<ResumeTo> resumeTos = getAllProviders().selectBy(asNewFreshen("java", "all", "Львов", UPGRADE));
+        List<ResumeTo> resumeTos = getAllProviders().selectBy(asNewFreshen("java", "all", "киев", UPGRADE));
         AtomicInteger i = new AtomicInteger(1);
         resumeTos.forEach(vacancyNet -> log.info("\nvacancyNet № {}\n{}\n", i.getAndIncrement(), vacancyNet.toString()));
         log.info("\n\ncommon = {}", resumeTos.size());

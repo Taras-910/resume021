@@ -35,20 +35,20 @@ public class HabrStrategy implements Strategy {
 
     @Override
     public List<ResumeTo> getResumes(Freshen freshen) {
-        String city = getHabr(freshen.getWorkplace()), language = freshen.getLanguage();
+        String workplace = getHabr(freshen.getWorkplace()), language = freshen.getLanguage();
         Set<ResumeTo> set = new LinkedHashSet<>();
         log.info(get_resume, freshen.getWorkplace(), language);
-        if((city).equals("-1")){
+        if((workplace).equals("-1")){
             return new ArrayList<>();
         }
         try {
             int page = 1;
             while (true) {
-                Document doc = getDocument(city, language, freshen.getLevel(), String.valueOf(page));
+                Document doc = getDocument(workplace, language, freshen.getLevel(), String.valueOf(page));
                 Elements elements = doc == null ? null : doc.getElementsByClass("resume-card");
                 if (elements == null || elements.size() == 0) break;
                 set.addAll(getResumesHabr(elements, freshen));
-                if (page < getMaxPages(habr, city)) page++;
+                if (page < getMaxPages(habr, workplace)) page++;
                 else break;
             }
         } catch (Exception e) {

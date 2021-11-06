@@ -218,8 +218,8 @@ public class ElementUtil {
                     String workBefore, skills, age, title = getCorrectTitle(xssClear(element.getElementsByTag("a").first().text()));
                     workBefore = getToWorkBefore(xssClear(element.getElementsByTag("ul").text().trim()));
                     skills = getCorrectSkills(xssClear(element.getElementsByClass("add-bottom").tagName("div").text().trim()));
-                    age = xssClear(element.getElementsByAttributeValueContaining("data-toggle", "popover").next().next().text().trim());
-                    age = getToAgeWork(isEmpty(age) ? xssClear(element.getElementsByTag("b").addClass("text-muted").next().next().text()) : age);
+                        age = xssClear(element.getElementsByAttributeValueContaining("data-toggle", "popover").next().next().text().trim());
+                        age = getToAgeWork(isEmpty(age) ? xssClear(element.getElementsByTag("b").addClass("text-muted").next().next().text()) : age);
                     if (isToValid(freshen, join(title, workBefore, skills)) && isAgeAfter(age) && workBefore.length() > 2) {
                         ResumeTo rTo = new ResumeTo();
                         rTo.setTitle(title);

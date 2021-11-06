@@ -27,7 +27,6 @@ public class AddressUtil {
         return switch (address) {
             case "remote", "віддалена робота", "віддалено", "удаленно", "no location" -> "remote";
             case "украина", "україна", "ua", "ukraine" -> "Украина";
-            case "foreign", "other" -> "foreign";
             case "киев", "київ", "kyiv", "kiev" -> "Киев";
             case "харьков", "харків", "kharkiv" -> "Харьков";
             case "одесса", "одеса", "odesa", "odessa" -> "Одесса";
@@ -47,6 +46,7 @@ public class AddressUtil {
             case "желтые", "желтыеводы", "жовтіводи" -> "Желтые-Воды";
             case "камянецьподільський", "каменецподольский" -> "Каменец-Подольский";
             case "іванофранківськ", "ivanofrankivsk", "иванофранковск" -> "Ивано-Франковск";
+            case "країни", "страны", "foreign", "other" -> "Foreign";
             case "uzhgorod" -> "Ужгород";
             case "russia", "росія" -> "Россия";
             case "uk", "англія" -> "Англия";
@@ -65,7 +65,6 @@ public class AddressUtil {
             case "узбекістан", "узбекистан" -> "Узбекистан";
             case "білорусь", "беларусь" -> "Беларусь";
             case "вірменія", "армения" -> "Армения";
-            case "країни", "страны" -> "Foreign";
             case "philippines" -> "Филипины";
             case "казахстан" -> "Казахстан";
             case "canada" -> "Канада";

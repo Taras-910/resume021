@@ -33,27 +33,24 @@ public class WorkStrategy implements Strategy {
 //      https://www.work.ua/ru/resumes-kyiv-java/?employment=76&experience=0&page=2
 
     protected Document getDocument(String workspace, String language, String level, String page) {
-        return DocumentUtil.getDocument(format(URL, getPartUrlWork(workspace), language, workspace.equals("remote") ?
+        return DocumentUtil.getDocument(format(URL, getPartUrlWork(getWork(workspace)), language, workspace.equals("remote") ?
                         "employment=76&" : "", level.equals("all") ? "" : "experience=" .concat(getLevel(work, level)),
                 page.equals("1") ? period : period.concat("&"), page.equals("1") ? "" : "page=" .concat(page)));
     }
 
     @Override
     public List<ResumeTo> getResumes(Freshen freshen) throws IOException {
-        String city = freshen.getWorkplace(), language = freshen.getLanguage();
-        log.info(get_resume, city, language);
+        String workplace = freshen.getWorkplace(), language = freshen.getLanguage();
+        log.info(get_resume, workplace, language);
         Set<ResumeTo> set = new LinkedHashSet<>();
-        if (city.equals("-1")) {
-            return new ArrayList<>();
-        }
         int page = 1;
         while (true) {
-            Document doc = getDocument(getWork(city), language, freshen.getLevel(), valueOf(page));
+            Document doc = getDocument(workplace, language, freshen.getLevel(), valueOf(page));
             Elements elements = doc == null ?
                     null : doc.getElementsByClass("card card-hover resume-link card-visited wordwrap");
             if (elements == null || elements.size() == 0) break;
             set.addAll(getResumesWork(elements, freshen));
-            if (page < getMaxPages(work, city)) page++;
+            if (page < getMaxPages(work, workplace)) page++;
             else break;
         }
         reCall(set.size(), new WorkStrategy());

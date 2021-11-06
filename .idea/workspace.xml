@@ -27,211 +27,58 @@
     <select />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="c015085c-f6f5-4ac3-9745-93d227edaee6" name="Default Changelist" comment="1 3  refactor and prepare to heroku deploy">
-      <change afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/data/AddressUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/data/CommonDataUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/data/PagesUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/date/CommonDateUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/salary/CommonSalaryUtil.java" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/salary/MoneyTypeUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/.idea/dataSources/2a68873d-64e8-461c-81ed-a627e93a8698.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/2a68873d-64e8-461c-81ed-a627e93a8698.xml" afterDir="false" />
+    <list default="true" id="c015085c-f6f5-4ac3-9745-93d227edaee6" name="Default Changelist" comment="1 4  refactor and prepare to heroku deploy">
+      <change beforePath="$PROJECT_DIR$/.idea/dataSources/2a68873d-64e8-461c-81ed-a627e93a8698.xml" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/2a68873d-64e8-461c-81ed-a627e93a8698/storage_v2/_src_/database/resume.LchNyA/schema/information_schema.FNRwLQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/2a68873d-64e8-461c-81ed-a627e93a8698/storage_v2/_src_/database/resume.LchNyA/schema/information_schema.FNRwLQ.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/2a68873d-64e8-461c-81ed-a627e93a8698/storage_v2/_src_/database/resume.LchNyA/schema/pg_catalog.0S1ZNQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/2a68873d-64e8-461c-81ed-a627e93a8698/storage_v2/_src_/database/resume.LchNyA/schema/pg_catalog.0S1ZNQ.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/2a68873d-64e8-461c-81ed-a627e93a8698/storage_v2/_src_/database/resume.LchNyA/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/2a68873d-64e8-461c-81ed-a627e93a8698/storage_v2/_src_/database/resume.LchNyA/schema/public.abK9xQ.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/f27d4e69-dfda-44a2-8352-3af78d30679d.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/f27d4e69-dfda-44a2-8352-3af78d30679d.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/dataSources/f27d4e69-dfda-44a2-8352-3af78d30679d/storage_v2/_src_/database/d69e4kp700gho2.IKJLuw/schema/public.abK9xQ.meta" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/dataSources/f27d4e69-dfda-44a2-8352-3af78d30679d/storage_v2/_src_/database/d69e4kp700gho2.IKJLuw/schema/public.abK9xQ.meta" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/Profiles.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/Profiles.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/SecurityUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/SecurityUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/aggregator/Provider.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/aggregator/Provider.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/aggregator/installation/InstallationUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/aggregator/installation/InstallationUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/aggregator/ProviderUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/aggregator/ProviderUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/aggregator/dispatcher/Dispatcher.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/aggregator/dispatcher/Dispatcher.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/aggregator/strategy/DjinniStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/aggregator/strategy/DjinniStrategy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/aggregator/strategy/GrcStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/aggregator/strategy/GrcStrategy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/aggregator/strategy/HabrStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/aggregator/strategy/HabrStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/aggregator/strategy/LinkedinStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/aggregator/strategy/LinkedinStrategy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/aggregator/strategy/RabotaStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/aggregator/strategy/RabotaStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/aggregator/strategy/TestStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/aggregator/strategy/TestStrategy.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/aggregator/strategy/WorkStrategy.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/aggregator/strategy/WorkStrategy.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/aggregator/strategy/provider/ProviderUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/aggregator/ProviderUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/model/AbstractBaseEntity.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/model/AbstractBaseEntity.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/model/Freshen.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/model/Freshen.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/model/Resume.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/model/Resume.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/model/User.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/model/User.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/model/Vote.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/model/Vote.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/repository/AggregatorRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/aggregator/dispatcher/Dispatcher.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/repository/ResumeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/repository/ResumeRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/repository/datajpa/CrudFreshenRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/repository/datajpa/CrudFreshenRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/repository/datajpa/CrudResumeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/repository/datajpa/CrudResumeRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/repository/datajpa/DataJpaFreshenRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/repository/datajpa/DataJpaFreshenRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/repository/datajpa/DataJpaResumeRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/repository/datajpa/DataJpaResumeRepository.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/repository/datajpa/DataJpaVoteRepository.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/repository/datajpa/DataJpaVoteRepository.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/service/AggregatorService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/service/AggregatorService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/service/AutoRefreshService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/service/AutoRefreshService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/service/FreshenService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/service/FreshenService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/service/ResumeService.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/service/ResumeService.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/to/ResumeTo.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/to/ResumeTo.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/util/AggregatorUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/util/AggregatorUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/util/AutoRefreshUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/util/AutoRefreshUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/util/DateTimeUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/util/DateTimeUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/util/FreshenUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/util/FreshenUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/util/MessagesUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/util/MessagesUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/util/ResumeCheckUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/util/ResumeCheckUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/util/ResumeUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/util/ResumeUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/util/UserUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/util/UserUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/util/ValidationUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/util/ValidationUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/DocumentUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/DocumentUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/ElementUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/ElementUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/data/CommonUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/data/CorrectAddress.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/data/CorrectAge.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/data/AgeUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/data/CorrectLevel.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/data/LevelUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/data/CorrectSkills.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/data/SkillsUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/data/CorrectTitle.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/data/TitleUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/data/CorrectUrl.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/data/UrlUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/data/CorrectWorkBefore.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/data/WorkBeforeUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/data/CorrectWorkplace.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/data/WorkplaceUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/data/LimitationPages.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/date/DateUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/date/DateUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/date/MonthUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/date/ToCorrectDate.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/salary/CheckUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/salary/FormatUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/salary/EurUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/salary/GbpUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/salary/HrnUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/salary/MinMax.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/salary/PlnUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/salary/RateUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/salary/RubUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/salary/SalaryUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/salary/UsdUtil.java" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/util/xss/XssUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/util/xss/XssUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/web/json/JsonUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/web/json/JsonUtil.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/web/rest/admin/UserRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/web/rest/admin/UserRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/web/rest/admin/VoteRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/web/rest/admin/VoteRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/web/rest/profile/ProfileVoteRestController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/web/rest/profile/ProfileVoteRestController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/web/ui/ProfileUIController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/web/ui/ProfileUIController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/web/ui/ResumeUIController.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/web/ui/ResumeUIController.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/db/initDB.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/db/initDB.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/db/populateDB.sql" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/db/populateDB.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/logback.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/logback.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/spring/spring-app.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/spring/spring-app.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/resources/spring/spring-db.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/resources/spring/spring-db.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/fragments/headTag.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/fragments/headTag.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/login.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/login.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/password.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/password.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/profile.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/profile.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/resumes.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/resumes.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/users.jsp" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/jsp/users.jsp" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/tags/inputField.tag" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/tags/inputField.tag" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/css/style.css" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/js/top.freshen.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/top.freshen.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/main/webapp/resources/js/top.resumes.js" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/webapp/resources/js/top.resumes.js" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ua/training/top/Main.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ua/training/top/Main.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ua/training/top/service/AbstractServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ua/training/top/service/AbstractServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ua/training/top/service/FreshenServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ua/training/top/service/FreshenServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ua/training/top/service/ResumeServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ua/training/top/service/ResumeServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ua/training/top/service/UserServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ua/training/top/service/UserServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ua/training/top/service/VoteServiceTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ua/training/top/service/VoteServiceTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ua/training/top/testData/FreshenTestData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ua/training/top/testData/FreshenTestData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ua/training/top/testData/ResumeTestData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ua/training/top/testData/ResumeTestData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ua/training/top/testData/ResumeToTestData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ua/training/top/testData/ResumeToTestData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ua/training/top/testData/UserTestData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ua/training/top/testData/UserTestData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ua/training/top/testData/VoteTestData.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ua/training/top/testData/VoteTestData.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ua/training/top/web/AbstractControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ua/training/top/web/AbstractControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ua/training/top/web/json/JsonUtilTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ua/training/top/web/json/JsonUtilTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ua/training/top/web/rest/admin/FreshenRestControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ua/training/top/web/rest/admin/FreshenRestControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ua/training/top/web/rest/admin/ResumeRestControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ua/training/top/web/rest/admin/ResumeRestControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ua/training/top/web/rest/admin/UserRestControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ua/training/top/web/rest/admin/UserRestControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ua/training/top/web/rest/admin/VoteRestControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ua/training/top/web/rest/admin/VoteRestControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ua/training/top/web/rest/profile/ProfileFreshenRestControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ua/training/top/web/rest/profile/ProfileFreshenRestControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/src/test/java/ua/training/top/web/rest/profile/ProfileUserRestControllerTest.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/test/java/ua/training/top/web/rest/profile/ProfileUserRestControllerTest.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/db/initDB.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/db/initDB.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/db/populateDB.sql" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/db/populateDB.sql" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/logback.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/logback.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/spring/spring-app.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/spring/spring-app.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/spring/spring-db.xml" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/spring/spring-db.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/Profiles.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ua/training/top/Profiles.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/data/AddressUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/data/AddressUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/data/AgeUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/data/AgeUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/data/CommonDataUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/data/CommonDataUtil.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/data/WorkplaceUtil.java" beforeDir="false" afterPath="$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/data/WorkplaceUtil.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/SecurityUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ua/training/top/SecurityUtil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/aggregator/Provider.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ua/training/top/aggregator/Provider.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/aggregator/installation/InstallationUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ua/training/top/aggregator/installation/InstallationUtil.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/aggregator/strategy/DjinniStrategy.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ua/training/top/aggregator/strategy/DjinniStrategy.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/aggregator/strategy/GrcStrategy.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ua/training/top/aggregator/strategy/GrcStrategy.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/aggregator/strategy/HabrStrategy.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ua/training/top/aggregator/strategy/HabrStrategy.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/aggregator/strategy/LinkedinStrategy.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ua/training/top/aggregator/strategy/LinkedinStrategy.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/aggregator/strategy/RabotaStrategy.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ua/training/top/aggregator/strategy/RabotaStrategy.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/aggregator/strategy/TestStrategy.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ua/training/top/aggregator/strategy/TestStrategy.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/aggregator/strategy/WorkStrategy.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ua/training/top/aggregator/strategy/WorkStrategy.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/aggregator/strategy/provider/ProviderUtil.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/model/AbstractBaseEntity.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ua/training/top/model/AbstractBaseEntity.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/model/Freshen.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ua/training/top/model/Freshen.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/model/Resume.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ua/training/top/model/Resume.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/model/User.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ua/training/top/model/User.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/model/Vote.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ua/training/top/model/Vote.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/repository/AggregatorRepository.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/repository/ResumeRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ua/training/top/repository/ResumeRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/repository/datajpa/CrudResumeRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ua/training/top/repository/datajpa/CrudResumeRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/repository/datajpa/DataJpaFreshenRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ua/training/top/repository/datajpa/DataJpaFreshenRepository.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/repository/datajpa/DataJpaResumeRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ua/training/top/repository/datajpa/DataJpaResumeRepository.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/repository/datajpa/DataJpaVoteRepository.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ua/training/top/repository/datajpa/DataJpaVoteRepository.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/service/AggregatorService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ua/training/top/service/AggregatorService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/service/AutoRefreshService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ua/training/top/service/AutoRefreshService.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/service/FreshenService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ua/training/top/service/FreshenService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/service/ResumeService.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ua/training/top/service/ResumeService.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/to/ResumeTo.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ua/training/top/to/ResumeTo.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/util/AggregatorUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ua/training/top/util/AggregatorUtil.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/util/AutoRefreshUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ua/training/top/util/AutoRefreshUtil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/util/DateTimeUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ua/training/top/util/DateTimeUtil.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/util/FreshenUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ua/training/top/util/FreshenUtil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/util/MessagesUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ua/training/top/util/MessagesUtil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/util/ResumeCheckUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ua/training/top/util/ResumeCheckUtil.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/util/ResumeUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ua/training/top/util/ResumeUtil.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/util/UserUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ua/training/top/util/UserUtil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/util/ValidationUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ua/training/top/util/ValidationUtil.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/util/parser/DocumentUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ua/training/top/util/parser/DocumentUtil.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/util/parser/ElementUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ua/training/top/util/parser/ElementUtil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/util/parser/data/CommonUtil.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/util/parser/data/CorrectAddress.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/util/parser/data/CorrectAge.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/util/parser/data/CorrectLevel.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/util/parser/data/CorrectSkills.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/util/parser/data/CorrectTitle.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/util/parser/data/CorrectUrl.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/util/parser/data/CorrectWorkBefore.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/util/parser/data/CorrectWorkplace.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/util/parser/data/LimitationPages.class" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/util/parser/date/DateUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ua/training/top/util/parser/date/DateUtil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/util/parser/date/MonthUtil.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/util/parser/date/ToCorrectDate.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/util/parser/salary/CheckUtil.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/util/parser/salary/EurUtil.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/util/parser/salary/GbpUtil.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/util/parser/salary/HrnUtil.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/util/parser/salary/MinMax.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/util/parser/salary/PlnUtil.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/util/parser/salary/RateUtil.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/util/parser/salary/RubUtil.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/util/parser/salary/SalaryUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ua/training/top/util/parser/salary/SalaryUtil.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/util/parser/salary/UsdUtil.class" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/web/json/JsonUtil.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ua/training/top/web/json/JsonUtil.class" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/web/ui/ProfileUIController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ua/training/top/web/ui/ProfileUIController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/classes/ua/training/top/web/ui/ResumeUIController.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/classes/ua/training/top/web/ui/ResumeUIController.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/test-classes/ua/training/top/Main.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/ua/training/top/Main.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/test-classes/ua/training/top/service/FreshenServiceTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/ua/training/top/service/FreshenServiceTest.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/test-classes/ua/training/top/service/ResumeServiceTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/ua/training/top/service/ResumeServiceTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/ua/training/top/service/UserServiceTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/ua/training/top/service/UserServiceTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/ua/training/top/service/VoteServiceTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/ua/training/top/service/VoteServiceTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/ua/training/top/testData/FreshenTestData.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/ua/training/top/testData/FreshenTestData.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/test-classes/ua/training/top/testData/ResumeTestData.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/ua/training/top/testData/ResumeTestData.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/test-classes/ua/training/top/testData/ResumeToTestData.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/ua/training/top/testData/ResumeToTestData.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/ua/training/top/testData/UserTestData.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/ua/training/top/testData/UserTestData.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/test-classes/ua/training/top/testData/VoteTestData.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/ua/training/top/testData/VoteTestData.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/ua/training/top/web/AbstractControllerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/ua/training/top/web/AbstractControllerTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/ua/training/top/web/json/JsonUtilTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/ua/training/top/web/json/JsonUtilTest.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/test-classes/ua/training/top/web/rest/admin/FreshenRestControllerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/ua/training/top/web/rest/admin/FreshenRestControllerTest.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/test-classes/ua/training/top/web/rest/admin/ResumeRestControllerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/ua/training/top/web/rest/admin/ResumeRestControllerTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/ua/training/top/web/rest/admin/UserRestControllerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/ua/training/top/web/rest/admin/UserRestControllerTest.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/test-classes/ua/training/top/web/rest/admin/VoteRestControllerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/ua/training/top/web/rest/admin/VoteRestControllerTest.class" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/target/test-classes/ua/training/top/web/rest/profile/ProfileFreshenRestControllerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/ua/training/top/web/rest/profile/ProfileFreshenRestControllerTest.class" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/target/test-classes/ua/training/top/web/rest/profile/ProfileUserRestControllerTest.class" beforeDir="false" afterPath="$PROJECT_DIR$/target/test-classes/ua/training/top/web/rest/profile/ProfileUserRestControllerTest.class" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -352,7 +199,7 @@
       <recent name="ua.training.top.service" />
     </key>
   </component>
-  <component name="RunManager" selected="Tomcat Server.Tomcat 9.0.36">
+  <component name="RunManager" selected="Application.AggregatorService">
     <configuration name="AggregatorService" type="Application" factoryName="Application" temporary="true" nameIsGenerated="true">
       <option name="MAIN_CLASS_NAME" value="ua.training.top.service.AggregatorService" />
       <module name="Resume" />
@@ -1168,14 +1015,7 @@
       <workItem from="1635562951192" duration="57365000" />
       <workItem from="1635756071413" duration="157622000" />
       <workItem from="1636046640046" duration="6000" />
-      <workItem from="1636046668048" duration="92317000" />
-    </task>
-    <task id="LOCAL-00174" summary="5_54 limit 5000">
-      <created>1614029407247</created>
-      <option name="number" value="00174" />
-      <option name="presentableId" value="LOCAL-00174" />
-      <option name="project" value="LOCAL" />
-      <updated>1614029407248</updated>
+      <workItem from="1636046668048" duration="105131000" />
     </task>
     <task id="LOCAL-00175" summary="5_55 fit limit 5100">
       <created>1614057082727</created>
@@ -1513,7 +1353,14 @@
       <option name="project" value="LOCAL" />
       <updated>1635565452495</updated>
     </task>
-    <option name="localTasksCounter" value="223" />
+    <task id="LOCAL-00223" summary="1 3  debug, refactor and prepare to heroku deploy">
+      <created>1636215583039</created>
+      <option name="number" value="00223" />
+      <option name="presentableId" value="LOCAL-00223" />
+      <option name="project" value="LOCAL" />
+      <updated>1636215583039</updated>
+    </task>
+    <option name="localTasksCounter" value="224" />
     <servers />
   </component>
   <component name="TypeScriptGeneratedFilesManager">
@@ -1561,7 +1408,6 @@
     <option name="CHECK_CODE_SMELLS_BEFORE_PROJECT_COMMIT" value="false" />
     <option name="CHECK_NEW_TODO" value="false" />
     <option name="SHOW_DIRTY_RECURSIVELY" value="true" />
-    <MESSAGE value="6.14 fix Upper address" />
     <MESSAGE value="6.15 fix address" />
     <MESSAGE value="6.16 debug, setThreeScheduledProviders" />
     <MESSAGE value="6.17 debug Habr, Jobs, Rabota" />
@@ -1586,7 +1432,8 @@
     <MESSAGE value="1 0  project installation" />
     <MESSAGE value="1 1  gitignore" />
     <MESSAGE value="1 2  refactor parser date" />
-    <option name="LAST_COMMIT_MESSAGE" value="1 2  refactor parser date" />
+    <MESSAGE value="1 3  debug, refactor and prepare to heroku deploy" />
+    <option name="LAST_COMMIT_MESSAGE" value="1 3  debug, refactor and prepare to heroku deploy" />
     <option name="OPTIMIZE_IMPORTS_BEFORE_PROJECT_COMMIT" value="true" />
   </component>
   <component name="XDebuggerManager">
@@ -1704,7 +1551,7 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/ua/training/top/util/UserUtil.java</url>
-          <line>25</line>
+          <line>26</line>
           <option name="timeStamp" value="1005" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -1718,13 +1565,8 @@
           <option name="timeStamp" value="1089" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/ua/training/top/web/ui/FreshenUIController.java</url>
-          <line>34</line>
-          <option name="timeStamp" value="1107" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/test/java/ua/training/top/web/rest/admin/ResumeRestControllerTest.java</url>
-          <line>160</line>
+          <line>164</line>
           <option name="timeStamp" value="1429" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
@@ -1739,23 +1581,48 @@
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/ua/training/top/repository/datajpa/DataJpaResumeRepository.java</url>
-          <line>70</line>
+          <line>71</line>
           <option name="timeStamp" value="1569" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/ua/training/top/repository/datajpa/DataJpaResumeRepository.java</url>
-          <line>63</line>
+          <line>64</line>
           <option name="timeStamp" value="1574" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/ua/training/top/repository/datajpa/DataJpaResumeRepository.java</url>
-          <line>72</line>
+          <line>73</line>
           <option name="timeStamp" value="1594" />
         </line-breakpoint>
         <line-breakpoint enabled="true" type="java-line">
           <url>file://$PROJECT_DIR$/src/main/java/ua/training/top/util/parser/data/LevelUtil.java</url>
           <line>59</line>
           <option name="timeStamp" value="1616" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/ua/training/top/util/ResumeCheckUtil.java</url>
+          <line>30</line>
+          <option name="timeStamp" value="1679" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/ua/training/top/util/ResumeCheckUtil.java</url>
+          <line>31</line>
+          <option name="timeStamp" value="1680" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/ua/training/top/util/ResumeCheckUtil.java</url>
+          <line>32</line>
+          <option name="timeStamp" value="1681" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/ua/training/top/util/ResumeCheckUtil.java</url>
+          <line>33</line>
+          <option name="timeStamp" value="1682" />
+        </line-breakpoint>
+        <line-breakpoint enabled="true" type="java-line">
+          <url>file://$PROJECT_DIR$/src/main/java/ua/training/top/util/ResumeCheckUtil.java</url>
+          <line>34</line>
+          <option name="timeStamp" value="1683" />
         </line-breakpoint>
       </breakpoints>
     </breakpoint-manager>

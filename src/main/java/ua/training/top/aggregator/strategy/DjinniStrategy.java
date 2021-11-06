@@ -38,16 +38,16 @@ public class DjinniStrategy implements Strategy{
 
     @Override
     public List<ResumeTo> getResumes(Freshen freshen) throws IOException {
-        String language = getStartUpper(freshen.getLanguage()), city = freshen.getWorkplace();
+        String language = getStartUpper(freshen.getLanguage()), workplace = freshen.getWorkplace();
         log.info(get_resume, freshen.getWorkplace(), language);
         Set<ResumeTo> set = new LinkedHashSet<>();
         int page = 1;
         while (true) {
-            Document doc = getDocument(city, language, String.valueOf(page), freshen.getLevel());
+            Document doc = getDocument(workplace, language, String.valueOf(page), freshen.getLevel());
             Elements elements = doc == null ? null : doc.select("span.candidate-header");
             if (elements == null || elements.size() == 0) break;
             set.addAll(getResumesDjinni(elements, freshen));
-            if(page < getMaxPages(djinni, city)) page++;
+            if(page < getMaxPages(djinni, workplace)) page++;
             else break;
         }
         reCall(set.size(), new DjinniStrategy());

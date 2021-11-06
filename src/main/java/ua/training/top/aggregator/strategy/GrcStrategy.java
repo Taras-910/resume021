@@ -31,27 +31,27 @@ public class GrcStrategy implements Strategy {
             url = "https://grc.ua/search/resume?clusters=true&exp_period=all_time&items_on_page=100&logic=normal&no_magic=true&order_by=relevance&ored_clusters=true&pos=full_text&text=%s&search_period=365%s%s%s%s%s";
 //https://grc.ua/search/resume?clusters=true&exp_period=all_time&items_on_page=100&logic=normal&no_magic=true&order_by=relevance&ored_clusters=true&pos=full_text&text=java&search_period=30&area=2&relocation=living_or_relocation&experience=between1And3&schedule=remote&page=1
 
-    protected Document getDocument(String city, String language, String level, String page) {
+    protected Document getDocument(String workplace, String language, String level, String page) {
         return DocumentUtil.getDocument(format(url, language,
-                city.equals("&schedule=remote") || city.equals("all")? "" : "&area=".concat(city),
-                city.equals("all") ? "" : relocation, level.isEmpty()? "" : level,
-                city.equals("&schedule=remote") ? city : "", getPageUrl(page)));
+                workplace.equals("&schedule=remote") || workplace.equals("all")? "" : "&area=".concat(workplace),
+                workplace.equals("all") ? "" : relocation, level.isEmpty()? "" : level,
+                workplace.equals("&schedule=remote") ? workplace : "", getPageUrl(page)));
     }
 
     @Override
     public List<ResumeTo> getResumes(Freshen freshen) throws IOException {
-        String city = freshen.getWorkplace(), level = freshen.getLevel(), language = freshen.getLanguage();
-        log.info(get_resume, city, language);
+        String workplace = freshen.getWorkplace(), level = freshen.getLevel(), language = freshen.getLanguage();
+        log.info(get_resume, workplace, language);
         Set<ResumeTo> set = new LinkedHashSet<>();
         int page = 1;
         while (true) {
-            Document doc = city.equals("foreign") ? DocumentUtil.getDocument(url_foreign) :
-                    getDocument(getGrc(city), language, getLevel(grc, level), String.valueOf(page));
+            Document doc = workplace.equals("foreign") ? DocumentUtil.getDocument(url_foreign) :
+                    getDocument(getGrc(workplace), language, getLevel(grc, level), String.valueOf(page));
             Elements elements = doc == null ?
                     null : doc.getElementsByClass("resume-search-item__content-wrapper");
             if (elements == null || elements.size() == 0) break;
             set.addAll(getResumesGrc(elements, freshen));
-            if (page < getMaxPages(grc, city)) page++;
+            if (page < getMaxPages(grc, workplace)) page++;
             else break;
         }
         return new ArrayList<>(set);

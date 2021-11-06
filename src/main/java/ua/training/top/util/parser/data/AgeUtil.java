@@ -24,7 +24,7 @@ public class AgeUtil {
     }
 
     public static String getToAgeWork(String age) {
-        return isEmpty(age) || !age.matches(".*\\d.*") ? link : age;
+        return isEmpty(age) || !age.contains("год") || !age.contains("лет") ? link : age;
     }
 
     public static String getToAgeHabr(String text){

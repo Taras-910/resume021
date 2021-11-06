@@ -19,7 +19,7 @@ public class CommonDataUtil {
             salary_error = "Error: salary not contains at least one [salary:,pln,$,usd,eur,€,грн,gbp,£,₤,₽,руб]={}",
             middle = "middle", trainee = "trainee", junior = "junior", senior = "senior", expert = "expert",
             internet_connection_error = "There may be no internet connection or exception={} by url={} ",
-            finish = "Finished ok, created: {}, updated: {} for Freshen: {}\n" + ".".repeat(50),
+            finish = "\nfinish is ok,\ncreated: {}\nupdated: {}\nFreshen: {}\n" + ":".repeat(125),
             error = "There is error \ne={}\n for parse \n{}",
             get_resume = "GetResumes city={} language={}",
             common_number = "Common number resumes = {}",
@@ -62,7 +62,7 @@ public class CommonDataUtil {
 
 
     public static boolean isEmpty(String text) {
-        return text == null || text.trim().equals("") || text.isEmpty();
+        return text == null || text.trim().isEmpty() || text.trim().equals("•");
     }
 
     public static boolean isCityUA(String text) {

@@ -41,8 +41,8 @@ public class Dispatcher implements AggregatorInterface {
             }
         }
         List<ResumeTo> resumeTos = set.parallelStream()
-                .filter(ResumeCheckUtil::checkNullDataResumeTo)
                 .filter(rTo -> reasonDateToLoad.isBefore(rTo.getReleaseDate()))
+                .filter(ResumeCheckUtil::checkNullDataResumeTo)
                 .map(rTo -> createTo(rTo, freshen)).distinct()
                 .collect(Collectors.toList());
         log.info(common_number, resumeTos.size());

@@ -153,7 +153,6 @@ public class WorkplaceUtil {
     }
 
     public static String getWork(String workplace) {
-        workplace = isCityRu(workplace) ? "-1" : workplace;
         return switch (workplace) {
             case "україна", "украина" -> "ua";
             case "київ", "киев", "kiev" -> "kyiv";
@@ -170,7 +169,7 @@ public class WorkplaceUtil {
             case "remote" -> "remote";
             case "all" -> "all";
             case "івано-франківськ", "ивано-франковск" -> "ivano-frankivsk";
-            default -> workplace.equals("-1") ? workplace : "other";
+            default -> "other";
         };
     }
 }

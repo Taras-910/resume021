@@ -29,28 +29,28 @@ public class RabotaStrategy implements Strategy {
             remotePart = "&scheduleIds=%5B%223%22%5D",
             URL = "https://rabota.ua/candidates/%s/%s?%s%s%s%s";
 
-    protected Document getDocument(String city, String language, String level, String page) {
-        return DocumentUtil.getDocument(format(URL, language, getRabota(city), page.equals("1") ?
-                "":"pg=".concat(page).concat("&"), periodPart, city.equals("remote") ? remotePart : "",
+    protected Document getDocument(String workplace, String language, String level, String page) {
+        return DocumentUtil.getDocument(format(URL, language, getRabota(workplace), page.equals("1") ?
+                "":"pg=".concat(page).concat("&"), periodPart, workplace.equals("remote") ? remotePart : "",
                 "&experienceIds=".concat(getLevel(rabota, level))));
     }
 
     @Override
     public List<ResumeTo> getResumes(Freshen freshen) throws IOException {
-        String city = freshen.getWorkplace(), language = freshen.getLanguage();
-        log.info(get_resume, city, language);
-        if (isCityRu(city)) {
+        String workplace = freshen.getWorkplace(), language = freshen.getLanguage();
+        log.info(get_resume, workplace, language);
+        if (isCityRu(workplace)) {
             return new ArrayList<>();
         }
         Set<ResumeTo> set = new LinkedHashSet<>();
         int page = 1;
         while(true) {
-            Document doc = getDocument(city, language, freshen.getLevel(), String.valueOf(page));
+            Document doc = getDocument(workplace, language, freshen.getLevel(), String.valueOf(page));
             Elements elements = doc == null ?
                     null : doc.getElementsByAttributeValueStarting("class","santa-outline-none");
             if (elements == null || elements.size() == 0) break;
             set.addAll(getResumesRabota(elements, freshen));
-            if (page < getMaxPages(rabota, city)) page++;
+            if (page < getMaxPages(rabota, workplace)) page++;
             else break;
         }
         reCall(set.size(), new RabotaStrategy());
