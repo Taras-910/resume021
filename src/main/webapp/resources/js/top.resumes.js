@@ -130,7 +130,7 @@ $(function () {
                 {
                     "data": function (data, type, row) {
                         if (data.address === "see the card" && type === "display") {
-                            return '<a href="' + data.url + '">card</a>'
+                            return 'see the <a href="' + data.url + '">card</a>'
                         }
                         return data.address;
                     }
@@ -205,7 +205,7 @@ $(function () {
             ],
             "order": [
                 [
-                    8,
+                    9,
                     "desc"
                 ]
             ],

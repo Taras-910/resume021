@@ -8,6 +8,7 @@ import org.springframework.util.Assert;
 import ua.training.top.model.Vote;
 import ua.training.top.repository.VoteRepository;
 
+import java.time.LocalDate;
 import java.util.List;
 
 import static ua.training.top.SecurityUtil.authUserId;
@@ -85,5 +86,16 @@ public class VoteService {
             log.info("create vote for resumeId {} userId {}", resumeId, authUserId());
             create(resumeId);
         }
+    }
+
+    @Transactional
+    public void deleteOutDated(LocalDate reasonLdt) {
+        log.info("deleteOutDated reasonPeriodToKeep {}", reasonLdt);
+        repository.deleteOutDated(reasonLdt);
+    }
+
+    public void deleteExceedLimit(int limitVote) {
+        log.info("deleteExceedLimit limitVote {}", limitVote);
+        repository.deleteExceedLimit(limitVote);
     }
 }

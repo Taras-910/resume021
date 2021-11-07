@@ -54,16 +54,23 @@ public class ResumeUtil {
     }
 
     public static Resume fromToForUpdate(ResumeTo rTo, Resume r) {
-        Resume resume = new Resume(r == null ? null : r.getId(), rTo.getTitle(),
-                r.getName().equals(link) ? link : rTo.getName(), r.getAge().equals(link) ? link : rTo.getAge(),
-                r.getAddress().equals(link) ? link : rTo.getAddress(), rTo.getSalary(), rTo.getWorkBefore(),
-                rTo.getUrl(), r.getSkills().equals(link) ? link : rTo.getSkills(), r.getReleaseDate());
+        Resume resume = new Resume(
+                r == null ? null : r.getId(),
+                rTo.getTitle(),
+                r.getName().equals(link) ? link : rTo.getName(),
+                r.getAge().equals(link) ? link : rTo.getAge(),
+                r.getAddress().equals(link) ? link : rTo.getAddress(),
+                rTo.getSalary(),
+                rTo.getWorkBefore(),
+                rTo.getUrl(),
+                r.getSkills().equals(link) ? link : rTo.getSkills(),
+                r.getReleaseDate());
         resume.setFreshen(r.getFreshen());
         return resume;
     }
 
     public static List<Resume> getResumesOutPeriodToKeep(List<Resume> resumesDb) {
-        return resumesDb.parallelStream()
+        return resumesDb.stream()
                 .filter(resumeTo -> reasonPeriodToKeep.isAfter(resumeTo.getReleaseDate()))
                 .collect(Collectors.toList());
     }

@@ -10,6 +10,7 @@ import org.springframework.util.Assert;
 import ua.training.top.model.Freshen;
 import ua.training.top.repository.FreshenRepository;
 
+import java.time.LocalDateTime;
 import java.util.List;
 
 import static ua.training.top.util.DateTimeUtil.tomorrow;
@@ -71,5 +72,17 @@ public class FreshenService {
             log.info("deleteList {}", listToDelete.size());
             repository.deleteList(listToDelete);
         }
+    }
+
+    @Transactional
+    public void deleteOutDated(LocalDateTime reasonLdt) {
+        log.info("deleteOutDated reasonPeriodToKeep {}", reasonLdt);
+        repository.deleteOutDated(reasonLdt);
+    }
+
+    @Transactional
+    public void deleteExceedLimit(int limitFreshen) {
+        log.info("deleteExceedLimit limitFreshen {}", limitFreshen);
+        repository.deleteExceedLimit(limitFreshen);
     }
 }

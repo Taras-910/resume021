@@ -23,7 +23,7 @@ public class CommonDataUtil {
             error = "There is error \ne={}\n for parse \n{}",
             get_resume = "GetResumes city={} language={}",
             common_number = "Common number resumes = {}",
-            error_parse = "Error parse field {} e {}",
+            error_parse = "Error parse field={} e={}",
             document_url = "GetDocument url={}\n",
             error_select = "Select error e {}",
             linkedin = "LinkedinStrategy",

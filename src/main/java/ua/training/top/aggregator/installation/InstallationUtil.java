@@ -17,8 +17,8 @@ public class InstallationUtil {
     public static int limitPages = 50;
 //    private static int repeatToCall = 1;
 //    public static int limitPages = 5;
-    public static LocalDate reasonDateToLoad = LocalDateTime.now().toLocalDate().minusDays(120);
-    public static LocalDate reasonPeriodToKeep = LocalDateTime.now().toLocalDate().minusDays(150);
+    public static LocalDate reasonDateToLoad = LocalDateTime.now().toLocalDate().minusDays(90);
+    public static LocalDate reasonPeriodToKeep = LocalDateTime.now().toLocalDate().minusDays(120);
     public static int limitResumesToKeep = 3000;
 
 //    public static boolean testProvider = true;
@@ -34,7 +34,7 @@ public class InstallationUtil {
     public static void offAutoRefreshProviders() { InstallationUtil.autoRefreshProviders = false; }
 
     public static void setTestReasonPeriodToKeep() {
-        InstallationUtil.reasonPeriodToKeep = LocalDateTime.now().toLocalDate().minusDays(3650);
+        InstallationUtil.reasonPeriodToKeep = LocalDateTime.now().toLocalDate().minusDays(365);
     }
 
     public static void reCall(int listSize, Strategy strategy){

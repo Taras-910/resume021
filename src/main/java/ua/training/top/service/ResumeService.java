@@ -10,10 +10,14 @@ import ua.training.top.repository.ResumeRepository;
 import ua.training.top.to.ResumeTo;
 import ua.training.top.util.ResumeUtil;
 
+import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.Collections;
 import java.util.List;
 
 import static ua.training.top.SecurityUtil.authUserId;
+import static ua.training.top.aggregator.installation.InstallationUtil.limitResumesToKeep;
+import static ua.training.top.aggregator.installation.InstallationUtil.reasonPeriodToKeep;
 import static ua.training.top.model.Goal.FILTER;
 import static ua.training.top.util.FreshenUtil.getFreshenFromTo;
 import static ua.training.top.util.ResumeCheckUtil.*;
@@ -36,7 +40,6 @@ public class ResumeService {
 
     public Resume get(int id) {
         log.info("get id {}", id);
-
         return checkNotFoundWithId(repository.get(id), id);
     }
 
@@ -81,6 +84,7 @@ public class ResumeService {
         return repository.save(resume);
     }
 
+    @Transactional
     public Resume create(ResumeTo resumeTo) {
         log.info("create resumeTo={}", resumeTo);
         isNullPointerException(resumeTo);
@@ -112,4 +116,25 @@ public class ResumeService {
             repository.deleteList(listToDelete);
         }
     }
+
+    @Transactional
+    public List<Resume> deleteOutDatedAndGetAll() {
+        log.info("deleteOutDateAndGetAll reasonPeriodToKeep {}", reasonPeriodToKeep);
+        freshenService.deleteOutDated(LocalDateTime.of(reasonPeriodToKeep, LocalTime.MIN));
+        voteService.deleteOutDated(reasonPeriodToKeep);
+        return repository.deleteOutDated(reasonPeriodToKeep);
+    }
+
+    @Transactional
+    public void deleteExceedLimitHeroku(int totalNumber) {
+        log.info("deleteExceedLimitHeroku totalNumber {}", totalNumber);
+        int exceedNumber = totalNumber - limitResumesToKeep;
+        if (exceedNumber > 0) {
+            log.info("start delete exceedNumber {}", exceedNumber);
+            repository.deleteExceedLimit(exceedNumber);
+            freshenService.deleteExceedLimit(limitResumesToKeep / 2 + 1);
+            voteService.deleteExceedLimit(limitResumesToKeep / 5);
+        }
+    }
+
 }

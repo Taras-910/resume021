@@ -141,14 +141,14 @@ public class WorkplaceUtil {
     }
 
     public static String getRabota(String workplace) {
-        workplace = isCityWorld(workplace) || isEquals(workplace, of("foreign", "россия")) ? "другие_страны" : workplace;
         return switch (workplace) {
             case "київ", "киев" -> "киев";
             case "львів", "львов" -> "львов";
             case "дніпро", "днепр" -> "днепр";
             case "одеса", "одесса" -> "одесса";
-            case "харьків", "харьков" -> "харьков";
-            default -> workplace.equals("другие_страны") ? workplace : "вся_украина";
+            case "харків", "харьков" -> "харьков";
+            default -> isEquals(workplace, of("foreign", "россия", "минск")) || isCityWorld(workplace) ?
+                    "другие_страны" : "вся_украина";
         };
     }
 

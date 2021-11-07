@@ -3,6 +3,7 @@ package ua.training.top.repository;
 import ua.training.top.model.Freshen;
 import ua.training.top.model.Resume;
 
+import java.time.LocalDate;
 import java.util.List;
 
 public interface ResumeRepository {
@@ -24,5 +25,9 @@ public interface ResumeRepository {
     List<Resume> getByFilter(Freshen freshen);
 
     List<Resume> getByUserId(int userId);
+
+    List<Resume> deleteOutDated(LocalDate reasonPeriodToKeep);
+
+    void deleteExceedLimit(int exceedNumber);
 }
 

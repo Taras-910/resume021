@@ -62,11 +62,11 @@ public class AutoRefreshUtil {
     public static final Map<Integer, String> mapLevel =
             Map.of(
                     0, middle,
-                    1, senior,
-                    2, trainee,
-                    3, all,
+                    1, all,
+                    2, senior,
+                    3, expert,
                     4, junior,
-                    5, expert
+                    5, trainee
                     );
 
     public static Freshen randomFreshen(String workplace, String level) {

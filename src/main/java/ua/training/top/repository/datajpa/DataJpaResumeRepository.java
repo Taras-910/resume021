@@ -9,6 +9,7 @@ import ua.training.top.model.Freshen;
 import ua.training.top.model.Resume;
 import ua.training.top.repository.ResumeRepository;
 
+import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
@@ -55,7 +56,6 @@ public class DataJpaResumeRepository implements ResumeRepository {
     @Transactional
     @Override
     public boolean delete(int id) {
-        log.info("delete id {}", id);
         return Optional.of(resumeRepository.delete(id)).orElse(0) != 0;
     }
 
@@ -96,5 +96,16 @@ public class DataJpaResumeRepository implements ResumeRepository {
     public List<Resume> getByUserId(int userId) {
         return Optional.of(resumeRepository.getByUserId(userId)).orElse(new ArrayList<>());
     }
+
+    @Transactional
+    @Override
+    public List<Resume> deleteOutDated(LocalDate reasonPeriodToKeep) {
+        deleteList(resumeRepository.getOutDated(reasonPeriodToKeep));
+        return getAll();
+    }
+
+    @Transactional
+    @Override
+    public void deleteExceedLimit(int exceedNumber) { deleteList(resumeRepository.findExceeded(exceedNumber)); }
 }
 

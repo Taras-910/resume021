@@ -28,8 +28,8 @@ public class DateTimeUtil {
         return ldt == null ? "" : ldt.format(DATE_TIME_FORMATTER);
     }
 
-    public static String print(LocalDate ldt) {
-        return ldt == null ? "" : ldt.format(DATE_FORMATTER);
+    public static String print(LocalDate ld) {
+        return ld == null ? "" : ld.format(DATE_FORMATTER);
     }
 
     public static @Nullable
@@ -47,3 +47,4 @@ public class DateTimeUtil {
         return StringUtils.isEmpty(str) ? null : LocalDateTime.parse(str);
     }
 }
+//      parseLocalDateTime(print(date))

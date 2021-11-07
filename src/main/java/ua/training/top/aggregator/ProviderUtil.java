@@ -28,8 +28,8 @@ public class ProviderUtil {
                     new Provider(new DjinniStrategy()),      /*ua, foreign, remote, all  50pages */
                     new Provider(new GrcStrategy()),         /*меняет salary, date */
                     new Provider(new HabrStrategy()),        /*нет за_рубежем*/
-//                    new Provider(new LinkedinStrategy())     /*только all, remote*/
-                    new Provider(new RabotaStrategy()),      /*оч мало - до 10*/
+                    new Provider(new LinkedinStrategy()),     /*только all, remote*/
+//                    new Provider(new RabotaStrategy())      /*оч мало - до 10*/
                     new Provider(new WorkStrategy())         /*нет за_рубежем*/
             );
         }
@@ -41,13 +41,13 @@ public class ProviderUtil {
 //Украина	32	   4(0)	     -	     6	    30	     -	     72
 //foreign	49	   2(0)	     1	     1	     -	     -	     53
 //Киев	    15	   1(0)	     1	     3	    15	     -	     35
-//Москва	 -	  34(0)      1	     -	     -	     -	     35
 //remote 	 -	  17(0)	     1	     3	    12	    (5)	     33
 //Минск	     1	  10(0)	     1	     6	     -	     -	     18
+//Львов	     6	    -	     -	     8	     2	     -	     16
 //Харьков	 5	    -	     -	     2	     5	     -	     12
 //Одесса	 5	    -	     -	     2	     4	     -	     11
 //Санкт-П	 5	   5(0)	     1	     -	     -	     -	     11
-//Львов	     6	    -	     -	     8	     2	     -	      -
+//Москва	 -	   8(0)	     1	     -	     -	     -	      9
 
 //https://career.softserveinc.com/en-us/vacancies
 //https://jobs.ua/vacancy/kiev/rabota-java-developer

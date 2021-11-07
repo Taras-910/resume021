@@ -4,6 +4,7 @@ import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ua.training.top.model.Freshen;
 import ua.training.top.service.AggregatorService;
+import ua.training.top.service.FreshenService;
 import ua.training.top.service.ResumeService;
 
 import static ua.training.top.SecurityUtil.setTestAuthorizedUser;
@@ -35,7 +36,7 @@ public class Main {
 
 
 //        ResumeRestController resumeRestController = appCtx.getBean(ResumeRestController.class);
-//        FreshenService freshenService = appCtx.getBean(FreshenService.class);
+        FreshenService freshenService = appCtx.getBean(FreshenService.class);
 //        AggregatorService aggregatorService = appCtx.getBean(AggregatorService.class);
 //        UserService userService = appCtx.getBean(UserService.class);
         ResumeService resumeService = appCtx.getBean(ResumeService.class);
@@ -46,7 +47,9 @@ public class Main {
 
         System.out.println("=".repeat(40));
 
+
         System.out.println(".".repeat(40));
         appCtx.close();
     }
+
 }

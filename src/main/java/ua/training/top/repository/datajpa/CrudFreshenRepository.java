@@ -19,4 +19,11 @@ public interface CrudFreshenRepository extends JpaRepository<Freshen, Integer> {
 
     @Query("SELECT f FROM Freshen f WHERE f.recordedDate<=:finish AND f.recordedDate>=:start")
     List<Freshen> getBetween(@Param("finish") LocalDateTime finish, @Param("start") LocalDateTime start);
+
+    @Query("SELECT f FROM Freshen f WHERE f.recordedDate<:reasonLocalDateTime")
+    List<Freshen> getOutDated(@Param("reasonLocalDateTime") LocalDateTime reasonLocalDateTime);
+
+        @Query(value =
+            "SELECT * FROM resume.public.freshen f ORDER BY f.recorded_date, f.id LIMIT :limit", nativeQuery = true)
+    List<Freshen> findExceeded(@Param("limit") int limit);
 }

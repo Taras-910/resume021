@@ -7,6 +7,7 @@ import org.springframework.data.repository.query.Param;
 import org.springframework.transaction.annotation.Transactional;
 import ua.training.top.model.Resume;
 
+import java.time.LocalDate;
 import java.util.List;
 
 @Transactional(readOnly = true)
@@ -39,4 +40,12 @@ public interface CrudResumeRepository extends JpaRepository<Resume, Integer> {
 
     @Query("SELECT r FROM Resume r WHERE r.freshen.userId=:userId")
     List<Resume> getByUserId(@Param("userId") Integer userId);
+
+    @Query("SELECT r FROM Resume r WHERE r.releaseDate<:reasonPeriodToKeep")
+    List<Resume> getOutDated(@Param("reasonPeriodToKeep") LocalDate reasonPeriodToKeep);
+
+    @Query(value =
+            "SELECT * FROM resume.public.resume r ORDER BY r.release_date, r.id LIMIT :exceedNumber", nativeQuery = true)
+    List<Resume> findExceeded(@Param("exceedNumber") int exceedNumber);
 }
+

@@ -176,14 +176,20 @@ public class ElementUtil {
 
     public static List<ResumeTo> getResumesRabota(Elements elements, Freshen freshen) {
         List<ResumeTo> list = new ArrayList<>();
-        int i = 0;
+//        int i = 0;
         for (Element element : elements) {
+//            System.out.println(i++ + "--------------------------------------------------------------------------------------");
             try {
                 LocalDate localDate = getLocalDate(xssClear(element.getElementsByClass("santa-typo-additional santa-text-black-500 santa-mr-20").text().trim()));
                 if (localDate.isAfter(reasonDateToLoad)) {
                     String age = link, workBefore, title = getCorrectTitle(xssClear(element.getElementsByClass("santa-m-0 santa-typo-h3 santa-pb-10").text().trim()));
                     workBefore = getToWorkBeforeRabota(xssClear(element.getElementsByAttributeValueStarting("class", "santa-mt-0").tagName("p").text().trim()));
+
+//                    System.out.println("title="+title);
                     try {
+//                    System.out.println("ageString1=");
+//                        String ageString = element.getElementsByAttributeValueContaining("class", "santa-space-x-10").next().first().text().trim();
+//                        System.out.println("ageString="+ageString);
                         age = getToAgeRabota(xssClear(element.getElementsByAttributeValueContaining("class", "santa-space-x-10").next().first().text().trim()));
                     } catch (Exception e) {
                         log.error(error_parse, "age", e.getMessage());
