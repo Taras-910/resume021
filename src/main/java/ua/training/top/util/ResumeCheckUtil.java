@@ -8,7 +8,7 @@ import ua.training.top.to.ResumeTo;
 import java.util.List;
 
 import static ua.training.top.SecurityUtil.authUserId;
-import static ua.training.top.util.MessagesUtil.*;
+import static ua.training.top.util.InformUtil.*;
 import static ua.training.top.util.UserUtil.asAdmin;
 import static ua.training.top.util.parser.data.CommonDataUtil.isEmpty;
 

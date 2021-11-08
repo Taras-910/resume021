@@ -14,7 +14,7 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static ua.training.top.util.MessagesUtil.*;
+import static ua.training.top.util.InformUtil.*;
 
 @Transactional(readOnly = true)
 @Repository

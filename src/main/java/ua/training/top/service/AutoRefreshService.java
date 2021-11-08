@@ -13,7 +13,7 @@ import static ua.training.top.SecurityUtil.setTestAuthorizedUser;
 import static ua.training.top.aggregator.installation.InstallationUtil.offAutoRefreshProviders;
 import static ua.training.top.aggregator.installation.InstallationUtil.setAutoRefreshProviders;
 import static ua.training.top.util.AutoRefreshUtil.*;
-import static ua.training.top.util.MessagesUtil.delay;
+import static ua.training.top.util.InformUtil.delay;
 import static ua.training.top.util.UserUtil.asAdmin;
 
 @Component

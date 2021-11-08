@@ -29,7 +29,7 @@ public class GrcStrategy implements Strategy {
             relocation = "&relocation=living_or_relocation",
             url_foreign = "https://grc.ua/search/resume?text=java&logic=normal&pos=full_text&exp_period=all_time&education=none&order_by=relevance&search_period=365&items_on_page=100&no_magic=true&area=1001&area=27&area=74&area=85&area=199&area=37&area=45&area=38&area=21&area=94&area=65&area=101&area=33&area=108&area=6&area=7&area=236&relocation=living_or_relocation&schedule=remote",
             url = "https://grc.ua/search/resume?clusters=true&exp_period=all_time&items_on_page=100&logic=normal&no_magic=true&order_by=relevance&ored_clusters=true&pos=full_text&text=%s&search_period=365%s%s%s%s%s";
-//https://grc.ua/search/resume?clusters=true&exp_period=all_time&items_on_page=100&logic=normal&no_magic=true&order_by=relevance&ored_clusters=true&pos=full_text&text=java&search_period=30&area=2&relocation=living_or_relocation&experience=between1And3&schedule=remote&page=1
+//https://grc.ua/search/resume?clusters=true&exp_period=all_time&items_on_page=100&logic=normal&no_magic=true&order_by=relevance&ored_clusters=true&pos=full_text&text=java&search_period=365
 
     protected Document getDocument(String workplace, String language, String level, String page) {
         return DocumentUtil.getDocument(format(url, language,

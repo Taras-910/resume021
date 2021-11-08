@@ -11,7 +11,7 @@ import ua.training.top.util.exception.NotFoundException;
 
 import javax.servlet.http.HttpServletRequest;
 
-import static ua.training.top.util.MessagesUtil.*;
+import static ua.training.top.util.InformUtil.*;
 
 public class ValidationUtil {
     public static final Logger log = LoggerFactory.getLogger(ValidationUtil.class);

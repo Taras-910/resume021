@@ -23,9 +23,10 @@ import ua.training.top.util.exception.MethodNotAllowedException;
 
 import javax.validation.constraints.NotEmpty;
 import java.util.List;
+
 import static ua.training.top.model.AbstractBaseEntity.START_SEQ;
-import static ua.training.top.util.MessagesUtil.*;
-import static ua.training.top.util.UserUtil.*;
+import static ua.training.top.util.InformUtil.must_not_null;
+import static ua.training.top.util.UserUtil.prepareToSave;
 import static ua.training.top.util.ValidationUtil.*;
 
 @Scope(proxyMode = ScopedProxyMode.TARGET_CLASS)

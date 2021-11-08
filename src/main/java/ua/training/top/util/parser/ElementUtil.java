@@ -17,11 +17,11 @@ import static ua.training.top.util.parser.data.AddressUtil.getToAddressFormat;
 import static ua.training.top.util.parser.data.AddressUtil.getToAddressWork;
 import static ua.training.top.util.parser.data.AgeUtil.*;
 import static ua.training.top.util.parser.data.CommonDataUtil.*;
+import static ua.training.top.util.parser.data.LocalDateUtil.getToLocalDate;
 import static ua.training.top.util.parser.data.SkillsUtil.*;
 import static ua.training.top.util.parser.data.TitleUtil.getCorrectTitle;
 import static ua.training.top.util.parser.data.UrlUtil.getToUrl;
 import static ua.training.top.util.parser.data.WorkBeforeUtil.*;
-import static ua.training.top.util.parser.date.DateUtil.*;
 import static ua.training.top.util.parser.salary.SalaryUtil.getToSalary;
 import static ua.training.top.util.xss.XssUtil.xssClear;
 
@@ -32,7 +32,7 @@ public class ElementUtil {
         List<ResumeTo> list = new ArrayList<>();
         elements.forEach(element -> {
             try {
-                LocalDate localDate = parseStringToLocalDate(builderDateString(xssClear(element.getElementsByTag("small").text().trim())));
+                LocalDate localDate = getToLocalDate(djinni, xssClear(element.getElementsByTag("small").text().trim()));
                 if (localDate.isAfter(reasonDateToLoad)) {
                     String skills, age, workBefore, title = getCorrectTitle(xssClear(element.getElementsByClass("profile").tagName("a").text().trim()));
                     workBefore = getToWorkBefore(xssClear(element.nextElementSibling().ownText()));
@@ -40,7 +40,9 @@ public class ElementUtil {
                     age = link;
                     if (isToValid(freshen, join(title, workBefore, skills)) && isAgeAfter(age) && workBefore.length() > 2) {
                         ResumeTo rTo = new ResumeTo(
-                                title, link, age,
+                                title,
+                                link,
+                                age,
                                 getToAddressFormat(xssClear(element.getElementsByAttributeValueStarting("class", "tiny-profile-details").text()).split("· \\$")[0]),
                                 getToSalary(xssClear(element.getElementsByAttributeValueStarting("class", "profile-details-salary").text().trim())),
                                 getLinkIfEmpty(workBefore),
@@ -60,14 +62,17 @@ public class ElementUtil {
         List<ResumeTo> list = new ArrayList<>();
         elements.forEach(element -> {
             try {
-                LocalDate localDate = parseStringToLocalDate(builderDateString(getToDateGrc(xssClear(element.getElementsByAttributeValueStarting("class", "bloko-text bloko-text_tertiary").text().trim()))));
+                LocalDate localDate = getToLocalDate(grc, xssClear(element.getElementsByClass("resume-search-item__date").text().trim()));
                 if (localDate.isAfter(reasonDateToLoad)) {
                     String workBefore, age, title = getCorrectTitle(xssClear(element.getElementsByClass("resume-search-item__name").text().trim()));
                     workBefore = getToWorkBefore(xssClear(element.getElementsByAttributeValueStarting("data-qa", "resume-serp_resume-item-content").text()));
                     age = getLinkIfEmpty(xssClear(element.getElementsByAttributeValueStarting("data-qa", "resume-serp__resume-age").text()));
                     if (isToValid(freshen, join(title, workBefore)) && isAgeAfter(age) && workBefore.length() > 2) {
                         ResumeTo rTo = new ResumeTo(
-                                title, link, age, link,
+                                title,
+                                link,
+                                age,
+                                link,
 //                                getSalary(getCorrectSalary(xssClear(element.getElementsByAttributeValueStarting("class", "profile-details-salary").text().trim())), null),
                                 getToSalary(xssClear(element.getElementsByClass("bloko-text bloko-text_large bloko-text_strong").text().trim())),
                                 getLinkIfEmpty(workBefore),
@@ -87,7 +92,7 @@ public class ElementUtil {
         List<ResumeTo> list = new ArrayList<>();
         for (Element element : elements) {
             try {
-                LocalDate localDate = parseStringToLocalDate(xssClear(element.getElementsByClass("basic-date").attr("datetime")));
+                LocalDate localDate = getToLocalDate(habr, xssClear(element.getElementsByClass("basic-date").attr("datetime")));
                 if (localDate.isAfter(reasonDateToLoad)) {
                     String age = link, workBefore, skills, title = getCorrectTitle(xssClear(element.getElementsByClass("resume-card__specialization").text()));
                     skills = getSkillsHabr(xssClear(element.getElementsByClass("link-comp link-comp--appearance-dark").text().trim()));
@@ -101,7 +106,8 @@ public class ElementUtil {
                         ResumeTo rTo = new ResumeTo(
                                 title,
                                 xssClear(element.getElementsByClass("resume-card__title-link").text()),
-                                age, link,
+                                age,
+                                link,
                                 getToSalary(xssClear(element.getElementsByClass("resume-card__offer").addClass("preserve-line").tagName("span").text().trim())),
                                 workBefore,
                                 getToUrl(habr, xssClear(element.getElementsByTag("a").attr("href").trim())),
@@ -120,7 +126,7 @@ public class ElementUtil {
         List<ResumeTo> list = new ArrayList<>();
         for (Element element : elements) {
             try {
-                LocalDate localDate = getLocalDate(xssClear(element.getElementsByClass("santa-typo-additional santa-text-black-500 santa-mr-20").text().trim()));
+                LocalDate localDate = getToLocalDate(rabota, xssClear(element.getElementsByClass("santa-typo-additional santa-text-black-500 santa-mr-20").text().trim()));
                 if (localDate.isAfter(reasonDateToLoad)) {
                     String age = link, workBefore, title = getCorrectTitle(xssClear(element.getElementsByClass("santa-m-0 santa-typo-h3 santa-pb-10").text().trim()));
                     workBefore = getToWorkBeforeRabota(xssClear(element.getElementsByAttributeValueStarting("class", "santa-mt-0").tagName("p").text().trim()));
@@ -157,7 +163,7 @@ public class ElementUtil {
         List<ResumeTo> list = new ArrayList<>();
         for (Element element : elements) {
             try {
-                LocalDate localDate = getLocalDate(xssClear(element.getElementsByAttributeValueEnding("class", "pull-right").text().trim()));
+                LocalDate localDate = getToLocalDate(work, xssClear(element.getElementsByAttributeValueEnding("class", "pull-right").text().trim()));
                 if (localDate.isAfter(reasonDateToLoad)) {
                     String workBefore, skills, age, title = getCorrectTitle(xssClear(element.getElementsByTag("a").first().text()));
                     workBefore = getToWorkBefore(xssClear(element.getElementsByTag("ul").text().trim()));

@@ -7,17 +7,6 @@ import static ua.training.top.util.parser.data.CommonDataUtil.*;
 
 public class AddressUtil {
 
-    public static String getToAddressLinkedin(String address) {
-        String[] addressParts = address.split(",");
-        return addressParts.length > 1 && addressParts[0].trim().equalsIgnoreCase(addressParts[1].trim()) ?
-                address.substring(address.indexOf(",") + 1).trim() : address;
-    }
-
-    public static String getToAddressRabota(String address) {
-        return isEmpty(address) ? link : address.length() > 1 && address.contains(" ") ?
-                address.substring(0, address.indexOf(" ")).trim() : address;
-    }
-
     public static String getToAddressWork(String address) {
         return address.contains("·") ? address.substring(address.lastIndexOf("·") + 1).trim() : address;
     }

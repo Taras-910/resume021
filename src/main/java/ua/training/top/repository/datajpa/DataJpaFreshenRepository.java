@@ -50,7 +50,7 @@ public class DataJpaFreshenRepository implements FreshenRepository {
         List<Freshen> freshens = new ArrayList<>();
         try {
             freshens.addAll(freshenRepository.getBetween(finish, start));
-        } catch (Exception e) {
+        } catch (Exception ignored) {
         }
         return freshens;
     }

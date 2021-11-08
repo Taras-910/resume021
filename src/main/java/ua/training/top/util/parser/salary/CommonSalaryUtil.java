@@ -10,9 +10,10 @@ import static java.util.List.of;
 import static ua.training.top.util.parser.data.CommonDataUtil.getReplace;
 
 public class CommonSalaryUtil {
+    public static final Logger log = LoggerFactory.getLogger(CommonSalaryUtil.class);
     public static final Pattern patternMonetaryAmount =
             Pattern.compile("((?:[\\d,\\.\\s  &nbsp]+\\b)(\\s*)?(\\p{Sc}|ƒ))|((?:\\p{Sc}|ƒ)(\\s*)?[\\d,\\.\\s  &nbsp]+\\b)");
-    public static final Logger log = LoggerFactory.getLogger(CommonSalaryUtil.class);
+
     public static final float
             rate_pln_to_usd = 3.98f,
             rate_eur_to_usd = 0.86f,

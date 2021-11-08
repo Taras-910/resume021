@@ -18,7 +18,7 @@ import ua.training.top.service.UserService;
 
 import javax.validation.Valid;
 
-import static ua.training.top.util.MessagesUtil.*;
+import static ua.training.top.util.InformUtil.*;
 
 @ApiIgnore
 @Controller

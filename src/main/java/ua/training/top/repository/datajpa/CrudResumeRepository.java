@@ -21,7 +21,7 @@ public interface CrudResumeRepository extends JpaRepository<Resume, Integer> {
     @Query("SELECT r FROM Resume r WHERE r.id=:id")
     Resume get(@Param("id") int id);
 
-    @Query("SELECT r FROM Resume r ORDER BY r.releaseDate DESC")
+    @Query("SELECT r FROM Resume r ORDER BY r.releaseDate DESC, r.title ASC ")
     List<Resume> getAll();
 
     @Query("SELECT r FROM Resume r WHERE r.title=:title AND r.name=:name " +

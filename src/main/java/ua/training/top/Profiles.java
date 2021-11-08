@@ -1,6 +1,6 @@
 package ua.training.top;
 
-import static ua.training.top.util.MessagesUtil.not_find_driver;
+import static ua.training.top.util.InformUtil.not_find_driver;
 
 public class Profiles {
     public static final String

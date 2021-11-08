@@ -2,7 +2,6 @@ package ua.training.top.util.parser.data;
 
 import static java.util.List.of;
 import static ua.training.top.util.parser.data.CommonDataUtil.*;
-import static ua.training.top.util.parser.date.CommonDateUtil.isContains;
 
 public class AgeUtil {
 

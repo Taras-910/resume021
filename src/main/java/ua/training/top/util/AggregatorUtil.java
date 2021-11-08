@@ -5,7 +5,7 @@ import ua.training.top.model.Resume;
 import ua.training.top.to.ResumeTo;
 
 import static ua.training.top.util.parser.data.CommonDataUtil.getLimitation;
-import static ua.training.top.util.parser.data.CommonDataUtil.limit;
+import static ua.training.top.util.parser.data.CommonDataUtil.limitAnchor;
 
 public class AggregatorUtil {
     public static final String link = "see the card";
@@ -22,7 +22,7 @@ public class AggregatorUtil {
         String text = r.getWorkBefore().toLowerCase();
         text = text.replaceAll("месяц", " ").toLowerCase().trim();
         text = text.contains(" ") ? text.substring(0, text.indexOf(" ")).trim() : text;
-        return getLimitation(text.contains(" ") ? text.substring(0, text.lastIndexOf(" ")).trim() : text, limit);
+        return getLimitation(text.contains(" ") ? text.substring(0, text.lastIndexOf(" ")).trim() : text, limitAnchor);
     }
 
     public static Resume getForUpdate(Resume r, Resume resumeDb) {

@@ -9,7 +9,7 @@ import ua.training.top.to.ResumeTo;
 import java.io.IOException;
 import java.util.List;
 
-import static ua.training.top.util.MessagesUtil.number_inform;
+import static ua.training.top.util.InformUtil.number_inform;
 
 public class Provider {
     private static final Logger log = LoggerFactory.getLogger(Provider.class);

@@ -15,7 +15,7 @@ import java.util.List;
 
 import static ua.training.top.util.DateTimeUtil.tomorrow;
 import static ua.training.top.util.DateTimeUtil.yesterday;
-import static ua.training.top.util.MessagesUtil.must_not_null;
+import static ua.training.top.util.InformUtil.must_not_null;
 import static ua.training.top.util.ValidationUtil.*;
 
 @Service

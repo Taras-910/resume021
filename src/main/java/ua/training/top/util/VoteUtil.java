@@ -10,7 +10,7 @@ import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static ua.training.top.aggregator.installation.InstallationUtil.limitResumesToKeep;
-import static ua.training.top.util.MessagesUtil.not_found;
+import static ua.training.top.util.InformUtil.not_found;
 
 public class VoteUtil {
     public static Logger log = LoggerFactory.getLogger(VoteUtil.class);

@@ -13,16 +13,15 @@ public class CommonDataUtil {
 
     public static final int
             limitText = 300,
-            limit = 125;
+            limitAnchor = 125;
     public static final String
             document_user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1.2 Safari/605.1.15",
-            salary_error = "Error: salary not contains at least one [salary:,pln,$,usd,eur,€,грн,gbp,£,₤,₽,руб]={}",
             middle = "middle", trainee = "trainee", junior = "junior", senior = "senior", expert = "expert",
             internet_connection_error = "There may be no internet connection or exception={} by url={} ",
             finish = "\nfinish is ok,\ncreated: {}\nupdated: {}\nFreshen: {}\n" + ":".repeat(125),
             error = "There is error \ne={}\n for parse \n{}",
+            common_number = "Common number resumeTos = {}",
             get_resume = "GetResumes city={} language={}",
-            common_number = "Common number resumes = {}",
             error_parse = "Error parse field={} e={}",
             document_url = "GetDocument url={}\n",
             error_select = "Select error e {}",
@@ -87,6 +86,10 @@ public class CommonDataUtil {
 
     public static boolean isEquals(String workplace, List<String> list) {
         return list.stream().anyMatch(workplace.toLowerCase()::equals);
+    }
+
+    public static boolean isContains(String myDate, List<String> list) {
+        return list.stream().anyMatch(myDate.toLowerCase()::contains);
     }
 
     public static String getLimitation(String text, int limit) {

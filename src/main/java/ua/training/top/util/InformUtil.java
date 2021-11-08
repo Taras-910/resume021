@@ -1,6 +1,6 @@
 package ua.training.top.util;
 
-public class MessagesUtil {
+public class InformUtil {
     public static final String
             all = "all",
             email_error = "[email] must be in the format of an email address",
