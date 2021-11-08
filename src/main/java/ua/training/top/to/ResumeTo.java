@@ -71,6 +71,20 @@ public class ResumeTo extends BaseTo implements Serializable, Comparable<ResumeT
         this.toVote = toVote;
     }
 
+    public ResumeTo(@NotNull String title, @NotNull String name, String age, @NotNull String address,
+                    @NotNull Integer salary, @NotNull String workBefore, @NotNull String url, @NotNull String skills,
+                    @Nullable LocalDate releaseDate) {
+        this.title = title;
+        this.name = name;
+        this.age = age;
+        this.address = address;
+        this.salary = salary;
+        this.workBefore = workBefore;
+        this.url = url;
+        this.skills = skills;
+        this.releaseDate = releaseDate;
+    }
+
     public ResumeTo(){}
 
     public ResumeTo(ResumeTo rTo){

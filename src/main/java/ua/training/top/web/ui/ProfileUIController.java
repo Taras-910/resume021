@@ -45,7 +45,7 @@ public class ProfileUIController {
             status.setComplete();
             return "resumes";
         } catch (DataIntegrityViolationException ex) {
-            result.rejectValue("email", null, user_exist_error);
+            result.rejectValue("email", null, user_exist);
             return "profile";
         }
     }
@@ -73,7 +73,7 @@ public class ProfileUIController {
                 status.setComplete();
                 return "redirect:/login" + invite_sign_in + user.getEmail();
             } catch (DataIntegrityViolationException e) {
-                result.rejectValue("email", null, user_exist_error);
+                result.rejectValue("email", null, user_exist);
                 model.addAttribute("register", true);
                 return "profile";
             }

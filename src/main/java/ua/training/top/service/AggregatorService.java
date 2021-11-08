@@ -69,14 +69,13 @@ public class AggregatorService {
     public static void main(String[] args) throws IOException {
         setTestAuthorizedUser(asAdmin());
 
-        List<ResumeTo> resumeTos = getAllProviders().selectBy(asNewFreshen("java", "all", "львов", UPGRADE));
+        List<ResumeTo> resumeTos = getAllProviders().selectBy(asNewFreshen("java", "all", "all", UPGRADE));
         AtomicInteger i = new AtomicInteger(1);
         resumeTos.forEach(vacancyNet -> log.info("\nvacancyNet № {}\n{}\n", i.getAndIncrement(), vacancyNet.toString()));
         log.info("\n\ncommon = {}", resumeTos.size());
 
     }
 }
-
 //	      djinni   grc*10   habr  rabota   work  linkedin  total
 //all	    49	  49(0)	     1	     6	    16	   (100)	121
 //Украина	32	   4(0)	     -	     6	    30	     -	     72
@@ -89,3 +88,7 @@ public class AggregatorService {
 //Одесса	 5	    -	     -	     2	     4	     -	     11
 //Санкт-П	 5	   5(0)	     1	     -	     -	     -	     11
 //Москва	 -	   8(0)	     1	     -	     -	     -	      9
+
+
+
+

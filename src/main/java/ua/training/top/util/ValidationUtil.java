@@ -93,7 +93,7 @@ public class ValidationUtil {
 
     public static void checkExistThisEmail(User user) {
         if (user != null) {
-            throw new DataIntegrityViolationException(user_exist_error + user.getEmail());
+            throw new DataIntegrityViolationException(user_exist + user.getEmail());
         }
     }
 

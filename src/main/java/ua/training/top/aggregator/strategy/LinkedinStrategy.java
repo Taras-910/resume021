@@ -13,7 +13,6 @@ import java.util.*;
 
 import static java.lang.String.format;
 import static ua.training.top.aggregator.installation.InstallationUtil.reCall;
-import static ua.training.top.util.parser.ElementUtil.getResumesLinkedin;
 import static ua.training.top.util.parser.data.CommonDataUtil.get_resume;
 import static ua.training.top.util.parser.data.CommonDataUtil.linkedin;
 import static ua.training.top.util.parser.data.PagesUtil.getMaxPages;
@@ -62,7 +61,7 @@ public class LinkedinStrategy implements Strategy {
                 System.out.println("elements="+elements.size());
 
                 if (elements == null || elements.size() == 0) break;
-                set.addAll(getResumesLinkedin(elements, freshen));
+//                set.addAll(getResumesLinkedin(elements, freshen));
                 if(page < getMaxPages(linkedin, city)) page++;
                 else break;
             }

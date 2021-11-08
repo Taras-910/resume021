@@ -101,11 +101,11 @@ public class CommonDataUtil {
         return !isEmpty(text) && text.length() > 1 ? text.substring(0, 1).toUpperCase().concat(text.substring(1)) : text;
     }
 
-    public static String getReplace(String textForClean, List<String> wasteWords, String replacement) {
+    public static String getReplace(String text, List<String> wasteWords, String replacement) {
         for (String s : wasteWords) {
-            textForClean = textForClean.replaceAll(s, replacement).trim();
+            text = text.replaceAll(s, replacement).trim();
         }
-        return textForClean;
+        return text;
     }
 
     public static boolean isToValid(Freshen f, String text) {

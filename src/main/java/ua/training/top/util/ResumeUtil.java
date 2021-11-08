@@ -1,33 +1,25 @@
 package ua.training.top.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import ua.training.top.model.Freshen;
 import ua.training.top.model.Resume;
 import ua.training.top.model.Vote;
 import ua.training.top.to.ResumeTo;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 import static java.util.List.of;
-import static ua.training.top.aggregator.installation.InstallationUtil.limitResumesToKeep;
-import static ua.training.top.aggregator.installation.InstallationUtil.reasonPeriodToKeep;
-import static ua.training.top.util.ResumeCheckUtil.isSample;
-import static ua.training.top.util.parser.data.CommonDataUtil.*;
+import static ua.training.top.util.ResumeCheckUtil.isAccuracy;
+import static ua.training.top.util.parser.data.CommonDataUtil.link;
 
 public class ResumeUtil {
-    private static Logger log = LoggerFactory.getLogger(ResumeUtil.class);
 
     private static List<ResumeTo> getEmpty() {
         return of(new ResumeTo(0, "", "", "", "", -1,
                 "No filtering records found, refresh DB",
                 "", "", LocalDate.now(), "", "", "", false));
     }
-
 
     public static List<ResumeTo> getTos(List<Resume> resumes, List<Vote> votes) {
         return resumes.isEmpty() ? getEmpty() : resumes.stream()
@@ -54,8 +46,9 @@ public class ResumeUtil {
     }
 
     public static Resume fromToForUpdate(ResumeTo rTo, Resume r) {
+        assert r != null;
         Resume resume = new Resume(
-                r == null ? null : r.getId(),
+                r.getId(),
                 rTo.getTitle(),
                 r.getName().equals(link) ? link : rTo.getName(),
                 r.getAge().equals(link) ? link : rTo.getAge(),
@@ -69,30 +62,9 @@ public class ResumeUtil {
         return resume;
     }
 
-    public static List<Resume> getResumesOutPeriodToKeep(List<Resume> resumesDb) {
-        return resumesDb.stream()
-                .filter(resumeTo -> reasonPeriodToKeep.isAfter(resumeTo.getReleaseDate()))
-                .collect(Collectors.toList());
-    }
-
-    public static List<Resume> getResumesOutLimitHeroku(List<Resume> resumesDb) {
-        return Optional.of(resumesDb.parallelStream()
-                .sorted((r1, r2) -> r1.getReleaseDate().isAfter(r2.getReleaseDate()) ? 1 : 0)
-                .sequential()
-                .skip(limitResumesToKeep)
-                .collect(Collectors.toList())).orElse(new ArrayList<>());
-    }
-
-    public static String getPartWorkBefore(String text) {
-        text = text.replaceAll("месяц", " ").trim();
-        text = text.contains(" ") ? text.substring(0, text.indexOf(" ")).trim() : text;
-        return getLimitation(text.contains(" ") ? text.substring(0, text.lastIndexOf(" ")).trim() : text, limit);
-    }
-
-
     public static List<Resume> getFilterLanguage(List<Resume> resumes, Freshen f) {
         return f.getLanguage().equals("all") ? resumes : resumes.stream()
-                .filter(r -> isSample(f.getLanguage(), List.of(r.getSkills(),  r.getTitle(), r.getWorkBefore())))
+                .filter(r -> isAccuracy(f.getLanguage(), List.of(r.getSkills(),  r.getTitle(), r.getWorkBefore())))
                 .collect(Collectors.toList());
     }
 }

@@ -44,10 +44,6 @@ public class CommonDateUtil {
         return list.stream().anyMatch(myDate.toLowerCase()::contains);
     }
 
-    public static boolean isNoneContains(String myDate, List<String> list) {
-        return list.stream().noneMatch(myDate.toLowerCase()::contains);
-    }
-
     public static String thisYear() {
         return new SimpleDateFormat(DATE_PATTERN).format(new Date()).substring(0, 4);
     }

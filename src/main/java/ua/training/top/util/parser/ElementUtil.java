@@ -10,12 +10,11 @@ import ua.training.top.to.ResumeTo;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import static java.lang.String.join;
-import static org.springframework.util.StringUtils.hasText;
 import static ua.training.top.aggregator.installation.InstallationUtil.reasonDateToLoad;
-import static ua.training.top.util.parser.data.AddressUtil.*;
+import static ua.training.top.util.parser.data.AddressUtil.getToAddressFormat;
+import static ua.training.top.util.parser.data.AddressUtil.getToAddressWork;
 import static ua.training.top.util.parser.data.AgeUtil.*;
 import static ua.training.top.util.parser.data.CommonDataUtil.*;
 import static ua.training.top.util.parser.data.SkillsUtil.*;
@@ -24,7 +23,6 @@ import static ua.training.top.util.parser.data.UrlUtil.getToUrl;
 import static ua.training.top.util.parser.data.WorkBeforeUtil.*;
 import static ua.training.top.util.parser.date.DateUtil.*;
 import static ua.training.top.util.parser.salary.SalaryUtil.getToSalary;
-import static ua.training.top.util.parser.salary.SalaryUtil.getToSalaryRabota;
 import static ua.training.top.util.xss.XssUtil.xssClear;
 
 public class ElementUtil {
@@ -41,16 +39,13 @@ public class ElementUtil {
                     skills = getSkillsDjinni(title, xssClear(element.getElementsByAttributeValueStarting("class", "tiny-profile-details").text()), element);
                     age = link;
                     if (isToValid(freshen, join(title, workBefore, skills)) && isAgeAfter(age) && workBefore.length() > 2) {
-                        ResumeTo rTo = new ResumeTo();
-                        rTo.setTitle(title);
-                        rTo.setName(link);
-                        rTo.setAge(age);
-                        rTo.setAddress(getToAddressFormat(xssClear(element.getElementsByAttributeValueStarting("class", "tiny-profile-details").text()).split("· \\$")[0]));
-                        rTo.setSalary(getToSalary(xssClear(element.getElementsByAttributeValueStarting("class", "profile-details-salary").text().trim())));
-                        rTo.setWorkBefore(hasText(workBefore) ? workBefore : link);
-                        rTo.setUrl(getToUrl(djinni, xssClear(element.getElementsByTag("a").attr("href").trim())));
-                        rTo.setSkills(getLinkIfEmpty(skills));
-                        rTo.setReleaseDate(localDate);
+                        ResumeTo rTo = new ResumeTo(
+                                title, link, age,
+                                getToAddressFormat(xssClear(element.getElementsByAttributeValueStarting("class", "tiny-profile-details").text()).split("· \\$")[0]),
+                                getToSalary(xssClear(element.getElementsByAttributeValueStarting("class", "profile-details-salary").text().trim())),
+                                getLinkIfEmpty(workBefore),
+                                getToUrl(djinni, xssClear(element.getElementsByTag("a").attr("href").trim())),
+                                getLinkIfEmpty(skills), localDate);
                         list.add(rTo);
                     }
                 }
@@ -71,17 +66,13 @@ public class ElementUtil {
                     workBefore = getToWorkBefore(xssClear(element.getElementsByAttributeValueStarting("data-qa", "resume-serp_resume-item-content").text()));
                     age = getLinkIfEmpty(xssClear(element.getElementsByAttributeValueStarting("data-qa", "resume-serp__resume-age").text()));
                     if (isToValid(freshen, join(title, workBefore)) && isAgeAfter(age) && workBefore.length() > 2) {
-                        ResumeTo rTo = new ResumeTo();
-                        rTo.setTitle(title);
-                        rTo.setName(link);
-                        rTo.setAge(age);
-                        rTo.setAddress(link);
-//                        rTo.setSalary(getSalary(getCorrectSalary(xssClear(element.getElementsByAttributeValueStarting("class", "profile-details-salary").text().trim())), null));
-                        rTo.setSalary(getToSalary(xssClear(element.getElementsByClass("bloko-text bloko-text_large bloko-text_strong").text().trim())));
-                        rTo.setWorkBefore(isEmpty(workBefore) ? link : workBefore);
-                        rTo.setUrl(getToUrl(grc, xssClear(element.getElementsByClass("resume-search-item__name").attr("href").trim())));
-                        rTo.setSkills(link);
-                        rTo.setReleaseDate(localDate);
+                        ResumeTo rTo = new ResumeTo(
+                                title, link, age, link,
+//                                getSalary(getCorrectSalary(xssClear(element.getElementsByAttributeValueStarting("class", "profile-details-salary").text().trim())), null),
+                                getToSalary(xssClear(element.getElementsByClass("bloko-text bloko-text_large bloko-text_strong").text().trim())),
+                                getLinkIfEmpty(workBefore),
+                                getToUrl(grc, xssClear(element.getElementsByClass("resume-search-item__name").attr("href").trim())),
+                                link, localDate);
                         list.add(rTo);
                     }
                 }
@@ -107,16 +98,14 @@ public class ElementUtil {
                         log.error(error_parse, "age", e.getMessage());
                     }
                     if (isToValid(freshen, join(title, workBefore, skills)) && isAgeAfter(age) && workBefore.length() > 2) {
-                        ResumeTo rTo = new ResumeTo();
-                        rTo.setTitle(title);
-                        rTo.setName(xssClear(element.getElementsByClass("resume-card__title-link").text()));
-                          rTo.setAge(age);
-                        rTo.setAddress(link);
-                        rTo.setSalary(getToSalary(xssClear(element.getElementsByClass("resume-card__offer").addClass("preserve-line").tagName("span").text().trim())));
-                        rTo.setWorkBefore(workBefore);
-                        rTo.setUrl(getToUrl(habr, xssClear(element.getElementsByTag("a").attr("href").trim())));
-                        rTo.setSkills(skills);
-                        rTo.setReleaseDate(localDate);
+                        ResumeTo rTo = new ResumeTo(
+                                title,
+                                xssClear(element.getElementsByClass("resume-card__title-link").text()),
+                                age, link,
+                                getToSalary(xssClear(element.getElementsByClass("resume-card__offer").addClass("preserve-line").tagName("span").text().trim())),
+                                workBefore,
+                                getToUrl(habr, xssClear(element.getElementsByTag("a").attr("href").trim())),
+                                skills, localDate);
                         list.add(rTo);
                     }
                 }
@@ -127,64 +116,14 @@ public class ElementUtil {
         return list;
     }
 
-    public static List<ResumeTo> getResumesLinkedin(Elements elements, Freshen freshen) {
-        List<ResumeTo> list = new ArrayList<>();
-        AtomicInteger i = new AtomicInteger();
-        elements.forEach(element -> {
-            System.out.println(i.getAndIncrement() + "  -------------------------------------------------------------------------------------");
-//            System.out.println("element = " + element + "\n");
-            try {
-                LocalDate localDate = LocalDate.now().minusDays(7);
-                if (localDate.isAfter(reasonDateToLoad)) {
-                    System.out.println("element=" + element);
-
-                    System.out.println("mesage1String =" + element.getElementsByClass("entity-result ").addClass("entity-result__primary-subtitle"));
-                    String mesage1 = getCorrectTitle(xssClear(element.getElementsByAttributeValueStarting("class", "entity-result__primary-subtitle").text().trim()));
-                    System.out.println("mesage1=" + mesage1);
-
-                    System.out.println("mesage2String =" + xssClear(element.getElementsByAttributeValueStarting("class", "entity-result__secondary-subtitle").text().trim()));
-                    String mesage2 = getCorrectTitle(xssClear(element.getElementsByAttributeValueStarting("class", "entity-result__secondary-subtitle").text().trim()));
-                    System.out.println("mesage2=" + mesage2);
-
-                    System.out.println("mesage3String =" + xssClear(element.getElementsByAttributeValueStarting("class", "entity-result__summary").text().trim()));
-                    String mesage3 = getCorrectTitle(xssClear(element.getElementsByAttributeValueStarting("class", "entity-result__summary").text().trim()));
-                    System.out.println("mesage3=" + mesage3);
-
-                    System.out.println("mesage4String =" + xssClear(element.getElementsByAttributeValueStarting("class", "entity-result__summary").tagName("p").text().trim()));
-                    String mesage4 = getCorrectTitle(xssClear(element.getElementsByAttributeValueStarting("class", "entity-result__summary").tagName("p").text().trim()));
-                    System.out.println("mesage4=" + mesage4);
-                    if (/*checkTo(freshen, title.concat(" ").concat(workBefore).concat(" ").concat(skills), age) && workBefore.length() > 2*/true) {
-                        ResumeTo rTo = new ResumeTo();
-                        rTo.setTitle(mesage1);
-                        rTo.setName(link);
-                        rTo.setAge(link);
-                        rTo.setAddress(link);
-                        rTo.setSalary(1);
-                        rTo.setWorkBefore(link);
-                        rTo.setUrl(xssClear(element.getElementsByTag("a").first().attr("href")));
-                        rTo.setSkills(link);
-                        rTo.setReleaseDate(localDate);
-                        list.add(rTo);
-                    }
-                }
-            } catch (Exception e) {
-                log.error(error, e.getLocalizedMessage(), element);
-            }
-        });
-        return list;
-    }
-
     public static List<ResumeTo> getResumesRabota(Elements elements, Freshen freshen) {
         List<ResumeTo> list = new ArrayList<>();
-//        int i = 0;
         for (Element element : elements) {
-//            System.out.println(i++ + "--------------------------------------------------------------------------------------");
             try {
                 LocalDate localDate = getLocalDate(xssClear(element.getElementsByClass("santa-typo-additional santa-text-black-500 santa-mr-20").text().trim()));
                 if (localDate.isAfter(reasonDateToLoad)) {
                     String age = link, workBefore, title = getCorrectTitle(xssClear(element.getElementsByClass("santa-m-0 santa-typo-h3 santa-pb-10").text().trim()));
                     workBefore = getToWorkBeforeRabota(xssClear(element.getElementsByAttributeValueStarting("class", "santa-mt-0").tagName("p").text().trim()));
-
 //                    System.out.println("title="+title);
                     try {
 //                    System.out.println("ageString1=");
@@ -195,16 +134,15 @@ public class ElementUtil {
                         log.error(error_parse, "age", e.getMessage());
                     }
                     if (isToValid(freshen, join(title, workBefore)) && isAgeAfter(age) && workBefore.length() > 2) {
-                        ResumeTo rTo = new ResumeTo();
-                        rTo.setTitle(title);
-                        rTo.setName(xssClear(element.getElementsByAttributeValueStarting("class", "santa-pr-20 ").text()));
-                        rTo.setAge(age);
-                        rTo.setAddress(getToAddressFormat(getToAddressRabota(xssClear(element.getElementsByAttributeValueStarting("class", "santa-flex-shrink-0").next().text().trim()))));
-                        rTo.setSalary(getToSalary(getToSalaryRabota(xssClear(element.getElementsByAttributeValueStarting("class", "santa-flex-shrink-0").next().text().trim()))));
-                        rTo.setWorkBefore(workBefore);
-                        rTo.setUrl(xssClear(element.getElementsByAttributeValue("target", "_self").attr("href").trim()));
-                        rTo.setSkills(link);
-                        rTo.setReleaseDate(localDate);
+                        ResumeTo rTo = new ResumeTo(
+                                title,
+                                xssClear(element.getElementsByAttributeValueStarting("class", "santa-pr-20 ").text()),
+                                age,
+                                getToAddressFormat(xssClear(element.getElementsByAttributeValueStarting("class", "santa-flex-shrink-0").next().text().trim())),
+                                getToSalary(xssClear(element.getElementsByAttributeValueStarting("class", "santa-flex-shrink-0").next().text().trim())),
+                                workBefore,
+                                xssClear(element.getElementsByAttributeValue("target", "_self").attr("href").trim()),
+                                link, localDate);
                         list.add(rTo);
                     }
                 }
@@ -224,19 +162,18 @@ public class ElementUtil {
                     String workBefore, skills, age, title = getCorrectTitle(xssClear(element.getElementsByTag("a").first().text()));
                     workBefore = getToWorkBefore(xssClear(element.getElementsByTag("ul").text().trim()));
                     skills = getCorrectSkills(xssClear(element.getElementsByClass("add-bottom").tagName("div").text().trim()));
-                        age = xssClear(element.getElementsByAttributeValueContaining("data-toggle", "popover").next().next().text().trim());
-                        age = getToAgeWork(isEmpty(age) ? xssClear(element.getElementsByTag("b").addClass("text-muted").next().next().text()) : age);
+                    age = xssClear(element.getElementsByAttributeValueContaining("data-toggle", "popover").next().next().text().trim());
+                    age = getToAgeWork(isEmpty(age) ? xssClear(element.getElementsByTag("b").addClass("text-muted").next().next().text()) : age);
                     if (isToValid(freshen, join(title, workBefore, skills)) && isAgeAfter(age) && workBefore.length() > 2) {
-                        ResumeTo rTo = new ResumeTo();
-                        rTo.setTitle(title);
-                        rTo.setName(xssClear(element.getElementsByTag("b").text()));
-                        rTo.setAddress(getToAddressFormat(getToAddressWork(xssClear(element.getElementsByAttributeValueContaining("class", "add-bottom").prev().text().trim()))));
-                        rTo.setAge(age);
-                        rTo.setSalary(getToSalary(xssClear(element.getElementsByAttributeValueStarting("class", "nowrap").tagName("span").text().trim())));
-                        rTo.setWorkBefore(workBefore);
-                        rTo.setUrl(getToUrl(work, xssClear(element.getElementsByTag("a").attr("href"))));
-                        rTo.setSkills(skills);
-                        rTo.setReleaseDate(localDate);
+                        ResumeTo rTo = new ResumeTo(
+                                title,
+                                xssClear(element.getElementsByTag("b").text()),
+                                getToAddressFormat(getToAddressWork(xssClear(element.getElementsByAttributeValueContaining("class", "add-bottom").prev().text().trim()))),
+                                age,
+                                getToSalary(xssClear(element.getElementsByAttributeValueStarting("class", "nowrap").tagName("span").text().trim())),
+                                workBefore,
+                                getToUrl(work, xssClear(element.getElementsByTag("a").attr("href"))),
+                                skills, localDate);
                         list.add(rTo);
                     }
                 }

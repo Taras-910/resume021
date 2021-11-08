@@ -56,8 +56,7 @@ public class ResumeCheckUtil {
         }
     }
 
-    public static boolean isSample(String word, List<String> list) {
+    public static boolean isAccuracy(String word, List<String> list) {
         return list.stream().anyMatch( s -> s.toLowerCase().matches(".*\\b" + word + "\\b.*"));
     }
-
 }

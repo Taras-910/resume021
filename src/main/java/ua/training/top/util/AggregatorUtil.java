@@ -4,10 +4,12 @@ import ua.training.top.model.Freshen;
 import ua.training.top.model.Resume;
 import ua.training.top.to.ResumeTo;
 
-import static ua.training.top.util.ResumeUtil.getPartWorkBefore;
+import static ua.training.top.util.parser.data.CommonDataUtil.getLimitation;
+import static ua.training.top.util.parser.data.CommonDataUtil.limit;
 
 public class AggregatorUtil {
     public static final String link = "see the card";
+
     public static ResumeTo createTo(ResumeTo resumeTo, Freshen freshen) {
         resumeTo.setWorkplace(freshen.getWorkplace());
         resumeTo.setLevel(freshen.getLevel());
@@ -15,8 +17,12 @@ public class AggregatorUtil {
         resumeTo.setToVote(false);
         return resumeTo;
     }
+
     public static String getAnchor(Resume r) {
-        return getPartWorkBefore(r.getWorkBefore()).toLowerCase();
+        String text = r.getWorkBefore().toLowerCase();
+        text = text.replaceAll("месяц", " ").toLowerCase().trim();
+        text = text.contains(" ") ? text.substring(0, text.indexOf(" ")).trim() : text;
+        return getLimitation(text.contains(" ") ? text.substring(0, text.lastIndexOf(" ")).trim() : text, limit);
     }
 
     public static Resume getForUpdate(Resume r, Resume resumeDb) {

@@ -28,8 +28,7 @@ public class ProviderUtil {
                     new Provider(new DjinniStrategy()),      /*ua, foreign, remote, all  50pages */
                     new Provider(new GrcStrategy()),         /*меняет salary, date */
                     new Provider(new HabrStrategy()),        /*нет за_рубежем*/
-                    new Provider(new LinkedinStrategy()),     /*только all, remote*/
-//                    new Provider(new RabotaStrategy())      /*оч мало - до 10*/
+                    new Provider(new RabotaStrategy()),      /*оч мало - до 10*/
                     new Provider(new WorkStrategy())         /*нет за_рубежем*/
             );
         }
