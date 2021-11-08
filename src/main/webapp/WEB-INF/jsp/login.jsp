@@ -70,14 +70,13 @@
     резюме, пользователи могут управлять своим профилем через UI (по AJAX) и по REST интерфейсу с базовой авторизацией.
     Резюме можно фильтровать / обновлять / отмечать (меняется цвет строки, индивидуальный выбор сохраняется в базе
     данных).<br/>Весь REST интерфейс покрывается JUnit тестами, при этом используется Spring MVC Test и Spring Security
-    Test.<br/>БД хранит резюме за последние пол-года и само-обновляется из 6-ти ресурсов:<br/>
+    Test.<br/>БД хранит резюме за последние 4-е месяца и постоянно само-обновляется из 5-ти ресурсов:<br/>
     <a href="https://djinni.co">Djinni</a>,
     <a href="http://grc.ua">HH(GrcUA)</a>,
     <a href="https://career.habr.com">Habr</a>,
     <a href="https://www.linkedin.com">LinkedIn</a>,
     <a href="https://rabota.ua">Rabota</a>,
-    <a href="https://www.work.ua">Work</a>,
-    <a href="https://rabota.yandex.ru">Yandex</a>
+    <a href="https://www.work.ua">Work</a>
 </div>
 <br>
 <div class="container jumbotron py-0">
