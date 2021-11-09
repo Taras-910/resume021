@@ -16,15 +16,15 @@ public class LocalDateUtil {
 
     public static LocalDate getToLocalDate(String originText) {
         String preText = oneToNumbAndWord(originText);
-        if (isEmpty(preText) || !preText.contains(" ") && !isRuleDate(preText)) {
+        String text = getBruteAge(preText);
+        if (isEmpty(preText) || !preText.contains(" ") && !isRuleDate(preText) || !text.contains(" ")) {
             return LocalDate.now().minusMonths(1);
         }
         try {
-            String text = getBruteCleaning(preText);
-            int number = text.contains(" ") ? Integer.parseInt(text.split(" ")[0]) : 1;
-            String name = text.contains(" ") ? text.split(" ")[1] : "";
-            return isRuleMonth(text) ? getByDayAndMonth(name, number) :
-                    isRuleAgo(text) ? getByNumberAgo(name, number) : isRuleDate(text) ?
+            int number = Integer.parseInt(text.split(" ")[0]);
+            String name = text.split(" ")[1];
+            return isRuleMonth(text) ? getByDayAndMonth(number, name) :
+                    isRuleAgo(text) ? getByNumberAgo(number, name) : isRuleDate(text) ?
                     LocalDate.parse(text.contains("T") ? text.substring(0, text.indexOf("T")) : text) : now().minusMonths(1);
         } catch (Exception e) {
             log.error(error, e.getMessage(), originText);
@@ -32,7 +32,7 @@ public class LocalDateUtil {
         }
     }
 
-    private static LocalDate getByNumberAgo(String periodName, int number) {
+    private static LocalDate getByNumberAgo(int number, String periodName) {
         return switch (periodName) {
             case "сейчас"  -> LocalDate.now();
             case "минуту", "минуты", "минут" -> LocalDateTime.now().minusMinutes(number).toLocalDate();
@@ -44,7 +44,7 @@ public class LocalDateUtil {
         };
     }
 
-    private static LocalDate getByDayAndMonth(String monthName, int number) {
+    private static LocalDate getByDayAndMonth(int number, String monthName) {
         return switch (monthName) {
             case "сьогодні", "сегодня" -> LocalDate.now().minusDays(number);
             case "jan", "січня", "января" -> LocalDate.of(getYear(monthName), 1, number);
@@ -71,7 +71,7 @@ public class LocalDateUtil {
                 ? now().minusYears(1).getYear() : now().getYear();
     }
 
-    private static String getBruteCleaning(String text) {
+    private static String getBruteAge(String text) {
         List<String> list = getMatcherGroups(text, date_regex_number_and_word);
         return list.size() > 0 ? list.get(0) : text;
     }

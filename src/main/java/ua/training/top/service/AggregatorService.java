@@ -7,24 +7,20 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.training.top.model.Freshen;
 import ua.training.top.model.Resume;
-import ua.training.top.to.ResumeTo;
 import ua.training.top.util.AggregatorUtil;
 
 import java.io.IOException;
 import java.util.*;
-import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import static ua.training.top.SecurityUtil.setTestAuthorizedUser;
 import static ua.training.top.aggregator.ProviderUtil.getAllProviders;
-import static ua.training.top.model.Goal.UPGRADE;
 import static ua.training.top.util.AggregatorUtil.getAnchor;
 import static ua.training.top.util.AggregatorUtil.getForUpdate;
-import static ua.training.top.util.FreshenUtil.asNewFreshen;
 import static ua.training.top.util.ResumeUtil.fromTos;
 import static ua.training.top.util.UserUtil.asAdmin;
-import static ua.training.top.util.parser.data.CommonDataUtil.common_number;
 import static ua.training.top.util.parser.data.CommonDataUtil.finish;
+import static ua.training.top.util.parser.data.CommonDataUtil.is_age;
 
 @Service
 public class AggregatorService {
@@ -71,20 +67,20 @@ public class AggregatorService {
     public static void main(String[] args) throws IOException {
         setTestAuthorizedUser(asAdmin());
 
+/*
         List<ResumeTo> resumeTos = getAllProviders().selectBy(asNewFreshen("java", "all", "all", UPGRADE));
         AtomicInteger i = new AtomicInteger(1);
         resumeTos.forEach(vacancyNet -> log.info("\nvacancyNet № {}\n{}\n", i.getAndIncrement(), vacancyNet.toString()));
         log.info(common_number, resumeTos.size());
+*/
 
-/*
-        String age = "Среднее образование · Неполная занятость Java-разработчик, Outsource · 18 годмесяцев";
-        String age1 = "21 год";
-        String age3 = null;
-        System.out.println(getToAgeWork(age, age1));
+//        String age = "Среднее образование · Неполная занятость Java-разработчик, Outsource · 18 годмесяцев";
+//        String age1 = "21 год";
+        String age = "asdfkn adshj";
+        System.out.println(age.matches(is_age));
 //        String age3 = "1 год Среднее образованиение · Неполная занятость 2 года Java-разработчик, Outsource · 8 месяцев";
 //        System.out.println(getToAge(age3));
 
-*/
 
     }
 }

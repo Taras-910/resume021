@@ -13,7 +13,6 @@ public class AgeUtil {
     }
 
     public static boolean isAgeAfter(String age) {
-         return age.equals(link) || isEmpty(age) || !age.contains(" ") || !age.matches(".*\\d.*") ||
-                 Integer.parseInt(age.substring(0, age.indexOf(" "))) >= maxAge;
+         return isEmpty(age) || !age.matches(is_age) || Integer.parseInt(age.substring(0, age.indexOf(" "))) >= maxAge;
     }
 }
