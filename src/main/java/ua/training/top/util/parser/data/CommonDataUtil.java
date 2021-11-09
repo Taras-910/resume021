@@ -20,6 +20,7 @@ public class CommonDataUtil {
     public static final String
             is_age = ".*[1-7]\\d\\s?[годалетрківи]\\s?.*",
             extract_age = "(?:[1-7]\\d)\\s([годалетрківи])+",
+            extract_address = "(?:[а-яА-ЯіїєA-Za-z,\\s·]+)\\b",
             date_regex_number_and_word = "(?:\\d){1,2}\\s([а-яіїє])+|^[а-яіїє]{3,11}",
             matcher_date = "^(\\d{4})-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])T\\d{2}:\\d{2}:\\d{2}\\+\\d{2}:\\d{2}$",
             document_user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1.2 Safari/605.1.15",
@@ -60,7 +61,6 @@ public class CommonDataUtil {
                     "самара", "ульяновск", "воронеж"),
             citiesPL = of("wroclaw", "вроцлав", "krakow", "краков", "варшава", "warszawa", "warsaw"),
             citiesBY = of("minsk", "минск", "гомель", "гродно", "брест", "витебск"),
-            wasteAddress = of("будь", "другие", "города", "еще", "-", "Воды", "Рог", "городов", "який"),
             wasteWorkBefore = of("продав", "бармен", "ресто", "студент"),
             workersIT = of("develop", "engineer", "разработ", "розроб", "фронт", "front", "бэк", "backend", "web",
                     "веб", "фулстек", "microservice", "микросервис", "програм", "program", "git", "spring", "maven",

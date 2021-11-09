@@ -110,19 +110,12 @@ public class ResumeService {
     }
 
     @Transactional
-    public void deleteList(List<Resume> listToDelete) {
-        if (!listToDelete.isEmpty()) {
-            log.info("deleteList {}", listToDelete.size());
-            repository.deleteList(listToDelete);
-        }
-    }
-
-    @Transactional
     public List<Resume> deleteOutDatedAndGetAll() {
         log.info("deleteOutDateAndGetAll reasonPeriodToKeep {}", reasonPeriodToKeep);
         freshenService.deleteOutDated(LocalDateTime.of(reasonPeriodToKeep, LocalTime.MIN));
+        List<Resume> resumes = repository.deleteOutDated(reasonPeriodToKeep);
         voteService.deleteOutDated(reasonPeriodToKeep);
-        return repository.deleteOutDated(reasonPeriodToKeep);
+        return resumes;
     }
 
     @Transactional

@@ -19,8 +19,7 @@ import static ua.training.top.util.AggregatorUtil.getAnchor;
 import static ua.training.top.util.AggregatorUtil.getForUpdate;
 import static ua.training.top.util.ResumeUtil.fromTos;
 import static ua.training.top.util.UserUtil.asAdmin;
-import static ua.training.top.util.parser.data.CommonDataUtil.finish;
-import static ua.training.top.util.parser.data.CommonDataUtil.is_age;
+import static ua.training.top.util.parser.data.CommonDataUtil.*;
 
 @Service
 public class AggregatorService {
@@ -67,73 +66,30 @@ public class AggregatorService {
     public static void main(String[] args) throws IOException {
         setTestAuthorizedUser(asAdmin());
 
-/*
-        List<ResumeTo> resumeTos = getAllProviders().selectBy(asNewFreshen("java", "all", "all", UPGRADE));
-        AtomicInteger i = new AtomicInteger(1);
-        resumeTos.forEach(vacancyNet -> log.info("\nvacancyNet № {}\n{}\n", i.getAndIncrement(), vacancyNet.toString()));
-        log.info(common_number, resumeTos.size());
-*/
+//        List<ResumeTo> resumeTos = getAllProviders().selectBy(asNewFreshen("java", "all", "Киев", UPGRADE));
+//        AtomicInteger i = new AtomicInteger(1);
+//        resumeTos.forEach(vacancyNet -> log.info("\nvacancyNet № {}\n{}\n", i.getAndIncrement(), vacancyNet.toString()));
+//        log.info(common_number, resumeTos.size());
 
-//        String age = "Среднее образование · Неполная занятость Java-разработчик, Outsource · 18 годмесяцев";
-//        String age1 = "21 год";
-        String age = "asdfkn adshj";
-        System.out.println(age.matches(is_age));
-//        String age3 = "1 год Среднее образованиение · Неполная занятость 2 года Java-разработчик, Outsource · 8 месяцев";
-//        System.out.println(getToAge(age3));
+//        String text = "От 2 000 $ · Рассмотрю предложения реверс-инженер, Бэкенд разработчик, Разработчик мобильных приложений Владивосток · Готов к удалённой работе · Системное программирование · Обратная разработка · Delphi · Objective-С · C · ARM architecture · X86 asm · Win32 API · Lua · Java";
+//        String text = "Рассмотрю предложения Java/Kotlin-разработчик, Бэкенд разработчик, Фулстек разработчик, Senior Москва · Готов к удалённой работе · Java · Kotlin · SQL · Java Spring Framework. · Git · TDD/BDD · NoSQL · RabbitMQ · MongoDB · Высоконагруженные системы Возраст и стаж 29 лет · 6 лет и 11 месяцев 29 лет · 6 лет и 11 месяцев Последнее место работы Сбер · Java/Kotlin-разработчик · 3 года и 5 месяцев Сбер · Java/Kotlin-разработчик · 3 года и 5 месяцев Высшее образование МГТУ им. Н.Э. Баумана · Информатики и систем управления; ИУ · 1 год и 10 месяцев МГТУ им. Н.Э. Баумана · Информатики и систем управления; ИУ · 1 год и 10 месяцев Дополнительное образование stringconcat.com · OTUS stringconcat.com · OTUS";
+        String text = "От 2 000 $ ·  Ищу работу Backend, Бэкенд разработчик, Фулстек разработчик Ульяновск · Готов к удалён";
+        System.out.println(getToWorkBefore(text));
+    }
+    public static String extract_work_before_habr = "(Рассмотрю).*|(Не ищу).*|(Ищу).*",
+    extract_age = "(?:[1-7]\\d)\\s([годалетрківи])+",
+    extract_address = "(?:[а-яА-ЯіїєA-Za-z,\\s·]+)\\b";
 
-
+    public static String getToWorkBefore(String text) {
+        if(isEmpty(text)) {
+            return "see the card";
+        }
+        List<String> list = getMatcherGroups(text, extract_work_before_habr);
+        return list.size() > 0 ? list.get(0).trim() : "see the card";
     }
 }
+//От 200 000 ₽ · Рассмотрю предложения Ведущий
+//Не ищу работу Backend, Бэкенд разработчик, Фулстек разработчик Ульяновск · Готов к удалён
 
-
-// work age:     Киев · Украина
-// work address: Бахмут · Год · Грн
-
-//	      djinni   grc*10   habr  rabota   work  linkedin  total
-//all	    49	  49(0)	     1	     6	    16	   (100)	121
-//Украина	32	   4(0)	     -	     6	    30	     -	     72
-//foreign	49	   2(0)	     1	     1	     -	     -	     53
-//Киев	    15	   1(0)	     1	     3	    15	     -	     35
-//remote 	 -	  17(0)	     1	     3	    12	    (5)	     33
-//Минск	     1	  10(0)	     1	     6	     -	     -	     18
-//Львов	     6	    -	     -	     8	     2	     -	     16
-//Харьков	 5	    -	     -	     2	     5	     -	     12
-//Одесса	 5	    -	     -	     2	     4	     -	     11
-//Санкт-П	 5	   5(0)	     1	     -	     -	     -	     11
-//Москва	 -	   8(0)	     1	     -	     -	     -	      9
-
-
-
-//        String text = "3 часа назад", siteName = work;
-//        String text = "вчера", siteName = work;
-//        String text = "2 дня назад", siteName = work;
-//        String text = "6 дней назад", siteName = work;
-//        String text = "1 неделя назад", siteName = work;
-//        String text = "4 недели назад", siteName = work;
-//        String text = "1 месяц назад", siteName = work;
-//        String text = "Обновлено 22 минуты назад", siteName = work;
-//        String text = "Обновлено 2 часа назад", siteName = work;
-//        String text = "Обновлено 23 часа назад", siteName = work;
-//        String text = "Обновлено 1 день назад", siteName = work;
-//        String text = "Обновлено 2 дня назад", siteName = work;
-//        String text = "Обновлено 1 неделю назад", siteName = work;
-//        String text = "Обновлено 4 недели назад", siteName = work;
-//        String text = "Обновлено 1 месяц назад", siteName = work;
-
-//        String text = "сьогодні", siteName = grc;
-//        String text = "вчора", siteName = grc;
-//        String text = "6 листопада", siteName = grc;
-//        String text = "31 жовтня", siteName = grc;
-//        String text = "30 вересня", siteName = grc;
-//        String text = "Обновлено 8 ноября 06:22", siteName = grc;
-//        String text = "Обновлено 5 ноября 12:29", siteName = grc;
-//        String text = "Обновлено 28 октября 10:47", siteName = grc;
-//        String text = "Обновлено 18 октября 11:29", siteName = grc;
-//        String text = "Обновлено 21 сентября 19:27", siteName = grc;
-//        String text = "Обновлено 4 ноября 21:03", siteName = grc;
-
-//        String regex = "^(\\d{4})-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])T\\d{2}:\\d{2}:\\d{2}\\+\\d{2}:\\d{2}$";
-//        String text = "2021-11-09T09:48:19+03:00";
-//        System.out.println(text.matches("^(\\d{4})-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])T\\d{2}:\\d{2}:\\d{2}\\+\\d{2}:\\d{2}$"));
 
 

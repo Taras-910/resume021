@@ -3,7 +3,9 @@ package ua.training.top.aggregator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.training.top.aggregator.dispatcher.Dispatcher;
-import ua.training.top.aggregator.strategy.*;
+import ua.training.top.aggregator.strategy.HabrStrategy;
+import ua.training.top.aggregator.strategy.RabotaStrategy;
+import ua.training.top.aggregator.strategy.TestStrategy;
 
 import static ua.training.top.aggregator.installation.InstallationUtil.autoRefreshProviders;
 import static ua.training.top.aggregator.installation.InstallationUtil.testProvider;
@@ -25,29 +27,15 @@ public class ProviderUtil {
         } else {
             log.info("allProviders");
             return new Dispatcher(
-                    new Provider(new DjinniStrategy()),      /*ua, foreign, remote, all  50pages */
-                    new Provider(new GrcStrategy()),         /*меняет salary, date */
+//                    new Provider(new DjinniStrategy()),      /*ua, foreign, remote, all  50pages */
+//                    new Provider(new GrcStrategy()),         /*меняет salary, date */
                     new Provider(new HabrStrategy()),        /*нет за_рубежем*/
-                    new Provider(new RabotaStrategy()),      /*оч мало - до 10*/
-                    new Provider(new WorkStrategy())         /*нет за_рубежем*/
+                    new Provider(new RabotaStrategy())      /*оч мало - до 10*/
+//                    new Provider(new WorkStrategy())         /*нет за_рубежем*/
             );
         }
     }
 }
-
-//	      djinni   grc*10   habr  rabota   work  linkedin  total
-//all	    49	  49(0)	     1	     6	    16	   (100)	121
-//Украина	32	   4(0)	     -	     6	    30	     -	     72
-//foreign	49	   2(0)	     1	     1	     -	     -	     53
-//Киев	    15	   1(0)	     1	     3	    15	     -	     35
-//remote 	 -	  17(0)	     1	     3	    12	    (5)	     33
-//Минск	     1	  10(0)	     1	     6	     -	     -	     18
-//Львов	     6	    -	     -	     8	     2	     -	     16
-//Харьков	 5	    -	     -	     2	     5	     -	     12
-//Одесса	 5	    -	     -	     2	     4	     -	     11
-//Санкт-П	 5	   5(0)	     1	     -	     -	     -	     11
-//Москва	 -	   8(0)	     1	     -	     -	     -	      9
-
 //https://career.softserveinc.com/en-us/vacancies
 //https://jobs.ua/vacancy/kiev/rabota-java-developer
 //https://kiev.careerist.ru/jobs-java-developer/
