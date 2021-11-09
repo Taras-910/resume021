@@ -4,7 +4,10 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.training.top.model.Freshen;
 
+import java.util.ArrayList;
 import java.util.List;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static java.util.List.of;
 
@@ -15,7 +18,9 @@ public class CommonDataUtil {
             limitText = 300,
             limitAnchor = 125;
     public static final String
-            regex_number_and_word = "(?:\\d){1,2}\\s([а-яіїє])+|^[а-яіїє]{3,11}",
+            is_age = ".*[1-7]\\d\\s?[годалетрківи]\\s?.*",
+            extract_age = "(?:[1-7]\\d)\\s([годалетрківи])+",
+            date_regex_number_and_word = "(?:\\d){1,2}\\s([а-яіїє])+|^[а-яіїє]{3,11}",
             matcher_date = "^(\\d{4})-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])T\\d{2}:\\d{2}:\\d{2}\\+\\d{2}:\\d{2}$",
             document_user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1.2 Safari/605.1.15",
             middle = "middle", trainee = "trainee", junior = "junior", senior = "senior", expert = "expert",
@@ -130,5 +135,14 @@ public class CommonDataUtil {
 
     public static boolean isWorkerIT(String text) {
         return workersIT.stream().anyMatch(text.toLowerCase()::contains);
+    }
+
+    public static List<String> getMatcherGroups(String text, String matcher) {
+        Matcher m = Pattern.compile(matcher, Pattern.CASE_INSENSITIVE).matcher(text);
+        List<String> list = new ArrayList<>();
+        while (m.find()) {
+            list.add(m.group());
+        }
+        return list;
     }
 }

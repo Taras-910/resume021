@@ -23,6 +23,7 @@ import static ua.training.top.util.AggregatorUtil.getForUpdate;
 import static ua.training.top.util.FreshenUtil.asNewFreshen;
 import static ua.training.top.util.ResumeUtil.fromTos;
 import static ua.training.top.util.UserUtil.asAdmin;
+import static ua.training.top.util.parser.data.CommonDataUtil.common_number;
 import static ua.training.top.util.parser.data.CommonDataUtil.finish;
 
 @Service
@@ -38,9 +39,10 @@ public class AggregatorService {
         List<Resume> resumesStrategy = fromTos(getAllProviders().selectBy(freshen));
         if (!resumesStrategy.isEmpty()) {
             Freshen newFreshen = freshenService.create(freshen);
-            List<Resume> resumesDb = resumeService.deleteOutDatedAndGetAll();
-            List<Resume> resumesForCreate = new ArrayList<>();
-            List<Resume> resumesForUpdate = new ArrayList<>();
+            List<Resume>
+                    resumesDb = resumeService.deleteOutDatedAndGetAll(),
+                    resumesForCreate = new ArrayList<>(),
+                    resumesForUpdate = new ArrayList<>();
             Map<String, Resume> mapDb = resumesDb.stream()
                     .collect(Collectors.toMap(AggregatorUtil::getAnchor, r -> r));
             resumesStrategy.forEach(r -> {
@@ -72,13 +74,24 @@ public class AggregatorService {
         List<ResumeTo> resumeTos = getAllProviders().selectBy(asNewFreshen("java", "all", "all", UPGRADE));
         AtomicInteger i = new AtomicInteger(1);
         resumeTos.forEach(vacancyNet -> log.info("\nvacancyNet № {}\n{}\n", i.getAndIncrement(), vacancyNet.toString()));
-        log.info("\n\ncommon = {}", resumeTos.size());
+        log.info(common_number, resumeTos.size());
+
+/*
+        String age = "Среднее образование · Неполная занятость Java-разработчик, Outsource · 18 годмесяцев";
+        String age1 = "21 год";
+        String age3 = null;
+        System.out.println(getToAgeWork(age, age1));
+//        String age3 = "1 год Среднее образованиение · Неполная занятость 2 года Java-разработчик, Outsource · 8 месяцев";
+//        System.out.println(getToAge(age3));
+
+*/
 
     }
 }
 
 
-// habr     2021-11-08T18:33:02+03:00
+// work age:     Киев · Украина
+// work address: Бахмут · Год · Грн
 
 //	      djinni   grc*10   habr  rabota   work  linkedin  total
 //all	    49	  49(0)	     1	     6	    16	   (100)	121

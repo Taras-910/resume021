@@ -15,7 +15,8 @@ import static java.lang.String.join;
 import static ua.training.top.aggregator.installation.InstallationUtil.reasonDateToLoad;
 import static ua.training.top.util.parser.data.AddressUtil.getToAddressFormat;
 import static ua.training.top.util.parser.data.AddressUtil.getToAddressWork;
-import static ua.training.top.util.parser.data.AgeUtil.*;
+import static ua.training.top.util.parser.data.AgeUtil.getToAge;
+import static ua.training.top.util.parser.data.AgeUtil.isAgeAfter;
 import static ua.training.top.util.parser.data.CommonDataUtil.*;
 import static ua.training.top.util.parser.data.LocalDateUtil.getToLocalDate;
 import static ua.training.top.util.parser.data.SkillsUtil.*;
@@ -98,7 +99,7 @@ public class ElementUtil {
                     skills = getSkillsHabr(xssClear(element.getElementsByClass("link-comp link-comp--appearance-dark").text().trim()));
                     workBefore = getToWorkBeforeHabr(xssClear(element.getElementsByClass("inline-list").text()));
                     try {
-                        age = getToAgeHabr(xssClear(element.getElementsByClass("content-section content-section--appearance-card-section").addClass("inline-list").first().text()));
+                        age = getToAge(xssClear(element.getElementsByClass("content-section content-section--appearance-card-section").addClass("inline-list").first().text()));
                     } catch (Exception e) {
                         log.error(error_parse, "age", e.getMessage());
                     }
@@ -130,12 +131,8 @@ public class ElementUtil {
                 if (localDate.isAfter(reasonDateToLoad)) {
                     String age = link, workBefore, title = getCorrectTitle(xssClear(element.getElementsByClass("santa-m-0 santa-typo-h3 santa-pb-10").text().trim()));
                     workBefore = getToWorkBeforeRabota(xssClear(element.getElementsByAttributeValueStarting("class", "santa-mt-0").tagName("p").text().trim()));
-//                    System.out.println("title="+title);
                     try {
-//                    System.out.println("ageString1=");
-//                        String ageString = element.getElementsByAttributeValueContaining("class", "santa-space-x-10").next().first().text().trim();
-//                        System.out.println("ageString="+ageString);
-                        age = getToAgeRabota(xssClear(element.getElementsByAttributeValueContaining("class", "santa-space-x-10").next().first().text().trim()));
+                        age = getToAge(xssClear(element.getElementsByAttributeValueContaining("class", "santa-space-x-10").next().first().text().trim()));
                     } catch (Exception e) {
                         log.error(error_parse, "age", e.getMessage());
                     }
@@ -165,17 +162,17 @@ public class ElementUtil {
             try {
                 LocalDate localDate = getToLocalDate(xssClear(element.getElementsByAttributeValueEnding("class", "pull-right").text().trim()));
                 if (localDate.isAfter(reasonDateToLoad)) {
-                    String workBefore, skills, age, title = getCorrectTitle(xssClear(element.getElementsByTag("a").first().text()));
+                    String workBefore, skills, age, age1, title = getCorrectTitle(xssClear(element.getElementsByTag("a").first().text()));
                     workBefore = getToWorkBefore(xssClear(element.getElementsByTag("ul").text().trim()));
                     skills = getCorrectSkills(xssClear(element.getElementsByClass("add-bottom").tagName("div").text().trim()));
                     age = xssClear(element.getElementsByAttributeValueContaining("data-toggle", "popover").next().next().text().trim());
-                    age = getToAgeWork(isEmpty(age) ? xssClear(element.getElementsByTag("b").addClass("text-muted").next().next().text()) : age);
+                    age1 = xssClear(element.getElementsByTag("b").addClass("text-muted").next().next().text());
                     if (isToValid(freshen, join(title, workBefore, skills)) && isAgeAfter(age) && workBefore.length() > 2) {
                         ResumeTo rTo = new ResumeTo(
                                 title,
                                 xssClear(element.getElementsByTag("b").text()),
+                                !isEmpty(age) && age.matches(is_age) ? getToAge(age) : getToAge(age1),
                                 getToAddressFormat(getToAddressWork(xssClear(element.getElementsByAttributeValueContaining("class", "add-bottom").prev().text().trim()))),
-                                age,
                                 getToSalary(xssClear(element.getElementsByAttributeValueStarting("class", "nowrap").tagName("span").text().trim())),
                                 workBefore,
                                 getToUrl(work, xssClear(element.getElementsByTag("a").attr("href"))),
@@ -191,7 +188,8 @@ public class ElementUtil {
     }
 }
 /*
-                        System.out.println(i++ + "--------------------------------------------------------------------------------------");
+                        System.out.println(i++ + "-".repeat(70));
+
                         System.out.println("dateString="+ element.getElementsByAttributeValueEnding("class", "pull-right").text().trim());
                         System.out.println("date="+rTo.getReleaseDate());
                         System.out.println("titleString="+ xssClear(element.getElementsByTag("a").first().text()));

@@ -5,10 +5,7 @@ import org.slf4j.LoggerFactory;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static java.time.LocalDate.now;
 import static java.util.List.of;
@@ -35,7 +32,7 @@ public class LocalDateUtil {
         }
     }
 
-    public static LocalDate getByNumberAgo(String periodName, int number) {
+    private static LocalDate getByNumberAgo(String periodName, int number) {
         return switch (periodName) {
             case "сейчас"  -> LocalDate.now();
             case "минуту", "минуты", "минут" -> LocalDateTime.now().minusMinutes(number).toLocalDate();
@@ -47,7 +44,7 @@ public class LocalDateUtil {
         };
     }
 
-    public static LocalDate getByDayAndMonth(String monthName, int number) {
+    private static LocalDate getByDayAndMonth(String monthName, int number) {
         return switch (monthName) {
             case "сьогодні", "сегодня" -> LocalDate.now().minusDays(number);
             case "jan", "січня", "января" -> LocalDate.of(getYear(monthName), 1, number);
@@ -66,7 +63,7 @@ public class LocalDateUtil {
         };
     }
 
-    public static int getYear(String text) {
+    private static int getYear(String text) {
         return now().getMonth().toString().equals("JANUARY") && isEquals(text, of("сентября", "октября", "ноября", "декабря"))
                 || now().getMonth().toString().equals("FEBRUARY") && isEquals(text, of("октября", "ноября", "декабря"))
                 || now().getMonth().toString().equals("MARCH") && isEquals(text, of("ноября", "декабря"))
@@ -74,12 +71,8 @@ public class LocalDateUtil {
                 ? now().minusYears(1).getYear() : now().getYear();
     }
 
-    public static String getBruteCleaning(String text) {
-        Matcher m = Pattern.compile(regex_number_and_word, Pattern.CASE_INSENSITIVE).matcher(text);
-        List<String> list = new ArrayList<>();
-        while (m.find()) {
-            list.add(m.group());
-        }
+    private static String getBruteCleaning(String text) {
+        List<String> list = getMatcherGroups(text, date_regex_number_and_word);
         return list.size() > 0 ? list.get(0) : text;
     }
 
