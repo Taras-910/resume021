@@ -3,8 +3,7 @@ package ua.training.top.aggregator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.training.top.aggregator.dispatcher.Dispatcher;
-import ua.training.top.aggregator.strategy.HabrStrategy;
-import ua.training.top.aggregator.strategy.TestStrategy;
+import ua.training.top.aggregator.strategy.*;
 
 import static ua.training.top.aggregator.installation.InstallationUtil.autoRefreshProviders;
 import static ua.training.top.aggregator.installation.InstallationUtil.testProvider;
@@ -26,11 +25,11 @@ public class ProviderUtil {
         } else {
             log.info("allProviders");
             return new Dispatcher(
-//                    new Provider(new DjinniStrategy()),      /*ua, foreign, remote, all  50pages */
-//                    new Provider(new GrcStrategy()),         /*меняет salary, date */
-                    new Provider(new HabrStrategy())        /*нет за_рубежем*/
-//                    new Provider(new RabotaStrategy()),      /*оч мало - до 10*/
-//                    new Provider(new WorkStrategy())         /*нет за_рубежем*/
+                    new Provider(new DjinniStrategy()),      /*ua, foreign, remote, all  50pages */
+                    new Provider(new GrcStrategy()),         /*меняет salary, date */
+                    new Provider(new HabrStrategy()),        /*нет за_рубежем*/
+                    new Provider(new RabotaStrategy()),      /*оч мало - до 10*/
+                    new Provider(new WorkStrategy())         /*нет за_рубежем*/
             );
         }
     }

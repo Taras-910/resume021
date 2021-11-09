@@ -67,7 +67,7 @@ public class LocalDateUtil {
         return now().getMonth().toString().equals("JANUARY") && isEquals(text, of("сентября", "октября", "ноября", "декабря"))
                 || now().getMonth().toString().equals("FEBRUARY") && isEquals(text, of("октября", "ноября", "декабря"))
                 || now().getMonth().toString().equals("MARCH") && isEquals(text, of("ноября", "декабря"))
-                || now().getMonth().toString().equals("APRIL") && text.contains("декабря")
+                || now().getMonth().toString().equals("APRIL") && text.equalsIgnoreCase("декабря")
                 ? now().minusYears(1).getYear() : now().getYear();
     }
 

@@ -105,10 +105,6 @@ public class CommonDataUtil {
         return list.stream().anyMatch(workplace.toLowerCase()::equals);
     }
 
-    public static boolean isContains(String myDate, List<String> list) {
-        return list.stream().anyMatch(myDate.toLowerCase()::contains);
-    }
-
     public static String getLimitation(String text, int limit) {
         return text.length() > limit ? text.substring(0, limit) : text;
     }
