@@ -15,6 +15,8 @@ public class CommonDataUtil {
             limitText = 300,
             limitAnchor = 125;
     public static final String
+            regex_number_and_word = "(?:\\d){1,2}\\s([а-яіїє])+|^[а-яіїє]{3,11}",
+            matcher_date = "^(\\d{4})-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])T\\d{2}:\\d{2}:\\d{2}\\+\\d{2}:\\d{2}$",
             document_user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1.2 Safari/605.1.15",
             middle = "middle", trainee = "trainee", junior = "junior", senior = "senior", expert = "expert",
             internet_connection_error = "There may be no internet connection or exception={} by url={} ",
@@ -55,10 +57,20 @@ public class CommonDataUtil {
             citiesBY = of("minsk", "минск", "гомель", "гродно", "брест", "витебск"),
             wasteAddress = of("будь", "другие", "города", "еще", "-", "Воды", "Рог", "городов", "який"),
             wasteWorkBefore = of("продав", "бармен", "ресто", "студент"),
-            workersIT = List.of("develop", "engineer", "разработ", "розроб", "фронт", "front", "бэк", "backend", "web",
+            workersIT = of("develop", "engineer", "разработ", "розроб", "фронт", "front", "бэк", "backend", "web",
                     "веб", "фулстек", "microservice", "микросервис", "програм", "program", "git", "spring", "maven",
-                    "sql", "docker", "postgre", "rest", "mvc", "pattern");
+                    "sql", "docker", "postgre", "rest", "mvc", "pattern"),
+            ruleDaysAndMonth = of("січня", "лютого", "березня", "квітня", "травня", "червня", "липня", "серпня", "вересня",
+                    "жовтня", "листопада", "грудня", "января", "февраля", "марта", "апреля", "июня", "июля", "августа",
+                    "сентября", "октября", "ноября", "декабря", "сьогодні", "вчора"),
+            ruleAgo = of("сейчас", "только что", "минуту", "минуты", "минут", "час", "часа", "часов", "назад", "вчера",
+                    "день", "дня", "дней", "неделя", "недели", "месяц", "месяца");
 
+    public static boolean isRuleMonth(String text) { return ruleDaysAndMonth.stream().anyMatch(text.toLowerCase()::contains); }
+
+    public static boolean isRuleAgo(String text) { return ruleAgo.stream().anyMatch(text.toLowerCase()::contains); }
+
+    public static boolean isRuleDate(String text) { return text.matches(matcher_date); }
 
     public static boolean isEmpty(String text) {
         return text == null || text.trim().isEmpty() || text.trim().equals("•");

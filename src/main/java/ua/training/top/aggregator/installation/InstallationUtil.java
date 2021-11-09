@@ -13,10 +13,10 @@ import static ua.training.top.aggregator.dispatcher.Dispatcher.allProviders;
 public class InstallationUtil {
     private static final Logger log = LoggerFactory.getLogger(InstallationUtil.class);
 
-//    public static int repeatToCall = 3;
-//    public static int limitPages = 50;
-    private static int repeatToCall = 1;
-    public static int limitPages = 2;
+    public static int repeatToCall = 3;
+    public static int limitPages = 50;
+//    private static int repeatToCall = 1;
+//    public static int limitPages = 2;
     public static LocalDate reasonDateToLoad = LocalDateTime.now().toLocalDate().minusDays(90);
     public static LocalDate reasonPeriodToKeep = LocalDateTime.now().toLocalDate().minusDays(120);
     public static int limitResumesToKeep = 3000;
