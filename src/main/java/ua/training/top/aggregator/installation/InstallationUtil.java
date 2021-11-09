@@ -14,10 +14,10 @@ public class InstallationUtil {
     private static final Logger log = LoggerFactory.getLogger(InstallationUtil.class);
     public static final Integer maxAge = 22;
 
-//    public static int repeatToCall = 3;
-//    public static int limitPages = 50;
-    private static int repeatToCall = 2;
-    public static int limitPages = 4;
+    public static int repeatToCall = 3;
+    public static int limitPages = 50;
+//    private static int repeatToCall = 2;
+//    public static int limitPages = 4;
     public static LocalDate reasonDateToLoad = LocalDateTime.now().toLocalDate().minusDays(90);
     public static LocalDate reasonPeriodToKeep = LocalDateTime.now().toLocalDate().minusDays(120);
     public static int limitResumesToKeep = 3000;
