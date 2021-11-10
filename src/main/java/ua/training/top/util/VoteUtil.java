@@ -9,7 +9,7 @@ import java.util.List;
 import java.util.Optional;
 import java.util.stream.Collectors;
 
-import static ua.training.top.aggregator.installation.InstallationUtil.limitResumesToKeep;
+import static ua.training.top.aggregator.installation.InstallationUtil.limitResumesKeeping;
 import static ua.training.top.util.InformUtil.not_found;
 
 public class VoteUtil {
@@ -25,7 +25,7 @@ public class VoteUtil {
         return Optional.of(votesDb.parallelStream()
                 .sorted((v1, v2) -> v1.getLocalDate().isAfter(v2.getLocalDate()) ? 1 : 0)
                 .sequential()
-                .skip(limitResumesToKeep / 5)
+                .skip(limitResumesKeeping / 5)
                 .collect(Collectors.toList())).orElse(new ArrayList<>());
     }
 }

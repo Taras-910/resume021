@@ -61,8 +61,8 @@
                                     <option value='Харьков'>Харьков</option>
                                     <option value='Днепр'>Днепр</option>
                                     <option value='Украина'>Украина</option>
-                                    <option value='remote'>remote</option>
-                                    <option value='foreign'>foreign</option>
+                                    <option value='remote'>удаленно</option>
+                                    <option value='foreign'>другие страны</option>
                                 </datalist>
                             </div>
                         </form>
@@ -335,6 +335,7 @@
                             <option value='Middle'>(опыт 2+ года)</option>
                             <option value='Senior'>(опыт 3+ года)</option>
                             <option value='Expert'>(опыт 5+ лет)</option>
+                            <option value='all'>all</option>
                         </datalist>
                     </div>
                     <div class="form-group">
@@ -351,8 +352,9 @@
                             <option value='Днепр'>Днепр</option>
                             <option value='Украина'>Украина</option>
                             <option value='Россия'>Россия</option>
-                            <option value='remote'>remote</option>
-                            <option value='foreign'>foreign</option>
+                            <option value='remote'>удаленно</option>
+                            <option value='foreign'>другие страны</option>
+                            <option value='all'>all</option>
                         </datalist>
                     </div>
                     <div class="form-group">

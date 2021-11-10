@@ -16,8 +16,8 @@ import java.util.Set;
 
 import static java.lang.String.format;
 import static ua.training.top.util.parser.ElementUtil.getResumesGrc;
-import static ua.training.top.util.parser.data.CommonDataUtil.get_resume;
-import static ua.training.top.util.parser.data.CommonDataUtil.grc;
+import static ua.training.top.util.parser.data.DataUtil.get_resume;
+import static ua.training.top.util.parser.data.DataUtil.grc;
 import static ua.training.top.util.parser.data.LevelUtil.getLevel;
 import static ua.training.top.util.parser.data.PagesUtil.getMaxPages;
 import static ua.training.top.util.parser.data.UrlUtil.getPageUrl;

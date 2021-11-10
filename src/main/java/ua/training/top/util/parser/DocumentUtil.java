@@ -7,7 +7,7 @@ import org.slf4j.LoggerFactory;
 
 import java.io.IOException;
 
-import static ua.training.top.util.parser.data.CommonDataUtil.*;
+import static ua.training.top.util.parser.data.DataUtil.*;
 
 public class DocumentUtil {
     private static final Logger log = LoggerFactory.getLogger(DocumentUtil.class);

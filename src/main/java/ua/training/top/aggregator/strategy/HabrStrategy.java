@@ -16,11 +16,10 @@ import java.util.Set;
 import static java.lang.String.format;
 import static ua.training.top.aggregator.installation.InstallationUtil.reCall;
 import static ua.training.top.util.parser.ElementUtil.getResumesHabr;
-import static ua.training.top.util.parser.data.CommonDataUtil.*;
+import static ua.training.top.util.parser.data.DataUtil.*;
 import static ua.training.top.util.parser.data.LevelUtil.getLevel;
 import static ua.training.top.util.parser.data.PagesUtil.getMaxPages;
 import static ua.training.top.util.parser.data.UrlUtil.getPageUrl;
-import static ua.training.top.util.parser.data.UrlUtil.getPartUrlsHabr;
 import static ua.training.top.util.parser.data.WorkplaceUtil.getHabr;
 
 public class HabrStrategy implements Strategy {
@@ -57,5 +56,29 @@ public class HabrStrategy implements Strategy {
         }
         reCall(set.size(), new HabrStrategy());
         return new ArrayList<>(set);
+    }
+
+    public static String getPartUrlsHabr(String language) {
+        String skills = switch (language) {
+            case "php" -> "1005";
+            case "ruby" -> "1081";
+            case "javascript" -> "264";
+            case "kotlin" -> "239";
+            case "c#" -> "706";
+            case "typescript" -> "245";
+            case "c++" -> "172";
+            default -> "1012";
+        };
+        return "&skills[]=".concat(skills);
+    }
+
+    public static String getToSkillsHabr(String skills) {
+        skills = skills.contains(" ") ? skills.substring(skills.indexOf(" ")) : skills;
+        return getLimitation(skills);
+    }
+
+    public static String getToWorkBeforeHabr(String workBefore) {
+        workBefore = workBefore.startsWith("От") ? workBefore.substring(workBefore.indexOf("·") + 1) : workBefore;
+        return getLimitation(workBefore);
     }
 }

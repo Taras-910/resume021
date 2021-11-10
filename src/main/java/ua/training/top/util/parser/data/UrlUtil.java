@@ -1,6 +1,6 @@
 package ua.training.top.util.parser.data;
 
-import static ua.training.top.util.parser.data.CommonDataUtil.*;
+import static ua.training.top.util.parser.data.DataUtil.*;
 
 public class UrlUtil {
 
@@ -13,31 +13,10 @@ public class UrlUtil {
             case djinni -> "https://djinni.co";
             default -> link;
         };
-        StringBuilder sb = new StringBuilder(prefix);
-        return sb.append(url).toString();
-    }
-
-    public static String getPartUrlsHabr(String language) {
-        String skills = switch (language) {
-            case "php" -> "1005";
-            case "ruby" -> "1081";
-            case "javascript" -> "264";
-            case "kotlin" -> "239";
-            case "c#" -> "706";
-            case "typescript" -> "245";
-            case "c++" -> "172";
-            default -> "1012";
-        };
-        return "&skills[]=".concat(skills);
-    }
-
-    public static String getPartUrlWork(String workplace) {
-        return workplace.equals("all") ||workplace.equals("remote") || workplace.equals("ua") ? "" : "-" .concat(workplace);
+        return prefix + url;
     }
 
     public static String getPageUrl(String page) {
         return page.equals("1") ? "" : "&page=".concat(page);
     }
-
-
 }

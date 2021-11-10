@@ -2,7 +2,7 @@ package ua.training.top.util.parser.data;
 
 import static java.lang.Math.min;
 import static ua.training.top.aggregator.installation.InstallationUtil.limitPages;
-import static ua.training.top.util.parser.data.CommonDataUtil.*;
+import static ua.training.top.util.parser.data.DataUtil.*;
 
 public class PagesUtil {
 
@@ -24,7 +24,6 @@ public class PagesUtil {
             case "remote" -> switch (site) {
                 case grc -> 49;
                 case rabota -> 3;
-                case linkedin -> 5;
                 case work -> 12;
                 default -> 1;
             };
@@ -32,7 +31,6 @@ public class PagesUtil {
                 case djinni -> 32;
                 case grc -> 4;
                 case rabota -> 6;
-                case linkedin -> 5;
                 case work -> 30;
                 default -> 1;
             };

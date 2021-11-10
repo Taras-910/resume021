@@ -11,7 +11,7 @@ import java.util.stream.Collectors;
 
 import static java.util.List.of;
 import static ua.training.top.util.ResumeCheckUtil.isAccuracy;
-import static ua.training.top.util.parser.data.CommonDataUtil.link;
+import static ua.training.top.util.parser.data.DataUtil.link;
 
 public class ResumeUtil {
 

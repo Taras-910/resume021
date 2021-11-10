@@ -8,7 +8,7 @@ import java.util.List;
 import java.util.regex.Matcher;
 
 import static java.lang.Float.parseFloat;
-import static ua.training.top.util.parser.data.CommonDataUtil.*;
+import static ua.training.top.util.parser.data.DataUtil.*;
 import static ua.training.top.util.parser.salary.CommonSalaryUtil.*;
 
 public class SalaryUtil {

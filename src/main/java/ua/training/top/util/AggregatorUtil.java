@@ -4,8 +4,7 @@ import ua.training.top.model.Freshen;
 import ua.training.top.model.Resume;
 import ua.training.top.to.ResumeTo;
 
-import static ua.training.top.util.parser.data.CommonDataUtil.getLimitation;
-import static ua.training.top.util.parser.data.CommonDataUtil.limitAnchor;
+import static ua.training.top.util.parser.data.DataUtil.*;
 
 public class AggregatorUtil {
     public static final String link = "see the card";
@@ -22,7 +21,7 @@ public class AggregatorUtil {
         String text = r.getWorkBefore().toLowerCase();
         text = text.replaceAll("месяц", " ").toLowerCase().trim();
         text = text.contains(" ") ? text.substring(0, text.indexOf(" ")).trim() : text;
-        return getLimitation(text.contains(" ") ? text.substring(0, text.lastIndexOf(" ")).trim() : text, limitAnchor);
+        return getByLimit(text.contains(" ") ? text.substring(0, text.lastIndexOf(" ")).trim() : text, limitAnchor);
     }
 
     public static Resume getForUpdate(Resume r, Resume resumeDb) {
@@ -35,4 +34,10 @@ public class AggregatorUtil {
         r.setSkills(resumeDb.getSkills().equals(link) ? r.getSkills() : resumeDb.getSkills());
         return r;
     }
+    public static boolean isToValid(Freshen f, String text) {
+        String temp = text.toLowerCase();
+        return (temp.contains(f.getLanguage()) || isWorkerIT(temp)) && wasteWorkBefore.stream().noneMatch(temp::contains);
+    }
+
+
 }

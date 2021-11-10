@@ -17,7 +17,7 @@ import java.util.Set;
 import static java.lang.String.format;
 import static ua.training.top.aggregator.installation.InstallationUtil.reCall;
 import static ua.training.top.util.parser.ElementUtil.getResumesDjinni;
-import static ua.training.top.util.parser.data.CommonDataUtil.*;
+import static ua.training.top.util.parser.data.DataUtil.*;
 import static ua.training.top.util.parser.data.LevelUtil.getLevel;
 import static ua.training.top.util.parser.data.PagesUtil.getMaxPages;
 import static ua.training.top.util.parser.data.UrlUtil.getPageUrl;
@@ -38,7 +38,7 @@ public class DjinniStrategy implements Strategy{
 
     @Override
     public List<ResumeTo> getResumes(Freshen freshen) throws IOException {
-        String language = getStartUpper(freshen.getLanguage()), workplace = freshen.getWorkplace();
+        String language = getUpperStart(freshen.getLanguage()), workplace = freshen.getWorkplace();
         log.info(get_resume, freshen.getWorkplace(), language);
         Set<ResumeTo> set = new LinkedHashSet<>();
         int page = 1;

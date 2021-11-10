@@ -44,6 +44,7 @@ public interface CrudResumeRepository extends JpaRepository<Resume, Integer> {
     @Query("SELECT r FROM Resume r WHERE r.releaseDate<:reasonPeriodToKeep")
     List<Resume> getOutDated(@Param("reasonPeriodToKeep") LocalDate reasonPeriodToKeep);
 
+    //    https://stackoverflow.com/questions/9314078/setmaxresults-for-spring-data-jpa-annotation
     @Query(value =
             "SELECT * FROM resume.public.resume r ORDER BY r.release_date, r.id LIMIT :exceedNumber", nativeQuery = true)
     List<Resume> findExceeded(@Param("exceedNumber") int exceedNumber);

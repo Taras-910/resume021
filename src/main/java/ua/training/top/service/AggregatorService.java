@@ -23,8 +23,8 @@ import static ua.training.top.util.AggregatorUtil.getForUpdate;
 import static ua.training.top.util.FreshenUtil.asNewFreshen;
 import static ua.training.top.util.ResumeUtil.fromTos;
 import static ua.training.top.util.UserUtil.asAdmin;
-import static ua.training.top.util.parser.data.CommonDataUtil.common_number;
-import static ua.training.top.util.parser.data.CommonDataUtil.finish;
+import static ua.training.top.util.parser.data.DataUtil.common_number;
+import static ua.training.top.util.parser.data.DataUtil.finish;
 
 @Service
 public class AggregatorService {
@@ -71,12 +71,10 @@ public class AggregatorService {
     public static void main(String[] args) throws IOException {
         setTestAuthorizedUser(asAdmin());
 
-        List<ResumeTo> resumeTos = getAllProviders().selectBy(asNewFreshen("java", "all", "Киев", UPGRADE));
+        List<ResumeTo> resumeTos = getAllProviders().selectBy(asNewFreshen("java", "all", "all", UPGRADE));
         AtomicInteger i = new AtomicInteger(1);
         resumeTos.forEach(vacancyNet -> log.info("\nvacancyNet № {}\n{}\n", i.getAndIncrement(), vacancyNet.toString()));
         log.info(common_number, resumeTos.size());
-
-
     }
 }
 

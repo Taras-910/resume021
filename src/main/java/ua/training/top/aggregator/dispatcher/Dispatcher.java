@@ -13,10 +13,10 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static ua.training.top.aggregator.installation.InstallationUtil.reasonDateToLoad;
+import static ua.training.top.aggregator.installation.InstallationUtil.reasonDateLoading;
 import static ua.training.top.util.AggregatorUtil.createTo;
-import static ua.training.top.util.parser.data.CommonDataUtil.common_number;
-import static ua.training.top.util.parser.data.CommonDataUtil.error_select;
+import static ua.training.top.util.parser.data.DataUtil.common_number;
+import static ua.training.top.util.parser.data.DataUtil.error_select;
 
 @Repository
 public class Dispatcher implements AggregatorInterface {
@@ -41,7 +41,7 @@ public class Dispatcher implements AggregatorInterface {
             }
         }
         List<ResumeTo> resumeTos = set.parallelStream()
-                .filter(rTo -> reasonDateToLoad.isBefore(rTo.getReleaseDate()))
+                .filter(rTo -> reasonDateLoading.isBefore(rTo.getReleaseDate()))
                 .filter(ResumeCheckUtil::checkNullDataResumeTo)
                 .map(rTo -> createTo(rTo, freshen)).distinct()
                 .collect(Collectors.toList());

@@ -16,8 +16,8 @@ import java.util.Collections;
 import java.util.List;
 
 import static ua.training.top.SecurityUtil.authUserId;
-import static ua.training.top.aggregator.installation.InstallationUtil.limitResumesToKeep;
-import static ua.training.top.aggregator.installation.InstallationUtil.reasonPeriodToKeep;
+import static ua.training.top.aggregator.installation.InstallationUtil.limitResumesKeeping;
+import static ua.training.top.aggregator.installation.InstallationUtil.reasonPeriodKeeping;
 import static ua.training.top.model.Goal.FILTER;
 import static ua.training.top.util.FreshenUtil.getFreshenFromTo;
 import static ua.training.top.util.ResumeCheckUtil.*;
@@ -111,22 +111,22 @@ public class ResumeService {
 
     @Transactional
     public List<Resume> deleteOutDatedAndGetAll() {
-        log.info("deleteOutDateAndGetAll reasonPeriodToKeep {}", reasonPeriodToKeep);
-        freshenService.deleteOutDated(LocalDateTime.of(reasonPeriodToKeep, LocalTime.MIN));
-        List<Resume> resumes = repository.deleteOutDated(reasonPeriodToKeep);
-        voteService.deleteOutDated(reasonPeriodToKeep);
+        log.info("deleteOutDateAndGetAll reasonPeriodKeeping {}", reasonPeriodKeeping);
+        freshenService.deleteOutDated(LocalDateTime.of(reasonPeriodKeeping, LocalTime.MIN));
+        List<Resume> resumes = repository.deleteOutDated(reasonPeriodKeeping);
+        voteService.deleteOutDated(reasonPeriodKeeping);
         return resumes;
     }
 
     @Transactional
     public void deleteExceedLimitHeroku(int totalNumber) {
         log.info("deleteExceedLimitHeroku totalNumber {}", totalNumber);
-        int exceedNumber = totalNumber - limitResumesToKeep;
+        int exceedNumber = totalNumber - limitResumesKeeping;
         if (exceedNumber > 0) {
             log.info("start delete exceedNumber {}", exceedNumber);
             repository.deleteExceedLimit(exceedNumber);
-            freshenService.deleteExceedLimit(limitResumesToKeep / 2 + 1);
-            voteService.deleteExceedLimit(limitResumesToKeep / 5);
+            freshenService.deleteExceedLimit(limitResumesKeeping / 2 + 1);
+            voteService.deleteExceedLimit(limitResumesKeeping / 5);
         }
     }
 

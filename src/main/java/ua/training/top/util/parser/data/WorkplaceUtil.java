@@ -1,7 +1,7 @@
 package ua.training.top.util.parser.data;
 
 import static java.util.List.of;
-import static ua.training.top.util.parser.data.CommonDataUtil.*;
+import static ua.training.top.util.parser.data.DataUtil.*;
 
 public class WorkplaceUtil {
 

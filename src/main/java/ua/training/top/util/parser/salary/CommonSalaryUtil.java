@@ -7,7 +7,7 @@ import java.util.List;
 import java.util.regex.Pattern;
 
 import static java.util.List.of;
-import static ua.training.top.util.parser.data.CommonDataUtil.getReplace;
+import static ua.training.top.util.parser.data.DataUtil.getReplace;
 
 public class CommonSalaryUtil {
     public static final Logger log = LoggerFactory.getLogger(CommonSalaryUtil.class);

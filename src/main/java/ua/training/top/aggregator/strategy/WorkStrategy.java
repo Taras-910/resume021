@@ -18,11 +18,10 @@ import static java.lang.String.format;
 import static java.lang.String.valueOf;
 import static ua.training.top.aggregator.installation.InstallationUtil.reCall;
 import static ua.training.top.util.parser.ElementUtil.getResumesWork;
-import static ua.training.top.util.parser.data.CommonDataUtil.get_resume;
-import static ua.training.top.util.parser.data.CommonDataUtil.work;
+import static ua.training.top.util.parser.data.DataUtil.get_resume;
+import static ua.training.top.util.parser.data.DataUtil.work;
 import static ua.training.top.util.parser.data.LevelUtil.getLevel;
 import static ua.training.top.util.parser.data.PagesUtil.getMaxPages;
-import static ua.training.top.util.parser.data.UrlUtil.getPartUrlWork;
 import static ua.training.top.util.parser.data.WorkplaceUtil.getWork;
 
 public class WorkStrategy implements Strategy {
@@ -55,5 +54,13 @@ public class WorkStrategy implements Strategy {
         }
         reCall(set.size(), new WorkStrategy());
         return new ArrayList<>(set);
+    }
+
+    public static String getToAddressWork(String address) {
+        return address.contains("·") ? address.substring(address.lastIndexOf("·") + 1).trim() : address;
+    }
+
+    public static String getPartUrlWork(String workplace) {
+        return workplace.equals("all") ||workplace.equals("remote") || workplace.equals("ua") ? "" : "-" .concat(workplace);
     }
 }
