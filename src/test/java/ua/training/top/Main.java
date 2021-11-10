@@ -46,7 +46,11 @@ public class Main {
 //        VoteService voteService = appCtx.getBean(VoteService.class);
 
         System.out.println("=".repeat(40));
-
+        int countBefore = resumeService.getAll().size();
+        resumeService.deleteExceedLimitHeroku(3);
+        int countAfter = resumeService.getAll().size();
+        System.out.println("countBefore ="+ countBefore);
+        System.out.println("countAfter  ="+ countAfter);
 
         System.out.println(".".repeat(40));
         appCtx.close();

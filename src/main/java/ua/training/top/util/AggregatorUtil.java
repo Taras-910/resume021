@@ -18,7 +18,7 @@ public class AggregatorUtil {
     }
 
     public static String getAnchor(Resume r) {
-        String text = r.getWorkBefore().toLowerCase();
+        String text = String.join(" ", r.getTitle(), r.getWorkBefore()).toLowerCase();
         text = text.replaceAll("месяц", " ").toLowerCase().trim();
         text = text.contains(" ") ? text.substring(0, text.indexOf(" ")).trim() : text;
         return getByLimit(text.contains(" ") ? text.substring(0, text.lastIndexOf(" ")).trim() : text, limitAnchor);

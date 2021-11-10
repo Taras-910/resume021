@@ -12,15 +12,15 @@ import java.util.ArrayList;
 import java.util.List;
 
 import static java.lang.String.join;
-import static ua.training.top.aggregator.installation.InstallationUtil.reasonDateLoading;
+import static ua.training.top.aggregator.installation.Installation.reasonDateLoading;
 import static ua.training.top.aggregator.strategy.HabrStrategy.getToSkillsHabr;
 import static ua.training.top.aggregator.strategy.HabrStrategy.getToWorkBeforeHabr;
 import static ua.training.top.aggregator.strategy.WorkStrategy.getToAddressWork;
 import static ua.training.top.util.AggregatorUtil.isToValid;
 import static ua.training.top.util.parser.data.DataUtil.*;
-import static ua.training.top.util.parser.data.LocalDateUtil.getToLocalDate;
+import static ua.training.top.util.parser.data.ReleaseDateUtil.getToLocalDate;
+import static ua.training.top.util.parser.data.SalaryUtil.getToSalary;
 import static ua.training.top.util.parser.data.UrlUtil.getToUrl;
-import static ua.training.top.util.parser.salary.SalaryUtil.getToSalary;
 import static ua.training.top.util.xss.XssUtil.xssClear;
 
 public class ElementUtil {
@@ -90,7 +90,7 @@ public class ElementUtil {
                     try {
                         age = getMatch(age_field, xssClear(element.getElementsByClass("content-section content-section--appearance-card-section").addClass("inline-list").first().text()));
                     } catch (Exception e) {
-                        log.error(error_parse, "age", e.getMessage());
+                        log.error(error_parse, age_field, e.getMessage());
                     }
                     if (isToValid(freshen, join(title, workBefore, skills)) && isAgeAfter(age) && workBefore.length() > 2) {
                         ResumeTo rTo = new ResumeTo(title, name, age, link,
@@ -120,7 +120,7 @@ public class ElementUtil {
                     try {
                         age = getMatch(age_field, xssClear(element.getElementsByAttributeValueContaining("class", "santa-space-x-10").next().first().text().trim()));
                     } catch (Exception e) {
-                        log.error(error_parse, "age", e.getMessage());
+                        log.error(error_parse, age_field, e.getMessage());
                     }
                     if (isToValid(freshen, join(title, workBefore)) && isAgeAfter(age) && workBefore.length() > 2) {
                         ResumeTo rTo = new ResumeTo(title, name, age,

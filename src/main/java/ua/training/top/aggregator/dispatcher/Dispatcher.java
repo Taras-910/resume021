@@ -13,7 +13,7 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static ua.training.top.aggregator.installation.InstallationUtil.reasonDateLoading;
+import static ua.training.top.aggregator.installation.Installation.reasonDateLoading;
 import static ua.training.top.util.AggregatorUtil.createTo;
 import static ua.training.top.util.parser.data.DataUtil.common_number;
 import static ua.training.top.util.parser.data.DataUtil.error_select;

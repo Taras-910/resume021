@@ -1,10 +1,10 @@
-package ua.training.top.util.parser.data;
+package ua.training.top.aggregator.installation;
 
 import static java.lang.Math.min;
-import static ua.training.top.aggregator.installation.InstallationUtil.limitPages;
+import static ua.training.top.aggregator.installation.Installation.limitPages;
 import static ua.training.top.util.parser.data.DataUtil.*;
 
-public class PagesUtil {
+public class PagesCallNumber {
 
     public static int getMaxPages(String site, String city) {
         int pages;

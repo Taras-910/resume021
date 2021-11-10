@@ -5,8 +5,8 @@ import org.slf4j.LoggerFactory;
 import ua.training.top.aggregator.dispatcher.Dispatcher;
 import ua.training.top.aggregator.strategy.*;
 
-import static ua.training.top.aggregator.installation.InstallationUtil.autoRefreshProviders;
-import static ua.training.top.aggregator.installation.InstallationUtil.testProvider;
+import static ua.training.top.aggregator.installation.Installation.autoRefreshProviders;
+import static ua.training.top.aggregator.installation.Installation.testProvider;
 import static ua.training.top.util.AutoRefreshUtil.getKey;
 import static ua.training.top.util.AutoRefreshUtil.mapStrategies;
 

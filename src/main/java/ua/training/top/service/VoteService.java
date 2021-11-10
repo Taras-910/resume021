@@ -13,8 +13,8 @@ import java.util.List;
 
 import static ua.training.top.SecurityUtil.authUserId;
 import static ua.training.top.util.DateTimeUtil.thisDay;
+import static ua.training.top.util.ValidationUtil.checkNotFoundData;
 import static ua.training.top.util.ValidationUtil.checkNotFoundWithId;
-import static ua.training.top.util.VoteUtil.checkNotFoundData;
 
 @Service
 public class VoteService {

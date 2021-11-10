@@ -97,4 +97,9 @@ public class ValidationUtil {
         }
     }
 
+    public static void checkNotFoundData(boolean found, Object id) {
+        if (!found) {
+            log.error(not_found, id);
+        }
+    }
 }

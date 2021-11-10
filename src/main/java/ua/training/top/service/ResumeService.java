@@ -16,8 +16,8 @@ import java.util.Collections;
 import java.util.List;
 
 import static ua.training.top.SecurityUtil.authUserId;
-import static ua.training.top.aggregator.installation.InstallationUtil.limitResumesKeeping;
-import static ua.training.top.aggregator.installation.InstallationUtil.reasonPeriodKeeping;
+import static ua.training.top.aggregator.installation.Installation.limitResumesKeeping;
+import static ua.training.top.aggregator.installation.Installation.reasonPeriodKeeping;
 import static ua.training.top.model.Goal.FILTER;
 import static ua.training.top.util.FreshenUtil.getFreshenFromTo;
 import static ua.training.top.util.ResumeCheckUtil.*;
@@ -119,14 +119,13 @@ public class ResumeService {
     }
 
     @Transactional
-    public void deleteExceedLimitHeroku(int totalNumber) {
-        log.info("deleteExceedLimitHeroku totalNumber {}", totalNumber);
-        int exceedNumber = totalNumber - limitResumesKeeping;
-        if (exceedNumber > 0) {
-            log.info("start delete exceedNumber {}", exceedNumber);
-            repository.deleteExceedLimit(exceedNumber);
-            freshenService.deleteExceedLimit(limitResumesKeeping / 2 + 1);
-            voteService.deleteExceedLimit(limitResumesKeeping / 5);
+    public void deleteExceedLimitHeroku(int exceed) {
+        log.info("deleteExceedLimitHeroku exceed {}", exceed);
+        if (exceed > 0) {
+            log.info("start delete exceed {}", exceed);
+            repository.deleteExceedLimit(exceed);
+            freshenService.deleteExceedLimit(limitResumesKeeping / 2);
+            voteService.deleteExceedLimit(limitResumesKeeping / 2);
         }
     }
 

@@ -17,6 +17,7 @@ import java.util.stream.Collectors;
 
 import static ua.training.top.SecurityUtil.setTestAuthorizedUser;
 import static ua.training.top.aggregator.ProviderUtil.getAllProviders;
+import static ua.training.top.aggregator.installation.Installation.limitResumesKeeping;
 import static ua.training.top.model.Goal.UPGRADE;
 import static ua.training.top.util.AggregatorUtil.getAnchor;
 import static ua.training.top.util.AggregatorUtil.getForUpdate;
@@ -36,8 +37,8 @@ public class AggregatorService {
 
     public void refreshDB(Freshen freshen) {
         log.info("refreshDB by freshen {}", freshen);
-        List<Resume> resumesStrategy = fromTos(getAllProviders().selectBy(freshen));
-        if (!resumesStrategy.isEmpty()) {
+        List<Resume> resumesNet = fromTos(getAllProviders().selectBy(freshen));
+        if (!resumesNet.isEmpty()) {
             Freshen newFreshen = freshenService.create(freshen);
             List<Resume>
                     resumesDb = resumeService.deleteOutDatedAndGetAll(),
@@ -45,7 +46,7 @@ public class AggregatorService {
                     resumesForUpdate = new ArrayList<>();
             Map<String, Resume> mapDb = resumesDb.stream()
                     .collect(Collectors.toMap(AggregatorUtil::getAnchor, r -> r));
-            resumesStrategy.forEach(r -> {
+            resumesNet.forEach(r -> {
                 r.setFreshen(newFreshen);
                 if (mapDb.containsKey(getAnchor(r))) {
                     resumesForUpdate.add(getForUpdate(r, mapDb.get(getAnchor(r))));
@@ -60,7 +61,7 @@ public class AggregatorService {
 
     @Transactional
     protected void executeRefreshDb(List<Resume> resumesDb, List<Resume> resumesForCreate, List<Resume> resumesForUpdate) {
-        resumeService.deleteExceedLimitHeroku(resumesDb.size() + resumesForCreate.size());
+        resumeService.deleteExceedLimitHeroku(resumesDb.size() + resumesForCreate.size() - limitResumesKeeping);
         Set<Resume> resumes = new HashSet<>(resumesForUpdate);
         resumes.addAll(resumesForCreate);
         if (!resumes.isEmpty()) {
@@ -75,8 +76,22 @@ public class AggregatorService {
         AtomicInteger i = new AtomicInteger(1);
         resumeTos.forEach(vacancyNet -> log.info("\nvacancyNet № {}\n{}\n", i.getAndIncrement(), vacancyNet.toString()));
         log.info(common_number, resumeTos.size());
+
     }
 }
+
+//	      djinni   grc*10   habr  rabota   work  linkedin  total
+//all	    49	  49(0)	     1	     6	    16	   (100)	121
+//Украина	32	   4(0)	     -	     6	    30	     -	     72
+//foreign	49	   2(0)	     1	     1	     -	     -	     53
+//Киев	    15	   1(0)	     1	     3	    15	     -	     35
+//remote 	 -	  17(0)	     1	     3	    12	    (5)	     33
+//Минск	     1	  10(0)	     1	     6	     -	     -	     18
+//Львов	     6	    -	     -	     8	     2	     -	     16
+//Харьков	 5	    -	     -	     2	     5	     -	     12
+//Одесса	 5	    -	     -	     2	     4	     -	     11
+//Санкт-П	 5	   5(0)	     1	     -	     -	     -	     11
+//Москва	 -	   8(0)	     1	     -	     -	     -	      9
 
 
 

@@ -7,20 +7,20 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static java.util.List.of;
-import static ua.training.top.aggregator.installation.InstallationUtil.limitText;
-import static ua.training.top.aggregator.installation.InstallationUtil.maxAge;
+import static ua.training.top.aggregator.installation.Installation.limitText;
+import static ua.training.top.aggregator.installation.Installation.maxAge;
 
 public class DataUtil {
     public static final LocalDate defaultDate = LocalDate.now().minusMonths(1);
     public static final int limitAnchor = 125;
     public static final String
+            link = "see the card",
             is_date = "^(\\d{4})-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])T\\d{2}:\\d{2}:\\d{2}\\+\\d{2}:\\d{2}$",
             is_age = ".*[1-7]\\d\\s?[годалетрківи]\\s?.*",
             extract_age = "(?:[1-7]\\d)\\s([годалетрківи])+",
             extract_address = "(?:[а-яА-ЯіїєA-Za-z,\\s·]+)\\b",
             extract_date = "(?:\\d){1,2}\\s([а-яіїє])+|^[а-яіїє]{3,11}",
             document_user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1.2 Safari/605.1.15",
-            middle = "middle", trainee = "trainee", junior = "junior", senior = "senior", expert = "expert",
             internet_connection_error = "There may be no internet connection or exception={} by url={} ",
             finish = "\nfinish is ok,\ncreated: {}\nupdated: {}\nFreshen: {}\n" + ":".repeat(125),
             error = "There is error \ne={}\n for parse \n{}",
@@ -32,34 +32,43 @@ public class DataUtil {
             work = "WorkStrategyStrategy", rabota = "RabotaStrategy", djinni = "DjinniStrategy",
             habr = "HabrStrategy", grc = "GrcStrategy",
             local_date_field ="releaseDate", age_field = "age", address_field = "address",
-            link = "see the card";
+            hrn = "hrn", eur = "eur", gbp = "gbp", pln = "pln", rub = "rub", byn = "byn",
+            kzt = "kzt", usd = "usd", year = "year", hour = "hour", month = "month", day = "day",
+            middle = "middle", trainee = "trainee", junior = "junior", senior = "senior", expert = "expert";
+
     public static final List<String>
+            wasteSalary = of(" ", " ", "&nbsp;", "[.]{2,}", "(\\p{Sc}|ƒ)", "\\s+"),
             citiesUA = of("ukraine", "украина", "україна", "kyiv", "kiev", "київ", "киев", "дніпро", "днепр", "dnipro",
-            "харків", "харьков", "kharkiv", "львів", "львов", "lviv", "mykolaiv", "одесса", "odesa", "одеса", "винница",
-            "vinnitsia", "вінниця", "запоріжжя", "запорожье", "zaporizhzhya", "chernivtsi", "чернівці", "черновцы",
-            "чернігів", "чернигов", "chernigiv", "іванофранківськ", "иванофранковск", "ivanofrankivsk",
-            "івано-франківськ", "ужгород", "ивано-франковск", "ivano-frankivsk", "луцк", "луцьк", "миколаїв", "николаев",
-            "камянецьподільський", "каменецподольский", "каменец-подольский", "камянець-подільський", "жовті-води",
-            "жовтіводи", "кривой-рог", "кривойрог", "кривийріг", "кривий-ріг", "желтые-воды", "желтыеводы", "тернопіль",
-            "тернополь", "кропивницкий", "кропивницький", "кировоград", "кіровоград", "желтые", "кривой"),
+                    "харків", "харьков", "kharkiv", "львів", "львов", "lviv", "mykolaiv", "одесса", "odesa", "одеса",
+                    "винница", "vinnitsia", "вінниця", "запоріжжя", "запорожье", "zaporizhzhya", "chernivtsi", "чернівці",
+                    "черновцы", "чернігів", "чернигов", "chernigiv", "івано-франківськ", "ужгород", "ивано-франковск",
+                    "ivano-frankivsk", "луцк", "луцьк", "миколаїв", "николаев", "жовті-води", "кривой-рог", "кривий-ріг",
+                    "желтые-воды", "каменец-подольский", "камянець-подільський", "тернопіль", "тернополь", "кропивницкий",
+                    "кропивницький", "кировоград", "кіровоград"),
             citiesWorld = of("ізраїль", "израиль", "армения", "швейцарія", "оаэ", "швейцария", "франція", "франция",
                     "italy", "італія", "италия", "сінгапур", "turkey", "сингапур", "англія", "англия", "канада", "польща",
                     "польша", "молдова", "germany", "германия", "чехія", "чехия", "швеція", "швеция", "фінляндія",
                     "финляндия", "finland", "азербайджан", "norway", "poland", "singapore", "czechia", "france",
                     "киргизстан", "iran", "israel", "німеччина", "германия", "australia", "philippines", "uk", "estonia",
                     "netherlands", "узбекістан", "узбекистан", "білорусь", "беларусь", "казахстан", "foreign"),
-            citiesRU = of("санктпетербург", "санкт-петербург", "москва", "россия", "новосибирск", "екатеринбург", "томск",
-                    "нижний новгород", "казань", "краснодар", "пермь", "ростовнадону", "russia", "ростов-на-дону",
-                    "самара", "ульяновск", "воронеж"),
+            citiesRU = of("санкт-петербург", "москва", "россия", "новосибирск", "екатеринбург", "томск", "краснодар",
+                    "пермь", "russia", "ростов-на-дону", "нижний новгород", "казань", "самара", "ульяновск", "воронеж"),
             citiesBY = of("minsk", "минск", "гомель", "гродно", "брест", "витебск"),
+            monthsOfYear = of("січня", "января", "лютого", "февраля", "березня", "марта", "квітня", "апреля", "травня",
+                    "мая", "червня", "июня", "липня", "июля", "серпня", "августа", "вересня", "сентября", "жовтня",
+                    "октября", "листопада", "ноября", "грудня", "декабря"),
             wasteWorkBefore = of("продав", "бармен", "ресто", "студент"),
             workersIT = of("develop", "engineer", "разработ", "розроб", "фронт", "front", "бэк", "backend", "web",
                     "веб", "фулстек", "microservice", "микросервис", "програм", "program", "git", "spring", "maven",
                     "sql", "docker", "postgre", "rest", "mvc", "pattern");
 
-    public static boolean isDate(String text) { return text.matches(is_date); }
+    public static boolean isNumberFormat(String text) { return text.matches(is_date); }
 
     public static boolean isEmpty(String text) { return text == null || text.trim().isEmpty() || text.trim().equals("•"); }
+
+    public static boolean isMonth(String text) {
+        return monthsOfYear.stream().anyMatch(text.toLowerCase()::contains);
+    }
 
     public static boolean isCityUA(String text) {
         return citiesUA.stream().anyMatch(text.toLowerCase()::contains);
@@ -75,19 +84,19 @@ public class DataUtil {
 
     public static boolean isCityWorld(String text) { return citiesWorld.stream().anyMatch(text.toLowerCase()::contains); }
 
-    public static boolean isEquals(String workplace, List<String> list) {
-        return list.stream().anyMatch(workplace.toLowerCase()::equals);
-    }
-
     public static boolean isWorkerIT(String text) {
         return workersIT.stream().anyMatch(text.toLowerCase()::contains);
     }
 
-    public static String getLimitation(String text) { return getByLimit(getLinkIfEmpty(text), limitText); }
+    public static boolean isEquals(String workplace, List<String> list) {
+        return list.stream().anyMatch(workplace.toLowerCase()::equals);
+    }
 
     public static boolean isAgeAfter(String age) {
         return isEmpty(age) || !age.matches(is_age) || Integer.parseInt(age.substring(0, age.indexOf(" "))) >= maxAge;
     }
+
+    public static String getLimitation(String text) { return getByLimit(getLinkIfEmpty(text), limitText); }
 
     public static String getByLimit(String text, int limit) {
         return text.length() > limit ? text.substring(0, limit) : text;
@@ -109,7 +118,7 @@ public class DataUtil {
     public static String getMatch(String fieldName, String text) {
         getLinkIfEmpty(text);
         //https://stackoverflow.com/questions/63964529/a-regex-to-get-any-price-string
-        Matcher m = Pattern.compile(getMatcher(fieldName), Pattern.CASE_INSENSITIVE).matcher(text);
+        Matcher m = Pattern.compile(getMatcherByField(fieldName), Pattern.CASE_INSENSITIVE).matcher(text);
         List<String> list = new ArrayList<>();
         while (m.find()) {
             list.add(m.group());
@@ -117,7 +126,7 @@ public class DataUtil {
         return list.size() > 0 ? list.get(0) : fieldName.equals(local_date_field) ? text : link;
     }
 
-    private static String getMatcher(String fieldName) {
+    private static String getMatcherByField(String fieldName) {
         return switch (fieldName) {
             case local_date_field -> extract_date;
             case address_field -> extract_address;

@@ -42,7 +42,6 @@ public class AutoRefreshUtil {
                     Map.entry(2, new Provider(new RabotaStrategy())),
                     Map.entry(3, new Provider(new WorkStrategy())),
                     Map.entry(4, new Provider(new HabrStrategy()))
-                    /*Map.entry(3, new Provider(new LinkedinStrategy()))*/
             );
 
     public static final Map<Integer, String> mapWorkplace =

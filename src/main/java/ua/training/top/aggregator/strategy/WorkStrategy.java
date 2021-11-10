@@ -16,12 +16,12 @@ import java.util.Set;
 
 import static java.lang.String.format;
 import static java.lang.String.valueOf;
-import static ua.training.top.aggregator.installation.InstallationUtil.reCall;
+import static ua.training.top.aggregator.installation.Installation.reCall;
+import static ua.training.top.aggregator.installation.PagesCallNumber.getMaxPages;
 import static ua.training.top.util.parser.ElementUtil.getResumesWork;
 import static ua.training.top.util.parser.data.DataUtil.get_resume;
 import static ua.training.top.util.parser.data.DataUtil.work;
-import static ua.training.top.util.parser.data.LevelUtil.getLevel;
-import static ua.training.top.util.parser.data.PagesUtil.getMaxPages;
+import static ua.training.top.util.parser.data.UrlUtil.getLevel;
 import static ua.training.top.util.parser.data.WorkplaceUtil.getWork;
 
 public class WorkStrategy implements Strategy {
