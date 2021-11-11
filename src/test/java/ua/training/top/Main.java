@@ -47,7 +47,7 @@ public class Main {
 
         System.out.println("=".repeat(40));
         int countBefore = resumeService.getAll().size();
-        resumeService.deleteExceedLimitHeroku(3);
+        resumeService.deleteExceedLimitDb(1);
         int countAfter = resumeService.getAll().size();
         System.out.println("countBefore ="+ countBefore);
         System.out.println("countAfter  ="+ countAfter);

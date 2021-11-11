@@ -1,22 +1,10 @@
 package ua.training.top.util.parser.data;
 
 import static java.util.List.of;
-import static ua.training.top.util.parser.data.DataUtil.*;
+import static ua.training.top.util.parser.data.DataUtil.isCityWorld;
+import static ua.training.top.util.parser.data.DataUtil.isEquals;
 
 public class WorkplaceUtil {
-
-    public static String getRegionDjinni(String workplace) {
-        return !isCityUA(workplace) || isEquals(workplace, of("all", "санкт-петербург", "remote")) ?
-                "" : isCityUA(workplace) || isEquals(workplace, of("украина", "україна", "ukraine")) ?
-                "&region=ukraine" : isCityBy(workplace) ? "&region=belarus" : isCityRu(workplace) ?
-                "&region=russia" : "&region=other";
-    }
-
-    public static String getLocationDjinni(String workplace) {
-        return isEquals(workplace, of("all", "украина", "foreign", "remote")) ?
-                "" : isCityUA(workplace) || workplace.equals("москва") ? "&location=".concat(getDjinni(workplace)) :
-                workplace.equals("санкт-петербург") ? "&keywords=санкт-петербург" : "&keywords=".concat(workplace);
-    }
 
     public static String getDjinni(String workplace) {
         workplace = workplace.toLowerCase();

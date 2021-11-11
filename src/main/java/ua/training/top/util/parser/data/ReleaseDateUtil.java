@@ -6,7 +6,9 @@ import org.slf4j.LoggerFactory;
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 
-import static java.time.LocalDate.*;
+import static java.time.LocalDate.now;
+import static java.time.LocalDate.parse;
+import static ua.training.top.util.AggregatorUtil.getMatch;
 import static ua.training.top.util.parser.data.DataUtil.*;
 
 public class ReleaseDateUtil {
@@ -14,7 +16,7 @@ public class ReleaseDateUtil {
 
     public static LocalDate getToLocalDate(String originText) {
         String preText = formatToNumAndWord(originText);
-        String text = getMatch(local_date_field, preText);
+        String text = getMatch(local_date, preText);
         if (isEmpty(preText) || !text.contains(" ")&& !isNumberFormat(preText)) {
             return defaultDate;
         }
@@ -32,8 +34,8 @@ public class ReleaseDateUtil {
         }
     }
 
-    private static LocalDate getLocalDate(int number, String name) {
-        return isMonth(name) ? of(now().getYear(), getMonth(name), number) :
+    static LocalDate getLocalDate(int number, String name) {
+        return isMonth(name) ? LocalDate.of(now().getYear(), getMonth(name), number) :
                 switch (name) {
                     case "сейчас", "минуту", "минуты", "минут" -> LocalDateTime.now().minusMinutes(number).toLocalDate();
                     case "час", "часа", "часов" -> LocalDateTime.now().minusHours(number).toLocalDate();
@@ -44,7 +46,7 @@ public class ReleaseDateUtil {
                 };
     }
 
-    private static String formatToNumAndWord(String originText) {
+    static String formatToNumAndWord(String originText) {
         return originText.replaceAll("сейчас", "0 минут").replaceAll("только что", "0 минут")
                 .replaceAll("сьогодні", "0 сьогодні").replaceAll("сегодня", "0 сегодня")
                 .replaceAll("вчора", "1 сьогодні").replaceAll("вчера", "1 день");
@@ -66,6 +68,5 @@ public class ReleaseDateUtil {
             default -> 1;
         };
     }
-
 }
 

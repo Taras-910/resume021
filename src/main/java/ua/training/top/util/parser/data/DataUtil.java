@@ -1,22 +1,19 @@
 package ua.training.top.util.parser.data;
 
 import java.time.LocalDate;
-import java.util.ArrayList;
 import java.util.List;
-import java.util.regex.Matcher;
-import java.util.regex.Pattern;
 
 import static java.util.List.of;
-import static ua.training.top.aggregator.installation.Installation.limitText;
 import static ua.training.top.aggregator.installation.Installation.maxAge;
+import static ua.training.top.aggregator.installation.Installation.maxLengthText;
 
 public class DataUtil {
     public static final LocalDate defaultDate = LocalDate.now().minusMonths(1);
-    public static final int limitAnchor = 125;
     public static final String
             link = "see the card",
             is_date = "^(\\d{4})-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])T\\d{2}:\\d{2}:\\d{2}\\+\\d{2}:\\d{2}$",
             is_age = ".*[1-7]\\d\\s?[годалетрківи]\\s?.*",
+            extract_month = "(?:\\s?\\d?\\d)\\s?\\(?\\s?([\\(месяцева])+\\.*",
             extract_age = "(?:[1-7]\\d)\\s([годалетрківи])+",
             extract_address = "(?:[а-яА-ЯіїєA-Za-z,\\s·]+)\\b",
             extract_date = "(?:\\d){1,2}\\s([а-яіїє])+|^[а-яіїє]{3,11}",
@@ -31,12 +28,22 @@ public class DataUtil {
             error_select = "Select error e {}",
             work = "WorkStrategyStrategy", rabota = "RabotaStrategy", djinni = "DjinniStrategy",
             habr = "HabrStrategy", grc = "GrcStrategy",
-            local_date_field ="releaseDate", age_field = "age", address_field = "address",
+            local_date ="releaseDate", age_field = "age", address_field = "address", regex = "regex",
             hrn = "hrn", eur = "eur", gbp = "gbp", pln = "pln", rub = "rub", byn = "byn",
             kzt = "kzt", usd = "usd", year = "year", hour = "hour", month = "month", day = "day",
             middle = "middle", trainee = "trainee", junior = "junior", senior = "senior", expert = "expert";
 
     public static final List<String>
+            salaryUsd = of("usd", "$"),
+            salaryEur = of("eur", "€"),
+            salaryPln = of("pln", "zł"),
+            salaryGbr = of("gbp", "£", "₤"),
+            salaryKzt = of("kzt", "тг", "₸"),
+            salaryByn = of("br", "byn", "byr"),
+            salaryHrn = of("hrn", "uah", "грн.", "грн", "₴"),
+            salaryRub = of("rub", "rur", "руб.", "руб", "₽"),
+            allSalaries = of("грн", "uah", "hrn", "₴", "$", "usd", "eur", "€", "pln",
+                    "zł", "gbp", "£", "₤", "руб", "₽", "kzt", "тг", "₸", "br", "byn"),
             wasteSalary = of(" ", " ", "&nbsp;", "[.]{2,}", "(\\p{Sc}|ƒ)", "\\s+"),
             citiesUA = of("ukraine", "украина", "україна", "kyiv", "kiev", "київ", "киев", "дніпро", "днепр", "dnipro",
                     "харків", "харьков", "kharkiv", "львів", "львов", "lviv", "mykolaiv", "одесса", "odesa", "одеса",
@@ -62,9 +69,13 @@ public class DataUtil {
                     "веб", "фулстек", "microservice", "микросервис", "програм", "program", "git", "spring", "maven",
                     "sql", "docker", "postgre", "rest", "mvc", "pattern");
 
-    public static boolean isNumberFormat(String text) { return text.matches(is_date); }
+    public static boolean isNumberFormat(String text) {
+        return text.matches(is_date);
+    }
 
-    public static boolean isEmpty(String text) { return text == null || text.trim().isEmpty() || text.trim().equals("•"); }
+    public static boolean isEmpty(String text) {
+        return text == null || text.trim().isEmpty() || text.trim().equals("•");
+    }
 
     public static boolean isMonth(String text) {
         return monthsOfYear.stream().anyMatch(text.toLowerCase()::contains);
@@ -82,7 +93,9 @@ public class DataUtil {
         return citiesBY.stream().anyMatch(text.toLowerCase()::contains);
     }
 
-    public static boolean isCityWorld(String text) { return citiesWorld.stream().anyMatch(text.toLowerCase()::contains); }
+    public static boolean isCityWorld(String text) {
+        return citiesWorld.stream().anyMatch(text.toLowerCase()::contains);
+    }
 
     public static boolean isWorkerIT(String text) {
         return workersIT.stream().anyMatch(text.toLowerCase()::contains);
@@ -96,7 +109,9 @@ public class DataUtil {
         return isEmpty(age) || !age.matches(is_age) || Integer.parseInt(age.substring(0, age.indexOf(" "))) >= maxAge;
     }
 
-    public static String getLimitation(String text) { return getByLimit(getLinkIfEmpty(text), limitText); }
+    public static String getLimitation(String text) {
+        return getByLimit(getLinkIfEmpty(text), maxLengthText);
+    }
 
     public static String getByLimit(String text, int limit) {
         return text.length() > limit ? text.substring(0, limit) : text;
@@ -113,25 +128,5 @@ public class DataUtil {
             text = text.replaceAll(s, replacement).trim();
         }
         return text;
-    }
-
-    public static String getMatch(String fieldName, String text) {
-        getLinkIfEmpty(text);
-        //https://stackoverflow.com/questions/63964529/a-regex-to-get-any-price-string
-        Matcher m = Pattern.compile(getMatcherByField(fieldName), Pattern.CASE_INSENSITIVE).matcher(text);
-        List<String> list = new ArrayList<>();
-        while (m.find()) {
-            list.add(m.group());
-        }
-        return list.size() > 0 ? list.get(0) : fieldName.equals(local_date_field) ? text : link;
-    }
-
-    private static String getMatcherByField(String fieldName) {
-        return switch (fieldName) {
-            case local_date_field -> extract_date;
-            case address_field -> extract_address;
-            case age_field -> extract_age;
-            default -> "";
-        };
     }
 }

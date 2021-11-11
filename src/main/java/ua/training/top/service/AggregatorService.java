@@ -61,7 +61,7 @@ public class AggregatorService {
 
     @Transactional
     protected void executeRefreshDb(List<Resume> resumesDb, List<Resume> resumesForCreate, List<Resume> resumesForUpdate) {
-        resumeService.deleteExceedLimitHeroku(resumesDb.size() + resumesForCreate.size() - limitResumesKeeping);
+        resumeService.deleteExceedLimitDb(resumesDb.size() + resumesForCreate.size() - limitResumesKeeping);
         Set<Resume> resumes = new HashSet<>(resumesForUpdate);
         resumes.addAll(resumesForCreate);
         if (!resumes.isEmpty()) {
@@ -76,7 +76,6 @@ public class AggregatorService {
         AtomicInteger i = new AtomicInteger(1);
         resumeTos.forEach(vacancyNet -> log.info("\nvacancyNet № {}\n{}\n", i.getAndIncrement(), vacancyNet.toString()));
         log.info(common_number, resumeTos.size());
-
     }
 }
 

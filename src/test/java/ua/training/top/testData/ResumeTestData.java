@@ -22,12 +22,12 @@ public class ResumeTestData {
     public static final Resume resume2 = getResume2();
 
     private static Resume getResume1() {
-        Resume vacancy =new Resume(resume1_id,"Middle Game Developer", "Василь Васильевич", "21",
+        Resume resume =new Resume(resume1_id,"Middle Game Developer", "Василь Васильевич", "21",
                 "Киев", 3000, "КСПО, 10 лет и 2 месяца",
-                "https://grc.ua/vacancy/40006938?query=java", "Spring, SQL, REST, PHP",
+                "https://grc.ua/resume/40006938?query=java", "Spring, SQL, REST, PHP",
                 LocalDate.of(2021, 10, 20));
-        vacancy.setFreshen(freshen1);
-        return vacancy;
+        resume.setFreshen(freshen1);
+        return resume;
     }
 
     private static Resume getResume2() {

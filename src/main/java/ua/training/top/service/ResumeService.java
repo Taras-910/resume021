@@ -119,7 +119,7 @@ public class ResumeService {
     }
 
     @Transactional
-    public void deleteExceedLimitHeroku(int exceed) {
+    public void deleteExceedLimitDb(int exceed) {
         log.info("deleteExceedLimitHeroku exceed {}", exceed);
         if (exceed > 0) {
             log.info("start delete exceed {}", exceed);

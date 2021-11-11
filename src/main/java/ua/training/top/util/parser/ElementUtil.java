@@ -16,6 +16,7 @@ import static ua.training.top.aggregator.installation.Installation.reasonDateLoa
 import static ua.training.top.aggregator.strategy.HabrStrategy.getToSkillsHabr;
 import static ua.training.top.aggregator.strategy.HabrStrategy.getToWorkBeforeHabr;
 import static ua.training.top.aggregator.strategy.WorkStrategy.getToAddressWork;
+import static ua.training.top.util.AggregatorUtil.getMatch;
 import static ua.training.top.util.AggregatorUtil.isToValid;
 import static ua.training.top.util.parser.data.DataUtil.*;
 import static ua.training.top.util.parser.data.ReleaseDateUtil.getToLocalDate;

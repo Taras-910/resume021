@@ -15,14 +15,14 @@ import java.util.List;
 import java.util.Set;
 
 import static java.lang.String.format;
+import static java.util.List.of;
 import static ua.training.top.aggregator.installation.Installation.reCall;
 import static ua.training.top.aggregator.installation.PagesCallNumber.getMaxPages;
 import static ua.training.top.util.parser.ElementUtil.getResumesDjinni;
 import static ua.training.top.util.parser.data.DataUtil.*;
 import static ua.training.top.util.parser.data.UrlUtil.getLevel;
 import static ua.training.top.util.parser.data.UrlUtil.getPageUrl;
-import static ua.training.top.util.parser.data.WorkplaceUtil.getLocationDjinni;
-import static ua.training.top.util.parser.data.WorkplaceUtil.getRegionDjinni;
+import static ua.training.top.util.parser.data.WorkplaceUtil.getDjinni;
 
 public class DjinniStrategy implements Strategy{
     private final static Logger log = LoggerFactory.getLogger(DjinniStrategy.class);
@@ -52,5 +52,18 @@ public class DjinniStrategy implements Strategy{
         }
         reCall(set.size(), new DjinniStrategy());
         return new ArrayList<>(set);
+    }
+
+    public static String getRegionDjinni(String workplace) {
+        return !isCityUA(workplace) || isEquals(workplace, of("all", "санкт-петербург", "remote")) ?
+                "" : isCityUA(workplace) || isEquals(workplace, of("украина", "україна", "ukraine")) ?
+                "&region=ukraine" : isCityBy(workplace) ? "&region=belarus" : isCityRu(workplace) ?
+                "&region=russia" : "&region=other";
+    }
+
+    public static String getLocationDjinni(String workplace) {
+        return isEquals(workplace, of("all", "украина", "foreign", "remote")) ?
+                "" : isCityUA(workplace) || workplace.equals("москва") ? "&location=".concat(getDjinni(workplace)) :
+                workplace.equals("санкт-петербург") ? "&keywords=санкт-петербург" : "&keywords=".concat(workplace);
     }
 }

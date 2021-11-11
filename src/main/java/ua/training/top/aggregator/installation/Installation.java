@@ -22,13 +22,13 @@ public class Installation {
             rate_kzt_to_usd = 426.74f,
             usd_one_to_one = 1.0f;
 
-    public static final int
-            limitResumesKeeping = 3000,
+    public static int
             maxAge = 22,
-            limitText = 300,
-            limitPages = 50;
+            maxLengthText = 300,
+            limitResumesKeeping = 3000,
+            limitPages = 50,
+            repeatOfCalls = 3;
 
-    public static int repeatOfCalls = 3;
     public static LocalDate
             reasonDateLoading = LocalDateTime.now().toLocalDate().minusDays(90),
             reasonPeriodKeeping = LocalDateTime.now().toLocalDate().minusDays(120);

@@ -9,7 +9,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static java.lang.Float.parseFloat;
-import static java.util.List.of;
 import static ua.training.top.aggregator.installation.Installation.*;
 import static ua.training.top.util.parser.data.DataUtil.*;
 
@@ -17,18 +16,6 @@ public class SalaryUtil {
     public static final Logger log = LoggerFactory.getLogger(SalaryUtil.class);
     public static final Pattern patternMonetaryAmount =
             Pattern.compile("((?:[\\d,\\.\\s  &nbsp]+\\b)(\\s*)?(\\p{Sc}|ƒ))|((?:\\p{Sc}|ƒ)(\\s*)?[\\d,\\.\\s  &nbsp]+\\b)");
-
-    public static final List<String>
-            salaryUsd = of("usd", "$"),
-            salaryEur = of("eur", "€"),
-            salaryPln = of("pln", "zł"),
-            salaryGbr = of("gbp", "£", "₤"),
-            salaryKzt = of("kzt", "тг", "₸"),
-            salaryByn = of("br", "byn", "byr"),
-            salaryHrn = of("hrn", "uah", "грн.", "грн", "₴"),
-            salaryRub = of("rub", "rur", "руб.", "руб", "₽"),
-            allSalaries = of("грн", "uah", "hrn", "₴", "$", "usd", "eur", "€", "pln",
-                    "zł", "gbp", "£", "₤", "руб", "₽", "kzt", "тг", "₸", "br", "byn");
 
     public static int getToSalary(String originText) {
         originText = originText.replaceAll(",", ".").toLowerCase();
