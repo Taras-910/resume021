@@ -39,8 +39,13 @@ public class SalaryUtil {
     public static String getMonetaryAmount(String originText, String currencyCode) {
         List<String> parts = new ArrayList<>();
         Matcher matcher = patternMonetaryAmount.matcher(getReplacementText(originText, currencyCode));
-        while (matcher.find()) {
-            parts.add(matcher.group());
+        try {
+            while (matcher.find()) {
+                parts.add(matcher.group());
+            }
+        } catch (Exception e) {
+            log.error(error, e.getMessage(), originText);
+            return null;
         }
         String monetaryAmount = parts.stream().filter(p -> p.contains(getBadge(currencyCode))).findFirst().orElse("");
         return getReplace(monetaryAmount, wasteSalary, "");
