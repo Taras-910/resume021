@@ -38,7 +38,7 @@ public class ElementUtil {
                     skills = getLimitation(xssClear(element.nextElementSibling().nextElementSibling().ownText()));
                     if (isToValid(freshen, join(title, workBefore, skills))) {
                         ResumeTo rTo = new ResumeTo(title, link, link,
-                                getMatch(address_field, xssClear(element.getElementsByAttributeValueStarting("class", "tiny-profile-details").text())),
+                                getMatch(address_field_extract, xssClear(element.getElementsByAttributeValueStarting("class", "tiny-profile-details").text())),
                                 getToSalary(xssClear(element.getElementsByAttributeValueStarting("class", "profile-details-salary").text().trim())),
                                 workBefore,
                                 getToUrl(djinni, xssClear(element.getElementsByTag("a").attr("href").trim())),
@@ -89,7 +89,7 @@ public class ElementUtil {
                     name = xssClear(element.getElementsByClass("resume-card__title-link").text());
                     workBefore = getToWorkBeforeHabr(xssClear(element.getElementsByClass("inline-list").text()));
                     try {
-                        age = getMatch(age_field, xssClear(element.getElementsByClass("content-section content-section--appearance-card-section").addClass("inline-list").first().text()));
+                        age = getMatch(age_field_extract, xssClear(element.getElementsByClass("content-section content-section--appearance-card-section").addClass("inline-list").first().text()));
                     } catch (Exception e) {
                         log.error(error_parse, age_field, e.getMessage());
                     }
@@ -119,13 +119,13 @@ public class ElementUtil {
                     workBefore = getLimitation(xssClear(element.getElementsByAttributeValueStarting("class", "santa-mt-0").tagName("p").text().trim()));
                     name = xssClear(element.getElementsByAttributeValueStarting("class", "santa-pr-20 ").text());
                     try {
-                        age = getMatch(age_field, xssClear(element.getElementsByAttributeValueContaining("class", "santa-space-x-10").next().first().text().trim()));
+                        age = getMatch(age_field_extract, xssClear(element.getElementsByAttributeValueContaining("class", "santa-space-x-10").next().first().text().trim()));
                     } catch (Exception e) {
                         log.error(error_parse, age_field, e.getMessage());
                     }
                     if (isToValid(freshen, join(title, workBefore)) && isAgeAfter(age)) {
                         ResumeTo rTo = new ResumeTo(title, name, age,
-                                getMatch(address_field, xssClear(element.getElementsByAttributeValueStarting("class", "santa-flex-shrink-0").next().text())),
+                                getMatch(address_field_extract, xssClear(element.getElementsByAttributeValueStarting("class", "santa-flex-shrink-0").next().text())),
                                 getToSalary(xssClear(element.getElementsByAttributeValueStarting("class", "santa-flex-shrink-0").next().text().trim())),
                                 workBefore,
                                 xssClear(element.getElementsByAttributeValue("target", "_self").attr("href").trim()),
@@ -152,7 +152,7 @@ public class ElementUtil {
                     name = xssClear(element.getElementsByTag("b").text());
                     age = xssClear(element.getElementsByAttributeValueContaining("data-toggle", "popover").next().next().text().trim());
                     age1 = xssClear(element.getElementsByTag("b").addClass("text-muted").next().next().text());
-                    age = !isEmpty(age) && age.matches(is_age) ? getMatch(age_field, age) : getMatch(age_field, age1);
+                    age = !isEmpty(age) && age.matches(is_age) ? getMatch(age_field_extract, age) : getMatch(age_field_extract, age1);
                     if (isToValid(freshen, join(title, workBefore, skills)) && isAgeAfter(age)) {
                         ResumeTo rTo = new ResumeTo(title, name, age,
                                 getToAddressWork(xssClear(element.getElementsByAttributeValueContaining("class", "add-bottom").prev().text().trim())),

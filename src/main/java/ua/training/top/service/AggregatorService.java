@@ -76,6 +76,7 @@ public class AggregatorService {
         AtomicInteger i = new AtomicInteger(1);
         resumeTos.forEach(vacancyNet -> log.info("\nvacancyNet № {}\n{}\n", i.getAndIncrement(), vacancyNet.toString()));
         log.info(common_number, resumeTos.size());
+
     }
 }
 

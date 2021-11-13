@@ -8,15 +8,16 @@ import static ua.training.top.aggregator.installation.Installation.maxAge;
 import static ua.training.top.aggregator.installation.Installation.maxLengthText;
 
 public class DataUtil {
+
     public static final LocalDate defaultDate = LocalDate.now().minusMonths(1);
     public static final String
             link = "see the card",
             is_date = "^(\\d{4})-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])T\\d{2}:\\d{2}:\\d{2}\\+\\d{2}:\\d{2}$",
             is_age = ".*[1-7]\\d\\s?[годалетрківи]\\s?.*",
-            extract_month = "(?:\\s?\\d?\\d)\\s?\\(?\\s?([\\(месяцева])+\\.*",
-            extract_age = "(?:[1-7]\\d)\\s([годалетрківи])+",
-            extract_address = "(?:[а-яА-ЯіїєA-Za-z,\\s·]+)\\b",
-            extract_date = "(?:\\d){1,2}\\s([а-яіїє])+|^[а-яіїє]{3,11}",
+            month_extract = "(?:\\s?\\d?\\d)\\s?\\(?\\s?([месяцева])+\\.*?",
+            age_field_extract = "(?:[1-7]\\d)\\s([годалетрківи])+",
+            address_field_extract = "(?:[а-яА-ЯіїєA-Za-z,\\s·]+)\\b",
+            local_date_extract = "(?:\\d){1,2}\\s([а-яіїє])+|^[а-яіїє]{3,11}",
             document_user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1.2 Safari/605.1.15",
             internet_connection_error = "There may be no internet connection or exception={} by url={} ",
             finish = "\nfinish is ok,\ncreated: {}\nupdated: {}\nFreshen: {}\n" + ":".repeat(125),
@@ -64,6 +65,7 @@ public class DataUtil {
             monthsOfYear = of("січня", "января", "лютого", "февраля", "березня", "марта", "квітня", "апреля", "травня",
                     "мая", "червня", "июня", "липня", "июля", "серпня", "августа", "вересня", "сентября", "жовтня",
                     "октября", "листопада", "ноября", "грудня", "декабря"),
+            ageAria = of("год", "года", "лет", "рік", "років", "роки"),
             wasteWorkBefore = of("продав", "бармен", "ресто", "студент"),
             workersIT = of("develop", "engineer", "разработ", "розроб", "фронт", "front", "бэк", "backend", "web",
                     "веб", "фулстек", "microservice", "микросервис", "програм", "program", "git", "spring", "maven",
@@ -76,6 +78,8 @@ public class DataUtil {
     public static boolean isEmpty(String text) {
         return text == null || text.trim().isEmpty() || text.trim().equals("•");
     }
+
+    public static boolean isAgeAria(String text) { return ageAria.stream().anyMatch(text.toLowerCase()::contains); }
 
     public static boolean isMonth(String text) {
         return monthsOfYear.stream().anyMatch(text.toLowerCase()::contains);

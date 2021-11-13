@@ -16,7 +16,7 @@ public class ReleaseDateUtil {
 
     public static LocalDate getToLocalDate(String originText) {
         String preText = formatToNumAndWord(originText);
-        String text = getMatch(local_date, preText);
+        String text = getMatch(local_date_extract, preText);
         if (isEmpty(preText) || !text.contains(" ")&& !isNumberFormat(preText)) {
             return defaultDate;
         }

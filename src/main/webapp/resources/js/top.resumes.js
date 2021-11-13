@@ -40,7 +40,7 @@ function clearFilter() {
     $.get(ajaxUrl, updateTableByData);
 }
 
-function updateRowVacancy(id) {
+function updateRowResume(id) {
     $.ajaxSetup({cacheURL: false});
     $('#detailsUpdateForm').find(":input").val("");
     $.get(ajaxUrl + id, function (data) {
@@ -63,7 +63,7 @@ function updateResumeTo() {
     });
 }
 
-function deleteRowVacancy(id) {
+function deleteRowResume(id) {
     $.ajaxSetup({cacheURL: false});
     $('#detailsDeleteForm').find(":input[name='id']").val(id);
     $('#deleteRow').modal();
@@ -189,7 +189,7 @@ $(function () {
                     "defaultContent": "",
                     "render": function (data, type, row) {  // update
                         if (type === "display") {
-                            return "<a onclick='updateRowVacancy(" + row.id + ");'><span class='fa fa-pencil'></span></a>";
+                            return "<a onclick='updateRowResume(" + row.id + ");'><span class='fa fa-pencil'></span></a>";
                         }
                     }
                 },
@@ -198,7 +198,7 @@ $(function () {
                     "defaultContent": "",
                     "render": function (data, type, row) {  // delete
                         if (type === "display") {
-                            return "<a onclick='deleteRowVacancy(" + row.id + ");'><span class='fa fa-remove'></span></a>";
+                            return "<a onclick='deleteRowResume(" + row.id + ");'><span class='fa fa-remove'></span></a>";
                         }
                     }
                 }

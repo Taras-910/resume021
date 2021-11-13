@@ -20,7 +20,7 @@ public class SalaryUtil {
     public static int getToSalary(String originText) {
         originText = originText.replaceAll(",", ".").toLowerCase();
         String currencyCode = getCurrencyCode(originText);
-        String amount = getMonetaryAmount(originText, currencyCode);
+        String amount = getAmount(originText, currencyCode);
         if (!isEmpty(originText) && !isEmpty(amount) && isSalary(originText)) {
             try {
                 return (int) (parseFloat(amount) * getPeriod(originText) / getRate(currencyCode) * 100);
@@ -36,24 +36,20 @@ public class SalaryUtil {
                 isPln(originText) ? pln : isGbr(originText) ? gbp : isKzt(originText) ? kzt : isSByn(originText) ? byn : "";
     }
 
-    public static String getMonetaryAmount(String originText, String currencyCode) {
+    public static String getAmount(String originText, String currencyCode) {
         List<String> parts = new ArrayList<>();
         Matcher matcher = patternMonetaryAmount.matcher(getReplacementText(originText, currencyCode));
-        try {
-            while (matcher.find()) {
-                parts.add(matcher.group());
-            }
-        } catch (Exception e) {
-            log.error(error, e.getMessage(), originText);
-            return null;
+        //https://stackoverflow.com/questions/63964529/a-regex-to-get-any-price-string
+        while (matcher.find()) {
+            parts.add(matcher.group());
         }
-        String monetaryAmount = parts.stream().filter(p -> p.contains(getBadge(currencyCode))).findFirst().orElse("");
-        return getReplace(monetaryAmount, wasteSalary, "");
+        String amount = parts.stream().filter(p -> p.contains(getBadge(currencyCode))).findFirst().orElse("");
+        return getReplace(amount, wasteSalary, "");
     }
 
     public static int getPeriod(String text) {
         return text.contains(year) ?
-                1/12 : text.contains(month) ? 1 : text.contains(day) ? 22 : text.contains(hour) ? 8 * 22 : 1;
+                1 / 12 : text.contains(month) ? 1 : text.contains(day) ? 22 : text.contains(hour) ? 8 * 22 : 1;
     }
 
     public static boolean isHrn(String text) {
