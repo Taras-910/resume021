@@ -13,7 +13,7 @@ public class DataUtil {
     public static final String
             link = "see the card",
             is_date = "^(\\d{4})-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])T\\d{2}:\\d{2}:\\d{2}\\+\\d{2}:\\d{2}$",
-            is_age = ".*[1-7]\\d\\s?[годалетрківи]\\s?.*",
+            is_age = ".*[1-7]\\d\\s?[годалетрківи]{3,}.*",
             month_extract = "(?:\\s?\\d?\\d)\\s?\\(?\\s?([месяцева])+\\.*?",
             age_field_extract = "(?:[1-7]\\d)\\s([годалетрківи])+",
             address_field_extract = "(?:[а-яА-ЯіїєA-Za-z,\\s·]+)\\b",
@@ -79,7 +79,7 @@ public class DataUtil {
         return text == null || text.trim().isEmpty() || text.trim().equals("•");
     }
 
-    public static boolean isAgeAria(String text) { return ageAria.stream().anyMatch(text.toLowerCase()::contains); }
+    public static boolean isAge(String text) { return !isEmpty(text) && text.matches(is_age); }
 
     public static boolean isMonth(String text) {
         return monthsOfYear.stream().anyMatch(text.toLowerCase()::contains);

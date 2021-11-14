@@ -79,7 +79,6 @@ public class AggregatorService {
 
     }
 }
-
 //	      djinni   grc*10   habr  rabota   work  linkedin  total
 //all	    49	  49(0)	     1	     6	    16	   (100)	121
 //Украина	32	   4(0)	     -	     6	    30	     -	     72

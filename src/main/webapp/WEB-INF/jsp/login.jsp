@@ -74,7 +74,7 @@
     <a href="https://djinni.co">Djinni</a>,
     <a href="http://grc.ua">HH(GrcUA)</a>,
     <a href="https://career.habr.com">Habr</a>,
-    <a href="https://www.linkedin.com">LinkedIn</a>,
+    <%--<a href="https://www.linkedin.com">LinkedIn</a>,--%>
     <a href="https://rabota.ua">Rabota</a>,
     <a href="https://www.work.ua">Work</a>
 </div>

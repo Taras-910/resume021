@@ -119,7 +119,8 @@ public class ElementUtil {
                     workBefore = getLimitation(xssClear(element.getElementsByAttributeValueStarting("class", "santa-mt-0").tagName("p").text().trim()));
                     name = xssClear(element.getElementsByAttributeValueStarting("class", "santa-pr-20 ").text());
                     try {
-                        age = getMatch(age_field_extract, xssClear(element.getElementsByAttributeValueContaining("class", "santa-space-x-10").next().first().text().trim()));
+                        age = xssClear(element.getElementsByAttributeValueContaining("class", "santa-space-x-10").next().first().text().trim());
+                        age = isAge(age) ? getMatch(age_field_extract, age) : link;
                     } catch (Exception e) {
                         log.error(error_parse, age_field, e.getMessage());
                     }
@@ -152,7 +153,7 @@ public class ElementUtil {
                     name = xssClear(element.getElementsByTag("b").text());
                     age = xssClear(element.getElementsByAttributeValueContaining("data-toggle", "popover").next().next().text().trim());
                     age1 = xssClear(element.getElementsByTag("b").addClass("text-muted").next().next().text());
-                    age = !isEmpty(age) && age.matches(is_age) ? getMatch(age_field_extract, age) : getMatch(age_field_extract, age1);
+                    age = !isEmpty(age) && age.matches(is_age) ? getMatch(age_field_extract, age) : !isEmpty(age1) && age1.matches(is_age) ? getMatch(age_field_extract, age1) : link;
                     if (isToValid(freshen, join(title, workBefore, skills)) && isAgeAfter(age)) {
                         ResumeTo rTo = new ResumeTo(title, name, age,
                                 getToAddressWork(xssClear(element.getElementsByAttributeValueContaining("class", "add-bottom").prev().text().trim())),
