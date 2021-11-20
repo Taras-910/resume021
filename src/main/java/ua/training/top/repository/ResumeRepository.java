@@ -28,6 +28,6 @@ public interface ResumeRepository {
 
     List<Resume> deleteOutDated(LocalDate reasonPeriodToKeep);
 
-    void deleteExceedLimit(int exceedNumber);
+    List<Resume> getLimit(int limit);
 }
 

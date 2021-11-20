@@ -7,7 +7,7 @@
 <body>
 <nav class="navbar navbar-dark bg-dark py-0">
     <div class="container">
-        <div class="navbar-brand"><h3><img src="resources/images/icon-vacancy.png">   programmer resume  🔥</h3></div>
+        <div class="navbar-brand"><h3><img src="resources/images/icon-vacancy.png">   > 2000 programmer resumes  🔥</h3></div>
         <form class="form-inline my-2" id="login_form" action="spring_security_check" method="post">
             <input class="form-control mr-1" type="text" placeholder="Email" name="username">
             <input class="form-control mr-1" type="password" placeholder="Password" name="password">

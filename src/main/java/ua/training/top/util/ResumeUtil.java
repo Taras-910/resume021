@@ -14,6 +14,16 @@ import static ua.training.top.util.ResumeCheckUtil.isAccuracy;
 import static ua.training.top.util.parser.data.DataUtil.link;
 
 public class ResumeUtil {
+    public static boolean firstDownload = true;
+
+    public static void offFirstDownload() {
+        ResumeUtil.firstDownload = false;
+    }
+
+    public static void setFirstDownload() {
+        ResumeUtil.firstDownload = true;
+    }
+
 
     private static List<ResumeTo> getEmpty() {
         return of(new ResumeTo(0, "", "", "", "", -1,

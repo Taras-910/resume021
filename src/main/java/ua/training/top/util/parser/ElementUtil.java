@@ -90,6 +90,7 @@ public class ElementUtil {
                     workBefore = getToWorkBeforeHabr(xssClear(element.getElementsByClass("inline-list").text()));
                     try {
                         age = getMatch(age_field_extract, xssClear(element.getElementsByClass("content-section content-section--appearance-card-section").addClass("inline-list").first().text()));
+                        age = isAge(age) ? age : link;
                     } catch (Exception e) {
                         log.error(error_parse, age_field, e.getMessage());
                     }
@@ -153,9 +154,9 @@ public class ElementUtil {
                     name = xssClear(element.getElementsByTag("b").text());
                     age = xssClear(element.getElementsByAttributeValueContaining("data-toggle", "popover").next().next().text().trim());
                     age1 = xssClear(element.getElementsByTag("b").addClass("text-muted").next().next().text());
-                    age = !isEmpty(age) && age.matches(is_age) ? getMatch(age_field_extract, age) : !isEmpty(age1) && age1.matches(is_age) ? getMatch(age_field_extract, age1) : link;
                     if (isToValid(freshen, join(title, workBefore, skills)) && isAgeAfter(age)) {
-                        ResumeTo rTo = new ResumeTo(title, name, age,
+                        ResumeTo rTo = new ResumeTo(title, name,
+                                isAge(age) ? getMatch(age_field_extract, age) : isAge(age1) ? getMatch(age_field_extract, age1) : link,
                                 getToAddressWork(xssClear(element.getElementsByAttributeValueContaining("class", "add-bottom").prev().text().trim())),
                                 getToSalary(xssClear(element.getElementsByAttributeValueStarting("class", "nowrap").tagName("span").text().trim())),
                                 workBefore,

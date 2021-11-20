@@ -122,7 +122,7 @@ $(function () {
                 {
                     "data": function (data, type, row) {
                         if (data.age === "see the card" && type === "display") {
-                            return '<a href="' + data.url + '">card</a>'
+                            return '<a href="' + data.url + '">-</a>'
                         }
                         return data.age;
                     }
@@ -130,7 +130,7 @@ $(function () {
                 {
                     "data": function (data, type, row) {
                         if (data.address === "see the card" && type === "display") {
-                            return 'see the <a href="' + data.url + '">card</a>'
+                            return '<a href="' + data.url + '">-</a>'
                         }
                         return data.address;
                     }
@@ -138,7 +138,7 @@ $(function () {
                 {
                     "data": function (data, type, row) {
                         if (data.salary === 1 && type === "display") {
-                            return '<a href="' + data.url + '">card</a>'
+                            return '<a href="' + data.url + '">-</a>'
                         }
                         if (data.salary > 1 && type === "display") {
                             return data.salary / 100;

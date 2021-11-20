@@ -65,7 +65,6 @@ public class DataUtil {
             monthsOfYear = of("січня", "января", "лютого", "февраля", "березня", "марта", "квітня", "апреля", "травня",
                     "мая", "червня", "июня", "липня", "июля", "серпня", "августа", "вересня", "сентября", "жовтня",
                     "октября", "листопада", "ноября", "грудня", "декабря"),
-            ageAria = of("год", "года", "лет", "рік", "років", "роки"),
             wasteWorkBefore = of("продав", "бармен", "ресто", "студент"),
             workersIT = of("develop", "engineer", "разработ", "розроб", "фронт", "front", "бэк", "backend", "web",
                     "веб", "фулстек", "microservice", "микросервис", "програм", "program", "git", "spring", "maven",
@@ -79,7 +78,9 @@ public class DataUtil {
         return text == null || text.trim().isEmpty() || text.trim().equals("•");
     }
 
-    public static boolean isAge(String text) { return !isEmpty(text) && text.matches(is_age); }
+    public static boolean isAge(String text) {
+        return !isEmpty(text) && text.matches(is_age);
+    }
 
     public static boolean isMonth(String text) {
         return monthsOfYear.stream().anyMatch(text.toLowerCase()::contains);

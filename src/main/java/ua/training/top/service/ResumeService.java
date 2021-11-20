@@ -50,6 +50,10 @@ public class ResumeService {
 
     public List<Resume> getAll() {
         log.info("getAll");
+        if(firstDownload) {
+            offFirstDownload();
+            return repository.getLimit(100);
+        }
         return repository.getAll();
     }
 
@@ -123,10 +127,12 @@ public class ResumeService {
         log.info("deleteExceedLimitHeroku exceed {}", exceed);
         if (exceed > 0) {
             log.info("start delete exceed {}", exceed);
-            repository.deleteExceedLimit(exceed);
+            repository.deleteList(getLimit(exceed));
             freshenService.deleteExceedLimit(limitResumesKeeping / 2);
             voteService.deleteExceedLimit(limitResumesKeeping / 2);
         }
     }
 
+    @Transactional
+    public List<Resume> getLimit(int limit) { return repository.getLimit(limit); }
 }

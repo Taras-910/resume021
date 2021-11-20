@@ -89,7 +89,7 @@ public class DataJpaResumeRepository implements ResumeRepository {
 
     @Override
     public List<Resume> getAll() {
-        return resumeRepository.getAll();
+        return resumeRepository.findAll(SORT_DATE_NAME);
     }
 
     @Override
@@ -106,6 +106,6 @@ public class DataJpaResumeRepository implements ResumeRepository {
 
     @Transactional
     @Override
-    public void deleteExceedLimit(int exceedNumber) { deleteList(resumeRepository.findExceeded(exceedNumber)); }
+    public List<Resume>  getLimit(int limit) { return resumeRepository.getLimit(limit); }
 }
 
