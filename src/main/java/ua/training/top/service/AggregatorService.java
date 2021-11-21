@@ -50,9 +50,9 @@ public class AggregatorService {
                 r.setFreshen(newFreshen);
                 if (mapDb.containsKey(getAnchor(r))) {
                     resumesForUpdate.add(getForUpdate(r, mapDb.get(getAnchor(r))));
-                } else {
-                    resumesForCreate.add(r);
-                }
+                } else if(!resumesForCreate.contains(r)) {
+                        resumesForCreate.add(r);
+                    }
             });
             executeRefreshDb(resumesDb, resumesForCreate, resumesForUpdate);
             log.info(finish, resumesForCreate.size(), resumesForUpdate.size(), freshen);

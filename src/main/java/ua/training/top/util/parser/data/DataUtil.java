@@ -14,7 +14,7 @@ public class DataUtil {
             link = "see the card",
             is_date = "^(\\d{4})-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])T\\d{2}:\\d{2}:\\d{2}\\+\\d{2}:\\d{2}$",
             is_age = ".*[1-7]\\d\\s?[годалетрківи]{3,}.*",
-            month_extract = "(?:\\s?\\d?\\d)\\s?\\(?\\s?([месяцева])+\\.*?",
+            month_extract = "(?:\\s?\\d?\\d)\\s?\\(?\\s?([месяцеваmonth])+\\.*?",
             age_field_extract = "(?:[1-7]\\d)\\s([годалетрківи])+",
             address_field_extract = "(?:[а-яА-ЯіїєA-Za-z,\\s·]+)\\b",
             local_date_extract = "(?:\\d){1,2}\\s([а-яіїє])+|^[а-яіїє]{3,11}",

@@ -12,7 +12,6 @@ import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
 import static java.lang.String.join;
-import static ua.training.top.aggregator.installation.Installation.maxLengthText;
 import static ua.training.top.util.parser.data.DataUtil.*;
 
 public class AggregatorUtil {
@@ -27,10 +26,10 @@ public class AggregatorUtil {
     }
 
     public static String getAnchor(Resume r) {
-        String workBefore = r.getWorkBefore();
-        String find = getMatch(month_extract, workBefore);
-        workBefore = find.equals(workBefore) ? workBefore : workBefore.substring(0, workBefore.indexOf(find));
-        return getByLimit(join(" ", r.getTitle(), r.getName(), workBefore), maxLengthText / 3).toLowerCase();
+        String anchor = r.getWorkBefore().equals(link) ? r.getSkills() : r.getWorkBefore();
+        String withoutMonth = getMatch(month_extract, anchor);
+        anchor = withoutMonth.equals(anchor) ? anchor : anchor.substring(0, anchor.indexOf(withoutMonth));
+        return join(" ", r.getTitle(), r.getName(), anchor).toLowerCase();
     }
 
     public static Resume getForUpdate(Resume r, Resume resumeDb) {

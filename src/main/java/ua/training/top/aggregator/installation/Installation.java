@@ -24,7 +24,7 @@ public class Installation {
 
     public static int
             maxAge = 22,
-            maxLengthText = 300,
+            maxLengthText = 250,
             limitResumesKeeping = 3000,
             limitPages = 50,
             repeatOfCalls = 3;
