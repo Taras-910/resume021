@@ -106,6 +106,11 @@ public class DataJpaResumeRepository implements ResumeRepository {
 
     @Transactional
     @Override
-    public List<Resume>  getLimit(int limit) { return resumeRepository.getLimit(limit); }
+    public List<Resume>  getList(int limit) { return resumeRepository.getList(limit); }
+
+    @Override
+    public List<Resume> getFirstPortion(int limit) {
+        return resumeRepository.getFirstPortion(limit);
+    }
 }
 

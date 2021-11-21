@@ -86,6 +86,8 @@ $(function () {
     ctx = {
         ajaxUrl: ajaxUrl,
         datatableApi: $("#datatable").DataTable({
+            "iDisplayLength": 10,
+            "bPaginate": true,
             "ajax": {
                 "url": ajaxUrl,
                 "dataSrc": ""
@@ -94,9 +96,7 @@ $(function () {
                 "defaultContent": "-",
                 "targets": "_all"
             }],
-            "pagingType": "full_numbers",
             "info": true,
-            "deferRender": true,
             "columns": [
                 {
                     "data": "id",

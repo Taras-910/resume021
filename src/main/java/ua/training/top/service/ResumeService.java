@@ -52,7 +52,7 @@ public class ResumeService {
         log.info("getAll");
         if(firstDownload) {
             offFirstDownload();
-            return repository.getLimit(100);
+            return repository.getFirstPortion(100);
         }
         return repository.getAll();
     }
@@ -127,12 +127,12 @@ public class ResumeService {
         log.info("deleteExceedLimitHeroku exceed {}", exceed);
         if (exceed > 0) {
             log.info("start delete exceed {}", exceed);
-            repository.deleteList(getLimit(exceed));
+            repository.deleteList(repository.getList(exceed));
             freshenService.deleteExceedLimit(limitResumesKeeping / 2);
             voteService.deleteExceedLimit(limitResumesKeeping / 2);
         }
     }
 
     @Transactional
-    public List<Resume> getLimit(int limit) { return repository.getLimit(limit); }
+    public List<Resume> getFirstPortion(int limit) { return repository.getFirstPortion(limit); }
 }

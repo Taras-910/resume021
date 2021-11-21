@@ -28,6 +28,8 @@ public interface ResumeRepository {
 
     List<Resume> deleteOutDated(LocalDate reasonPeriodToKeep);
 
-    List<Resume> getLimit(int limit);
+    List<Resume> getList(int limit);
+
+    List<Resume> getFirstPortion(int limit);
 }
 
