@@ -2,6 +2,7 @@ package ua.training.top.repository.datajpa;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
@@ -109,8 +110,8 @@ public class DataJpaResumeRepository implements ResumeRepository {
     public List<Resume>  getList(int limit) { return resumeRepository.getList(limit); }
 
     @Override
-    public List<Resume> getFirstPortion(int limit) {
-        return resumeRepository.getFirstPortion(limit);
+    public List<Resume> getFirstPage(PageRequest pageable) {
+        return resumeRepository.getFirstPage(pageable).getContent();
     }
 }
 

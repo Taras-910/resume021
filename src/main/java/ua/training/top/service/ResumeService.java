@@ -2,6 +2,7 @@ package ua.training.top.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.training.top.model.Freshen;
@@ -52,7 +53,7 @@ public class ResumeService {
         log.info("getAll");
         if(firstDownload) {
             offFirstDownload();
-            return repository.getFirstPortion(100);
+            return getFirstPage(0, 300);
         }
         return repository.getAll();
     }
@@ -134,5 +135,6 @@ public class ResumeService {
     }
 
     @Transactional
-    public List<Resume> getFirstPortion(int limit) { return repository.getFirstPortion(limit); }
-}
+    public List<Resume> getFirstPage(int page, int size) {
+        return repository.getFirstPage(PageRequest.of(page, size));
+    }}

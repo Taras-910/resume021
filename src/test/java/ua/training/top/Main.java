@@ -3,12 +3,9 @@ package ua.training.top;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ua.training.top.model.Freshen;
-import ua.training.top.model.Resume;
 import ua.training.top.service.AggregatorService;
 import ua.training.top.service.FreshenService;
 import ua.training.top.service.ResumeService;
-
-import java.util.List;
 
 import static ua.training.top.SecurityUtil.setTestAuthorizedUser;
 import static ua.training.top.model.Goal.UPGRADE;
@@ -49,9 +46,7 @@ public class Main {
 //        VoteService voteService = appCtx.getBean(VoteService.class);
 
         System.out.println("=".repeat(40));
-        List<Resume> resumes = resumeService.getFirstPortion(3);
 
-        System.out.println("resumes ="+ resumes.toString());
 
         System.out.println(".".repeat(40));
         appCtx.close();

@@ -1,5 +1,7 @@
 package ua.training.top.repository.datajpa;
 
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Modifying;
 import org.springframework.data.jpa.repository.Query;
@@ -48,8 +50,7 @@ public interface CrudResumeRepository extends JpaRepository<Resume, Integer> {
     @Query(value = "SELECT * FROM Resume r ORDER BY r.release_date ASC LIMIT :limit", nativeQuery = true)
     List<Resume> getList(@Param("limit") int limit);
 
-    //    https://stackoverflow.com/questions/9314078/setmaxresults-for-spring-data-jpa-annotation
-    @Query(value = "SELECT * FROM Resume r ORDER BY r.release_date DESC LIMIT :limit", nativeQuery = true)
-    List<Resume> getFirstPortion(@Param("limit") int limit);
+    @Query(value = "SELECT r FROM Resume r ORDER BY r.releaseDate DESC, r.id DESC")
+    Page<Resume> getFirstPage(PageRequest pageable);
 }
 
