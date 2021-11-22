@@ -10,7 +10,6 @@ import ua.training.top.to.ResumeTo;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.concurrent.atomic.AtomicInteger;
 
 import static java.lang.String.join;
 import static ua.training.top.aggregator.installation.Installation.reasonDateLoading;
@@ -56,45 +55,19 @@ public class ElementUtil {
 
     public static List<ResumeTo> getResumesGrc(Elements elements, Freshen freshen) {
         List<ResumeTo> list = new ArrayList<>();
-        AtomicInteger i = new AtomicInteger(1);
         elements.forEach(element -> {
-            System.out.println(i.getAndIncrement() + "-".repeat(120));
             try {
                 LocalDate localDate = getToLocalDate(xssClear(element.getElementsByClass("resume-search-item__date").text()));
-                System.out.println("dateString="+ xssClear(element.getElementsByClass("resume-search-item__date").text()));
                 if (localDate.isAfter(reasonDateLoading)) {
                     String workBefore, age, title = getUpperStart(xssClear(element.getElementsByClass("resume-search-item__name").text()));
-                    System.out.println("titleString="+ xssClear(element.getElementsByClass("resume-search-item__name").text()));
                     workBefore = getLimitation(xssClear(element.getElementsByAttributeValueStarting("data-qa", "resume-serp_resume-item-content").text()));
-                    System.out.println("workBeforeString="+ xssClear(element.getElementsByAttributeValueStarting("data-qa", "resume-serp_resume-item-content").text()));
                     age = getLinkIfEmpty(xssClear(element.getElementsByAttributeValueStarting("data-qa", "resume-serp__resume-age").text()));
-                    System.out.println("ageString="+ xssClear(element.getElementsByAttributeValueStarting("data-qa", "resume-serp__resume-age").text()));
-                    System.out.println("salaryString="+ xssClear(element.getElementsByClass("bloko-text bloko-text_large bloko-text_strong").text()));
                     if (isToValid(freshen, join(title, workBefore)) && isAgeAfter(age)) {
                         ResumeTo rTo = new ResumeTo(title, link, age, link,
                                 getToSalary(xssClear(element.getElementsByClass("bloko-text bloko-text_large bloko-text_strong").text())),
                                 workBefore,
                                 getToUrl(grc, xssClear(element.getElementsByClass("resume-search-item__name").attr("href"))),
                                 link, localDate);
-//                        System.out.println("dateString="+ xssClear(element.getElementsByClass("resume-search-item__date").text()));
-                        System.out.println("date="+rTo.getReleaseDate());
-//                        System.out.println("titleString="+ xssClear(element.getElementsByClass("resume-search-item__name").text()));
-                        System.out.println("title="+rTo.getTitle());
-                        System.out.println("nameString="+ link);
-                        System.out.println("name="+rTo.getName());
-//                        System.out.println("ageString="+ xssClear(element.getElementsByAttributeValueStarting("data-qa", "resume-serp__resume-age").text()));
-                        System.out.println("age="+rTo.getAge());
-                        System.out.println("addressString="+ link);
-                        System.out.println("address="+rTo.getAddress());
-//                        System.out.println("salaryString="+ xssClear(element.getElementsByClass("bloko-text bloko-text_large bloko-text_strong").text()));
-                        System.out.println("salary="+rTo.getSalary());
-
-//                        System.out.println("workBeforeString="+ xssClear(element.getElementsByAttributeValueStarting("data-qa", "resume-serp_resume-item-content").text()));
-                        System.out.println("workBefore="+rTo.getWorkBefore());
-                        System.out.println("urlString="+ xssClear(element.getElementsByTag("a").attr("href")));
-                        System.out.println("url="+rTo.getUrl());
-                        System.out.println("skillsString="+ link);
-                        System.out.println("skills="+rTo.getSkills());
                         list.add(rTo);
                     }
                 }

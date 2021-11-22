@@ -15,6 +15,7 @@ import java.util.List;
 import java.util.Set;
 
 import static java.lang.String.format;
+import static ua.training.top.aggregator.installation.Installation.reCall;
 import static ua.training.top.aggregator.installation.PagesCallNumber.getMaxPages;
 import static ua.training.top.util.parser.ElementUtil.getResumesGrc;
 import static ua.training.top.util.parser.data.DataUtil.get_resume;
@@ -54,6 +55,7 @@ public class GrcStrategy implements Strategy {
             if (page < getMaxPages(grc, workplace)) page++;
             else break;
         }
+        reCall(set.size(), new GrcStrategy());
         return new ArrayList<>(set);
     }
 }

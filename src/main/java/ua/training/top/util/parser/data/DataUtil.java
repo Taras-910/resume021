@@ -117,15 +117,14 @@ public class DataUtil {
     }
 
     public static String getLimitation(String text) {
-        getLinkIfEmpty(text);
-        return text.length() > maxLengthText ? text.substring(0, maxLengthText) : text;
+        return isEmpty(text) ? link : text.length() > maxLengthText ? text.substring(0, maxLengthText) : text;
     }
 
-    public static String getLinkIfEmpty(String text) { return isEmpty(text) ? link : text; }
+    public static String getLinkIfEmpty(String text) {
+        return isEmpty(text) ? link : text; }
 
     public static String getUpperStart(String text) {
-        getLinkIfEmpty(text);
-        return text.length() > 1 ? text.substring(0, 1).toUpperCase().concat(text.substring(1)) : link;
+        return isEmpty(text) || text.length() <= 1 ?  link : text.substring(0, 1).toUpperCase().concat(text.substring(1));
     }
 
     public static String getReplace(String text, List<String> wasteWords, String replacement) {
