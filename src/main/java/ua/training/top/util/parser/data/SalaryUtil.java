@@ -7,20 +7,31 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
+import java.util.stream.Collectors;
 
 import static java.lang.Float.parseFloat;
-import static ua.training.top.aggregator.installation.Installation.*;
 import static ua.training.top.util.parser.data.DataUtil.*;
 
 public class SalaryUtil {
     public static final Logger log = LoggerFactory.getLogger(SalaryUtil.class);
-    public static final Pattern patternMonetaryAmount =
-            Pattern.compile("((?:[\\d,\\.\\s  &nbsp]+\\b)(\\s*)?(\\p{Sc}|ƒ))|((?:\\p{Sc}|ƒ)(\\s*)?[\\d,\\.\\s  &nbsp]+\\b)");
+    public static final float
+            rate_pln_to_usd = 3.98f,
+            rate_eur_to_usd = 0.86f,
+            rate_gbp_to_usd = 0.73f,
+            rate_byn_to_usd = 2.43f,
+            rate_hrn_to_usd = 26.25f,
+            rate_rub_to_usd = 71.78f,
+            rate_kzt_to_usd = 426.74f,
+            usd_one_to_one = 1.0f;
 
     public static int getToSalary(String originText) {
+
+        if (isEmpty(originText) || !isSalary(originText.toLowerCase())) {
+            return 1;
+        }
         originText = originText.replaceAll(",", ".").toLowerCase();
         String currencyCode = getCurrencyCode(originText);
-        String amount = getAmount(originText, currencyCode);
+        String amount = getAmountMonetary(originText, currencyCode).get(0);
         if (!isEmpty(originText) && !isEmpty(amount) && isSalary(originText)) {
             try {
                 return (int) (parseFloat(amount) * getPeriod(originText) / getRate(currencyCode) * 100);
@@ -32,24 +43,32 @@ public class SalaryUtil {
     }
 
     public static String getCurrencyCode(String originText) {
-        return isUsd(originText) ? usd : isHrn(originText) ? hrn : isEur(originText) ? eur : isRub(originText) ? rub :
-                isPln(originText) ? pln : isGbr(originText) ? gbp : isKzt(originText) ? kzt : isSByn(originText) ? byn : "";
+        return isUsd(originText) ? usd : isHrn(originText) ? hrn : isEur(originText) ? eur : isSByn(originText) ? byn :
+                isRub(originText) ? rub : isPln(originText) ? pln : isGbr(originText) ? gbp : isKzt(originText) ? kzt : "";
     }
 
-    public static String getAmount(String originText, String currencyCode) {
+    public static List<String> getAmountMonetary(String originText, String currencyCode) {
         List<String> parts = new ArrayList<>();
+        Pattern patternMonetaryAmount = Pattern.compile(monetary_amount_regex);
         Matcher matcher = patternMonetaryAmount.matcher(getReplacementText(originText, currencyCode));
-        //https://stackoverflow.com/questions/63964529/a-regex-to-get-any-price-string
         while (matcher.find()) {
             parts.add(matcher.group());
         }
-        String amount = parts.stream().filter(p -> p.contains(getBadge(currencyCode))).findFirst().orElse("");
-        return getReplace(amount, wasteSalary, "");
+        List<String>
+                amounts = parts.stream().filter(p -> p.contains(getBadge(currencyCode))).collect(Collectors.toList()),
+                monetaryAmounts = new ArrayList<>();
+        amounts.forEach(s -> {
+            s = getReplace(s, wasteSalary, "");
+            if (s.matches(is_salary_number)) {
+                monetaryAmounts.add(s);
+            }
+        });
+        return monetaryAmounts;
     }
 
-    public static int getPeriod(String text) {
-        return text.contains(year) ?
-                1 / 12 : text.contains(month) ? 1 : text.contains(day) ? 22 : text.contains(hour) ? 8 * 22 : 1;
+    public static float getPeriod(String text) {
+        return text.contains(year) ? 1.0f / 12.0f : text.contains(month) ?
+                1.0f : text.contains(day) ? 22.0f : text.contains(hour) ? 22.0f * 8.0f : 1.0f;
     }
 
     public static boolean isHrn(String text) {

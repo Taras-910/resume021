@@ -15,6 +15,9 @@ public class ReleaseDateUtil {
     private final static Logger log = LoggerFactory.getLogger(ReleaseDateUtil.class);
 
     public static LocalDate getToLocalDate(String originText) {
+        if (isEmpty(originText)) {
+            return defaultDate;
+        }
         String preText = formatToNumAndWord(originText);
         String text = getMatch(local_date_extract, preText);
         if (isEmpty(preText) || !text.contains(" ")&& !isNumberFormat(preText)) {

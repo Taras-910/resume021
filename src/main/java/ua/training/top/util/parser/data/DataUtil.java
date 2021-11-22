@@ -12,8 +12,10 @@ public class DataUtil {
     public static final LocalDate defaultDate = LocalDate.now().minusMonths(1);
     public static final String
             link = "see the card",
+            monetary_amount_regex = "((?:[\\d,\\.\\s  &nbsp]+\\b)(\\s*)?(\\p{Sc}|ƒ))|((?:\\p{Sc}|ƒ)(\\s*)?[\\d,\\.\\s  &nbsp]+\\b)",
             is_date = "^(\\d{4})-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])T\\d{2}:\\d{2}:\\d{2}\\+\\d{2}:\\d{2}$",
             is_age = ".*[1-7]\\d\\s?[годалетрківи]{3,}.*",
+            is_salary_number = "[\\d\\.]+",
             month_extract = "(?:\\s?\\d?\\d)\\s?\\(?\\s?([месяцеваmonth])+\\.*?",
             age_field_extract = "(?:[1-7]\\d)\\s([годалетрківи])+",
             address_field_extract = "(?:[а-яА-ЯіїєA-Za-z,\\s·]+)\\b",
@@ -40,9 +42,9 @@ public class DataUtil {
             salaryPln = of("pln", "zł"),
             salaryGbr = of("gbp", "£", "₤"),
             salaryKzt = of("kzt", "тг", "₸"),
-            salaryByn = of("br", "byn", "byr"),
             salaryHrn = of("hrn", "uah", "грн.", "грн", "₴"),
             salaryRub = of("rub", "rur", "руб.", "руб", "₽"),
+            salaryByn = of("бел. руб.", "бел. руб", "бел руб", "br", "byn", "byr"),
             allSalaries = of("грн", "uah", "hrn", "₴", "$", "usd", "eur", "€", "pln",
                     "zł", "gbp", "£", "₤", "руб", "₽", "kzt", "тг", "₸", "br", "byn"),
             wasteSalary = of(" ", " ", "&nbsp;", "[.]{2,}", "(\\p{Sc}|ƒ)", "\\s+"),
@@ -115,17 +117,15 @@ public class DataUtil {
     }
 
     public static String getLimitation(String text) {
-        return getByLimit(getLinkIfEmpty(text), maxLengthText);
-    }
-
-    public static String getByLimit(String text, int limit) {
-        return text.length() > limit ? text.substring(0, limit) : text;
+        getLinkIfEmpty(text);
+        return text.length() > maxLengthText ? text.substring(0, maxLengthText) : text;
     }
 
     public static String getLinkIfEmpty(String text) { return isEmpty(text) ? link : text; }
 
     public static String getUpperStart(String text) {
-        return !isEmpty(text) && text.length() > 1 ? text.substring(0, 1).toUpperCase().concat(text.substring(1)) : link;
+        getLinkIfEmpty(text);
+        return text.length() > 1 ? text.substring(0, 1).toUpperCase().concat(text.substring(1)) : link;
     }
 
     public static String getReplace(String text, List<String> wasteWords, String replacement) {

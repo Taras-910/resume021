@@ -53,14 +53,9 @@ public class ResumeService {
         log.info("getAll");
         if(firstDownload) {
             offFirstDownload();
-            return getFirstPage(0, 300);
+            return repository.getFirstPage(PageRequest.of(0, 200));
         }
         return repository.getAll();
-    }
-
-    public List<Resume> getByUserId(int userId) {
-        log.info("getAllByUserId");
-        return repository.getByUserId(userId);
     }
 
     public List<ResumeTo> getAllTos() {
@@ -133,8 +128,4 @@ public class ResumeService {
             voteService.deleteExceedLimit(limitResumesKeeping / 2);
         }
     }
-
-    @Transactional
-    public List<Resume> getFirstPage(int page, int size) {
-        return repository.getFirstPage(PageRequest.of(page, size));
-    }}
+}

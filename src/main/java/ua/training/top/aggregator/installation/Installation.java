@@ -12,22 +12,14 @@ import static ua.training.top.aggregator.dispatcher.Dispatcher.allProviders;
 
 public class Installation {
     private static final Logger log = LoggerFactory.getLogger(Installation.class);
-    public static final float
-            rate_pln_to_usd = 3.98f,
-            rate_eur_to_usd = 0.86f,
-            rate_gbp_to_usd = 0.73f,
-            rate_byn_to_usd = 2.43f,
-            rate_hrn_to_usd = 26.25f,
-            rate_rub_to_usd = 71.78f,
-            rate_kzt_to_usd = 426.74f,
-            usd_one_to_one = 1.0f;
-
     public static int
             maxAge = 22,
             maxLengthText = 250,
             limitResumesKeeping = 3000,
             limitPages = 50,
             repeatOfCalls = 3;
+//    limitPages = 1,
+//    repeatOfCalls = 1;
 
     public static LocalDate
             reasonDateLoading = LocalDateTime.now().toLocalDate().minusDays(90),

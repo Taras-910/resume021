@@ -1,6 +1,6 @@
-.idea
+.idea/*
 out
-target
+target/
 *.iml
 log
 *.patch
