@@ -1,8 +1,0 @@
-GET http://localhost/users
-
-###
-
-GET http://localhost/profile/vacancies/filter
-
-###
-
