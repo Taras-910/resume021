@@ -15,8 +15,10 @@ public class DataUtil {
             monetary_amount_regex = "((?:[\\d,\\.\\s  &nbsp]+\\b)(\\s*)?(\\p{Sc}|ƒ))|((?:\\p{Sc}|ƒ)(\\s*)?[\\d,\\.\\s  &nbsp]+\\b)",
             is_date = "^(\\d{4})-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])T\\d{2}:\\d{2}:\\d{2}\\+\\d{2}:\\d{2}$",
             is_age = ".*[1-7]\\d\\s?[годалетрківи]{3,}.*",
-            is_salary_number = "[\\d\\.]+",
-            month_extract = "(?:\\s?\\d?\\d)\\s?\\(?\\s?([месяцеваmonth])+\\.*?",
+            is_month = ".*1?\\d\\s?[месяцевіь]{3,}.*",
+            is_date_work = "(.*\\d?\\d\\s?[годалетрківи]{3,})?\\s?и?\\s?1?\\d\\s?[месяцевіь]{3,}.*",
+            is_number = "[\\d\\.]+",
+            date_work_extract = "((?:\\s?\\d?\\d)\\s?\\(?\\s?([летгодаyears])+)?(\\s?[иі,]?\\s?)?(?:\\s?\\d?\\d)\\s?\\(?\\s?([месяцеваmonths])+\\.*?",
             age_field_extract = "(?:[1-7]\\d)\\s([годалетрківи])+",
             address_field_extract = "(?:[а-яА-ЯіїєA-Za-z,\\s·]+)\\b",
             local_date_extract = "(?:\\d){1,2}\\s([а-яіїє])+|^[а-яіїє]{3,11}",
@@ -31,20 +33,19 @@ public class DataUtil {
             error_select = "Select error e {}",
             work = "WorkStrategyStrategy", rabota = "RabotaStrategy", djinni = "DjinniStrategy",
             habr = "HabrStrategy", grc = "GrcStrategy",
-            local_date ="releaseDate", age_field = "age", address_field = "address", regex = "regex",
-            hrn = "hrn", eur = "eur", gbp = "gbp", pln = "pln", rub = "rub", byn = "byn",
-            kzt = "kzt", usd = "usd", year = "year", hour = "hour", month = "month", day = "day",
+            hrn = "hrn", eur = "eur", gbp = "gbp", pln = "pln", rub = "rub", byn = "byn", kzt = "kzt", usd = "usd",
+            year = "year", hour = "hour", month = "month", day = "day", age_field = "age",
             middle = "middle", trainee = "trainee", junior = "junior", senior = "senior", expert = "expert";
 
     public static final List<String>
-            salaryUsd = of("usd", "$"),
-            salaryEur = of("eur", "€"),
-            salaryPln = of("pln", "zł"),
-            salaryGbr = of("gbp", "£", "₤"),
-            salaryKzt = of("kzt", "тг", "₸"),
-            salaryHrn = of("hrn", "uah", "грн.", "грн", "₴"),
-            salaryRub = of("rub", "rur", "руб.", "руб", "₽"),
-            salaryByn = of("бел. руб.", "бел. руб", "бел руб", "br", "byn", "byr"),
+            ariaUsd = of("usd", "$"),
+            ariaEur = of("eur", "€"),
+            ariaPln = of("pln", "zł"),
+            ariaGbr = of("gbp", "£", "₤"),
+            ariaKzt = of("kzt", "тг", "₸"),
+            ariaHrn = of("hrn", "uah", "грн.", "грн", "₴"),
+            ariaRub = of("rub", "rur", "руб.", "руб", "₽"),
+            ariaByn = of("бел. руб.", "бел. руб", "бел руб", "br", "byn", "byr"),
             allSalaries = of("грн", "uah", "hrn", "₴", "$", "usd", "eur", "€", "pln",
                     "zł", "gbp", "£", "₤", "руб", "₽", "kzt", "тг", "₸", "br", "byn"),
             wasteSalary = of(" ", " ", "&nbsp;", "[.]{2,}", "(\\p{Sc}|ƒ)", "\\s+"),
@@ -72,6 +73,10 @@ public class DataUtil {
                     "веб", "фулстек", "microservice", "микросервис", "програм", "program", "git", "spring", "maven",
                     "sql", "docker", "postgre", "rest", "mvc", "pattern");
 
+    public static boolean isContains(List<String> area, String text) {
+        return area.stream().anyMatch(text.toLowerCase()::contains);
+    }
+
     public static boolean isNumberFormat(String text) {
         return text.matches(is_date);
     }
@@ -82,30 +87,6 @@ public class DataUtil {
 
     public static boolean isAge(String text) {
         return !isEmpty(text) && text.matches(is_age);
-    }
-
-    public static boolean isMonth(String text) {
-        return monthsOfYear.stream().anyMatch(text.toLowerCase()::contains);
-    }
-
-    public static boolean isCityUA(String text) {
-        return citiesUA.stream().anyMatch(text.toLowerCase()::contains);
-    }
-
-    public static boolean isCityRu(String text) {
-        return citiesRU.stream().anyMatch(text.toLowerCase()::contains);
-    }
-
-    public static boolean isCityBy(String text) {
-        return citiesBY.stream().anyMatch(text.toLowerCase()::contains);
-    }
-
-    public static boolean isCityWorld(String text) {
-        return citiesWorld.stream().anyMatch(text.toLowerCase()::contains);
-    }
-
-    public static boolean isWorkerIT(String text) {
-        return workersIT.stream().anyMatch(text.toLowerCase()::contains);
     }
 
     public static boolean isEquals(String workplace, List<String> list) {

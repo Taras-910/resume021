@@ -13,13 +13,11 @@ import static ua.training.top.aggregator.dispatcher.Dispatcher.allProviders;
 public class Installation {
     private static final Logger log = LoggerFactory.getLogger(Installation.class);
     public static int
-            maxAge = 22,
+            maxAge = 21,
             maxLengthText = 250,
             limitResumesKeeping = 3000,
             limitPages = 50,
             repeatOfCalls = 3;
-//    limitPages = 1,
-//    repeatOfCalls = 1;
 
     public static LocalDate
             reasonDateLoading = LocalDateTime.now().toLocalDate().minusDays(90),

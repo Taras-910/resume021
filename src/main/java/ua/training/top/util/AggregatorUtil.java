@@ -1,7 +1,5 @@
 package ua.training.top.util;
 
-import org.slf4j.Logger;
-import org.slf4j.LoggerFactory;
 import ua.training.top.model.Freshen;
 import ua.training.top.model.Resume;
 import ua.training.top.to.ResumeTo;
@@ -15,7 +13,6 @@ import static java.lang.String.join;
 import static ua.training.top.util.parser.data.DataUtil.*;
 
 public class AggregatorUtil {
-    private final static Logger log = LoggerFactory.getLogger(AggregatorUtil.class);
 
     public static ResumeTo createTo(ResumeTo resumeTo, Freshen freshen) {
         resumeTo.setWorkplace(freshen.getWorkplace());
@@ -26,10 +23,11 @@ public class AggregatorUtil {
     }
 
     public static String getAnchor(Resume r) {
-        String anchor = r.getWorkBefore().equals(link) ? r.getSkills() : r.getWorkBefore();
-        String withoutMonth = getMatch(month_extract, anchor);
-        anchor = withoutMonth.equals(anchor) ? anchor : anchor.substring(0, anchor.indexOf(withoutMonth));
-        return join(" ", r.getTitle(), r.getName(), anchor).toLowerCase();
+        String work = r.getWorkBefore();
+        for(String m : getDateWork(work)) {
+            work = work.replaceAll(m, "");
+        }
+        return join(" ", r.getTitle(), r.getName().equals(link) ? "" : r.getName(), work).toLowerCase();
     }
 
     public static Resume getForUpdate(Resume r, Resume resumeDb) {
@@ -45,17 +43,33 @@ public class AggregatorUtil {
 
     public static boolean isToValid(Freshen f, String text) {
         String temp = text.toLowerCase();
-        return (temp.contains(f.getLanguage()) || isWorkerIT(temp)) && wasteWorkBefore.stream().noneMatch(temp::contains);
+        return (temp.contains(f.getLanguage()) || isContains(workersIT, temp))
+                && wasteWorkBefore.stream().noneMatch(temp::contains);
     }
 
-    public static String getMatch(String fieldName, String text) {
-        getLinkIfEmpty(text);
+    public static String getExtract(String regexName, String text) {
+        if (isEmpty(text)) {
+            return link;
+        }
         //https://stackoverflow.com/questions/63964529/a-regex-to-get-any-price-string
         List<String> list = new ArrayList<>();
-        Matcher m = Pattern.compile(fieldName, Pattern.CASE_INSENSITIVE).matcher(text);
+        Matcher m = Pattern.compile(regexName, Pattern.CASE_INSENSITIVE).matcher(text);
         while (m.find()) {
             list.add(m.group());
         }
-        return list.size() > 0 ? list.get(0) : !fieldName.contains("field") ? text : link;
+        return list.size() > 0 ? list.get(0) : !regexName.contains("field") ? text : link;
+    }
+
+    public static List<String> getDateWork(String text) {
+        //https://stackoverflow.com/questions/63964529/a-regex-to-get-any-price-string
+        List<String> list = new ArrayList<>();
+        Matcher m = Pattern.compile(date_work_extract, Pattern.CASE_INSENSITIVE).matcher(text);
+        while (m.find()) {
+            String s = m.group();
+            if (s.matches(is_date_work)) {
+                list.add(s);
+            }
+        }
+        return list;
     }
 }

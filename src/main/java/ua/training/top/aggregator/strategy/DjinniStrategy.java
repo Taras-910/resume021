@@ -55,15 +55,15 @@ public class DjinniStrategy implements Strategy{
     }
 
     public static String getRegionDjinni(String workplace) {
-        return !isCityUA(workplace) || isEquals(workplace, of("all", "санкт-петербург", "remote")) ?
-                "" : isCityUA(workplace) || isEquals(workplace, of("украина", "україна", "ukraine")) ?
-                "&region=ukraine" : isCityBy(workplace) ? "&region=belarus" : isCityRu(workplace) ?
+        return !isContains(citiesUA, workplace) || isEquals(workplace, of("all", "санкт-петербург", "remote")) ?
+                "" : isContains(citiesUA, workplace) || isEquals(workplace, of("украина", "україна", "ukraine")) ?
+                "&region=ukraine" : isContains(citiesBY, workplace) ? "&region=belarus" : isContains(citiesRU, workplace) ?
                 "&region=russia" : "&region=other";
     }
 
     public static String getLocationDjinni(String workplace) {
         return isEquals(workplace, of("all", "украина", "foreign", "remote")) ?
-                "" : isCityUA(workplace) || workplace.equals("москва") ? "&location=".concat(getDjinni(workplace)) :
+                "" : isContains(citiesUA, workplace) || workplace.equals("москва") ? "&location=".concat(getDjinni(workplace)) :
                 workplace.equals("санкт-петербург") ? "&keywords=санкт-петербург" : "&keywords=".concat(workplace);
     }
 }

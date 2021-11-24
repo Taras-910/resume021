@@ -1,8 +1,7 @@
 package ua.training.top.util.parser.data;
 
 import static java.util.List.of;
-import static ua.training.top.util.parser.data.DataUtil.isCityWorld;
-import static ua.training.top.util.parser.data.DataUtil.isEquals;
+import static ua.training.top.util.parser.data.DataUtil.*;
 
 public class WorkplaceUtil {
 
@@ -90,7 +89,7 @@ public class WorkplaceUtil {
             case "дніпро", "днепр" -> "днепр";
             case "одеса", "одесса" -> "одесса";
             case "харків", "харьков" -> "харьков";
-            default -> isEquals(workplace, of("foreign", "россия", "минск")) || isCityWorld(workplace) ?
+            default -> isEquals(workplace, of("foreign", "россия", "минск")) || isContains(citiesWorld, workplace) ?
                     "другие_страны" : "вся_украина";
         };
     }

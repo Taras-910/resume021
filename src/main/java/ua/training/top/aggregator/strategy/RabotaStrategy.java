@@ -39,7 +39,7 @@ public class RabotaStrategy implements Strategy {
     public List<ResumeTo> getResumes(Freshen freshen) throws IOException {
         String workplace = freshen.getWorkplace(), language = freshen.getLanguage();
         log.info(get_resume, workplace, language);
-        if (isCityRu(workplace)) {
+        if (isContains(citiesRU, workplace)) {
             return new ArrayList<>();
         }
         Set<ResumeTo> set = new LinkedHashSet<>();

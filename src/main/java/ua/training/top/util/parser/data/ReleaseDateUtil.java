@@ -8,7 +8,7 @@ import java.time.LocalDateTime;
 
 import static java.time.LocalDate.now;
 import static java.time.LocalDate.parse;
-import static ua.training.top.util.AggregatorUtil.getMatch;
+import static ua.training.top.util.AggregatorUtil.getExtract;
 import static ua.training.top.util.parser.data.DataUtil.*;
 
 public class ReleaseDateUtil {
@@ -19,8 +19,8 @@ public class ReleaseDateUtil {
             return defaultDate;
         }
         String preText = formatToNumAndWord(originText);
-        String text = getMatch(local_date_extract, preText);
-        if (isEmpty(preText) || !text.contains(" ")&& !isNumberFormat(preText)) {
+        String text = getExtract(local_date_extract, preText);
+        if (isEmpty(preText) || !text.contains(" ") && !isNumberFormat(preText)) {
             return defaultDate;
         }
         try {
@@ -38,7 +38,7 @@ public class ReleaseDateUtil {
     }
 
     static LocalDate getLocalDate(int number, String name) {
-        return isMonth(name) ? LocalDate.of(now().getYear(), getMonth(name), number) :
+        return isContains(monthsOfYear, name) ? LocalDate.of(now().getYear(), getMonth(name), number) :
                 switch (name) {
                     case "сейчас", "минуту", "минуты", "минут" -> LocalDateTime.now().minusMinutes(number).toLocalDate();
                     case "час", "часа", "часов" -> LocalDateTime.now().minusHours(number).toLocalDate();

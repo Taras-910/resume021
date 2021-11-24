@@ -25,14 +25,13 @@ public class SalaryUtil {
             usd_one_to_one = 1.0f;
 
     public static int getToSalary(String originText) {
-
-        if (isEmpty(originText) || !isSalary(originText.toLowerCase())) {
+        if (isEmpty(originText) || !isContains(allSalaries, originText.toLowerCase())) {
             return 1;
         }
         originText = originText.replaceAll(",", ".").toLowerCase();
         String currencyCode = getCurrencyCode(originText);
         String amount = getAmountMonetary(originText, currencyCode).get(0);
-        if (!isEmpty(originText) && !isEmpty(amount) && isSalary(originText)) {
+        if (!isEmpty(originText) && !isEmpty(amount) && isContains(allSalaries, originText)) {
             try {
                 return (int) (parseFloat(amount) * getPeriod(originText) / getRate(currencyCode) * 100);
             } catch (NumberFormatException e) {
@@ -42,9 +41,10 @@ public class SalaryUtil {
         return 1;
     }
 
-    public static String getCurrencyCode(String originText) {
-        return isUsd(originText) ? usd : isHrn(originText) ? hrn : isEur(originText) ? eur : isSByn(originText) ? byn :
-                isRub(originText) ? rub : isPln(originText) ? pln : isGbr(originText) ? gbp : isKzt(originText) ? kzt : "";
+    public static String getCurrencyCode(String text) {
+        return isContains(ariaUsd, text) ? usd : isContains(ariaHrn, text) ? hrn : isContains(ariaEur, text) ?
+                eur : isContains(ariaByn, text) ? byn : isContains(ariaRub, text) ? rub : isContains(ariaPln, text) ?
+                pln : isContains(ariaGbr, text) ? gbp : isContains(ariaKzt, text) ? kzt : "";
     }
 
     public static List<String> getAmountMonetary(String originText, String currencyCode) {
@@ -59,7 +59,7 @@ public class SalaryUtil {
                 monetaryAmounts = new ArrayList<>();
         amounts.forEach(s -> {
             s = getReplace(s, wasteSalary, "");
-            if (s.matches(is_salary_number)) {
+            if (s.matches(is_number)) {
                 monetaryAmounts.add(s);
             }
         });
@@ -71,48 +71,16 @@ public class SalaryUtil {
                 1.0f : text.contains(day) ? 22.0f : text.contains(hour) ? 22.0f * 8.0f : 1.0f;
     }
 
-    public static boolean isHrn(String text) {
-        return salaryHrn.stream().anyMatch(text.toLowerCase()::contains);
-    }
-
-    public static boolean isGbr(String text) {
-        return salaryGbr.stream().anyMatch(text.toLowerCase()::contains);
-    }
-
-    public static boolean isPln(String text) {
-        return salaryPln.stream().anyMatch(text.toLowerCase()::contains);
-    }
-
-    public static boolean isUsd(String text) { return salaryUsd.stream().anyMatch(text.toLowerCase()::contains); }
-
-    public static boolean isEur(String text) {
-        return salaryEur.stream().anyMatch(text.toLowerCase()::contains);
-    }
-
-    public static boolean isRub(String text) {
-        return salaryRub.stream().anyMatch(text.toLowerCase()::contains);
-    }
-
-    public static boolean isKzt(String text) {
-        return salaryKzt.stream().anyMatch(text.toLowerCase()::contains);
-    }
-
-    public static boolean isSByn(String text) {
-        return salaryByn.stream().anyMatch(text.toLowerCase()::contains);
-    }
-
-    public static boolean isSalary(String salary) { return (allSalaries.stream().anyMatch(salary::contains)); }
-
     public static String getReplacementText(String text, String moneyName) {
         return switch (moneyName) {
-            case usd -> getReplace(text, salaryUsd, "\\$");
-            case hrn -> getReplace(text, salaryHrn, "₴");
-            case eur -> getReplace(text, salaryEur, "€");
-            case rub -> getReplace(text, salaryRub, "₽");
-            case gbp -> getReplace(text, salaryGbr, "£");
-            case pln -> getReplace(text, salaryPln, "₧");
-            case kzt -> getReplace(text, salaryKzt, "₸");
-            case byn -> getReplace(text, salaryByn, "฿");
+            case usd -> getReplace(text, ariaUsd, "\\$");
+            case hrn -> getReplace(text, ariaHrn, "₴");
+            case eur -> getReplace(text, ariaEur, "€");
+            case rub -> getReplace(text, ariaRub, "₽");
+            case gbp -> getReplace(text, ariaGbr, "£");
+            case pln -> getReplace(text, ariaPln, "₧");
+            case kzt -> getReplace(text, ariaKzt, "₸");
+            case byn -> getReplace(text, ariaByn, "฿");
             default -> text;
         };
     }
