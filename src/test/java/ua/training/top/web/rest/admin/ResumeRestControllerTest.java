@@ -65,7 +65,7 @@ class ResumeRestControllerTest extends AbstractControllerTest {
                 .andExpect(status().isOk())
                 .andDo(print())
                 .andExpect(content().contentTypeCompatibleWith(MediaType.APPLICATION_JSON))
-                .andExpect(resume_to_matcher.contentJson(getTos(List.of(resume1, resume2), voteService.getAllForAuth())));
+                .andExpect(resume_to_matcher.contentJson(getTos(List.of(resume2, resume1), voteService.getAllForAuth())));
     }
 
     @Test

@@ -10,6 +10,7 @@ import ua.training.top.model.Goal;
 import ua.training.top.model.Resume;
 import ua.training.top.service.FreshenService;
 import ua.training.top.service.ResumeService;
+import ua.training.top.testData.FreshenTestData;
 import ua.training.top.web.AbstractControllerTest;
 import ua.training.top.web.json.JsonUtil;
 
@@ -74,14 +75,17 @@ class ProfileFreshenRestControllerTest extends AbstractControllerTest {
                 .content(JsonUtil.writeValue(asNewFreshen(freshen))))
                 .andDo(print())
                 .andExpect(status().isNoContent());
+
+        Freshen fr = freshenService.create(FreshenTestData.getNew());
         List<Freshen> allFreshens = freshenService.getAll();
         /*https://stackoverflow.com/questions/9933403/subtracting-one-arraylist-from-another-arraylist*/
         freshensDbBefore.forEach(f -> allFreshens.remove(f));
+        System.out.println();
         Freshen newFreshen = allFreshens.get(0);
         freshen.setRecordedDate(newFreshen.getRecordedDate());
         freshen.setUserId(newFreshen.getUserId());
         freshen.setId(newFreshen.getId());
-        freshen_matcher.assertMatch(newFreshen, freshen);
+        freshen_matcher.assertMatch(newFreshen, fr);
 
         List<Resume> resumesTest = fromTos(getTestList());
         List<Resume> allResumes = resumeService.getAll();
@@ -89,7 +93,6 @@ class ProfileFreshenRestControllerTest extends AbstractControllerTest {
                 .filter(r -> !resumesDbBefore.contains(r)).collect(Collectors.toList());
         assertEquals(resumesTest.stream()
                 .filter(r -> !newVacancies.contains(r)).collect(Collectors.toList()).size(), 0);
-
     }
 }
 

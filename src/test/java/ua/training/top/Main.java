@@ -3,9 +3,7 @@ package ua.training.top;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ua.training.top.model.Freshen;
-import ua.training.top.service.AggregatorService;
 import ua.training.top.service.FreshenService;
-import ua.training.top.service.ResumeService;
 
 import static ua.training.top.SecurityUtil.setTestAuthorizedUser;
 import static ua.training.top.model.Goal.UPGRADE;
@@ -39,14 +37,15 @@ public class Main {
         FreshenService freshenService = appCtx.getBean(FreshenService.class);
 //        AggregatorService aggregatorService = appCtx.getBean(AggregatorService.class);
 //        UserService userService = appCtx.getBean(UserService.class);
-        ResumeService resumeService = appCtx.getBean(ResumeService.class);
-        AggregatorService aggregatorService = appCtx.getBean(AggregatorService.class);
+//        ResumeService resumeService = appCtx.getBean(ResumeService.class);
+//        AggregatorService aggregatorService = appCtx.getBean(AggregatorService.class);
 //        FreshenService freshenService = appCtx.getBean(FreshenService.class);
 //        ResumeRepository resumeRepository = appCtx.getBean(ResumeRepository.class);
 //        VoteService voteService = appCtx.getBean(VoteService.class);
 
         System.out.println("=".repeat(40));
 
+        freshenService.getAll().forEach(System.out::println);
 
         System.out.println(".".repeat(40));
         appCtx.close();

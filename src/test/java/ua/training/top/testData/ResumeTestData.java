@@ -33,7 +33,7 @@ public class ResumeTestData {
     private static Resume getResume2() {
         Resume vacancy = new Resume(resume2_id, "Middle Java-разработчик", "Виктор Михайлович", "22",
                 "Днепр", 2000, "Днепросталь, 4 года и 5 месяцев",
-                "https://grc.ua/vacancy/40006938?query=java",
+                "https://grc.ua/resume/40006938?query=java",
                 "Понимание JVM. Умение отлаживать и профилировать java-приложения",
                 LocalDate.of(2021, 10, 20));
         vacancy.setFreshen(freshen2);
@@ -51,7 +51,7 @@ public class ResumeTestData {
     public static final List<Resume> RESUMES_GET_ALL = getAll();
 
     private static List<Resume> getAll() {
-        return  Arrays.asList(resume1, resume2);
+        return  Arrays.asList(resume2, resume1);
     }
 
     public static List<Resume> getListResumes() {
