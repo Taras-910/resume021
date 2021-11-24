@@ -31,6 +31,7 @@ public class FreshenUIController {
     @ResponseStatus(HttpStatus.NO_CONTENT)
     public void refreshDB(@Valid Freshen freshen) {
         log.info("refreshDB freshen {}", freshen);
+        
         freshen.setUserId(asAdmin().getId());
         service.refreshDB(asNewFreshen(freshen));
     }

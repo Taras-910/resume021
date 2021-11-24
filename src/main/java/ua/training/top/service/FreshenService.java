@@ -13,8 +13,6 @@ import ua.training.top.repository.FreshenRepository;
 import java.time.LocalDateTime;
 import java.util.List;
 
-import static ua.training.top.util.DateTimeUtil.tomorrow;
-import static ua.training.top.util.DateTimeUtil.yesterday;
 import static ua.training.top.util.InformUtil.must_not_null;
 import static ua.training.top.util.ValidationUtil.*;
 
@@ -59,19 +57,6 @@ public class FreshenService {
     public void refreshDB(Freshen freshen) {
         log.info("refreshDB freshen {}", freshen);
         aggregatorService.refreshDB(freshen);
-    }
-
-    public Freshen getLast() {
-        log.info("getLast");
-        return repository.getBetween(tomorrow, yesterday).stream().max((f1, f2) -> f1.getId().compareTo(f2.getId())).get();
-    }
-
-    @Transactional
-    public void deleteList(List<Freshen> listToDelete) {
-        if (!listToDelete.isEmpty()) {
-            log.info("deleteList {}", listToDelete.size());
-            repository.deleteList(listToDelete);
-        }
     }
 
     @Transactional

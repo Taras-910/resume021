@@ -11,6 +11,8 @@ import ua.training.top.to.ResumeTo;
 import ua.training.top.util.AggregatorUtil;
 
 import java.io.IOException;
+import java.time.Duration;
+import java.time.Instant;
 import java.util.*;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
@@ -24,8 +26,7 @@ import static ua.training.top.util.AggregatorUtil.getForUpdate;
 import static ua.training.top.util.FreshenUtil.asNewFreshen;
 import static ua.training.top.util.ResumeUtil.fromTos;
 import static ua.training.top.util.UserUtil.asAdmin;
-import static ua.training.top.util.parser.data.DataUtil.common_number;
-import static ua.training.top.util.parser.data.DataUtil.finish;
+import static ua.training.top.util.parser.data.DataUtil.*;
 
 @Service
 public class AggregatorService {
@@ -37,6 +38,7 @@ public class AggregatorService {
 
     public void refreshDB(Freshen freshen) {
         log.info("refreshDB by freshen {}", freshen);
+        Instant start = Instant.now();
         List<Resume> resumesNet = fromTos(getAllProviders().selectBy(freshen));
         if (!resumesNet.isEmpty()) {
             Freshen newFreshen = freshenService.create(freshen);
@@ -50,12 +52,16 @@ public class AggregatorService {
                 r.setFreshen(newFreshen);
                 if (mapDb.containsKey(getAnchor(r))) {
                     resumesForUpdate.add(getForUpdate(r, mapDb.get(getAnchor(r))));
-                } else if(!resumesForCreate.contains(r)) {
+                } else {
+                    if (!isContains(resumesForCreate.stream().map(AggregatorUtil::getAnchor).collect(Collectors.toList()), getAnchor(r))) {
                         resumesForCreate.add(r);
                     }
+                }
             });
             executeRefreshDb(resumesDb, resumesForCreate, resumesForUpdate);
-            log.info(finish, resumesForCreate.size(), resumesForUpdate.size(), freshen);
+            Instant finish = Instant.now();
+            long timeElapsed = Duration.between(start, finish).toMillis();
+            log.info(finish_message, timeElapsed, resumesForCreate.size(), resumesForUpdate.size(), freshen);
         }
     }
 

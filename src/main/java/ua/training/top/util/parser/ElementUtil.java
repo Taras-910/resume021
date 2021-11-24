@@ -61,8 +61,9 @@ public class ElementUtil {
                 if (localDate.isAfter(reasonDateLoading)) {
                     String workBefore, age, title = getUpperStart(xssClear(element.getElementsByClass("resume-search-item__name").text()));
                     workBefore = getLimitation(xssClear(element.getElementsByAttributeValueStarting("data-qa", "resume-serp_resume-item-content").text()));
-                    age = getLinkIfEmpty(xssClear(element.getElementsByAttributeValueStarting("data-qa", "resume-serp__resume-age").text()));
-                    if (isToValid(freshen, join(title, workBefore)) && isAgeAfter(age)) {
+                    age = xssClear(element.getElementsByAttributeValueStarting("data-qa", "resume-serp__resume-age").text());
+                    age = isAge(age) ? age : link;
+                    if (isToValid(freshen, join(title, workBefore)) && isAgeValid(age)) {
                         ResumeTo rTo = new ResumeTo(title, link, age, link,
                                 getToSalary(xssClear(element.getElementsByClass("bloko-text bloko-text_large bloko-text_strong").text())),
                                 workBefore,
@@ -94,7 +95,7 @@ public class ElementUtil {
                     } catch (Exception e) {
                         log.error(error_parse, age_field, e.getMessage());
                     }
-                    if (isToValid(freshen, join(title, workBefore, skills)) && isAgeAfter(age)) {
+                    if (isToValid(freshen, join(title, workBefore, skills)) && isAgeValid(age)) {
                         ResumeTo rTo = new ResumeTo(title, name, age, link,
                                 getToSalary(xssClear(element.getElementsByClass("resume-card__offer").addClass("preserve-line").tagName("span").text())),
                                 workBefore,
@@ -125,7 +126,7 @@ public class ElementUtil {
                     } catch (Exception e) {
                         log.error(error_parse, age_field, e.getMessage());
                     }
-                    if (isToValid(freshen, join(title, workBefore)) && isAgeAfter(age)) {
+                    if (isToValid(freshen, join(title, workBefore)) && isAgeValid(age)) {
                         ResumeTo rTo = new ResumeTo(title, name, age,
                                 getExtract(address_field_extract, xssClear(element.getElementsByAttributeValueStarting("class", "santa-flex-shrink-0").next().text())),
                                 getToSalary(xssClear(element.getElementsByAttributeValueStarting("class", "santa-flex-shrink-0").next().text())),
@@ -155,9 +156,9 @@ public class ElementUtil {
                     name = xssClear(element.getElementsByTag("b").text());
                     age = xssClear(element.getElementsByAttributeValueContaining("data-toggle", "popover").next().next().text().trim());
                     age1 = xssClear(element.getElementsByTag("b").addClass("text-muted").next().next().text());
-                    if (isToValid(freshen, join(title, workBefore, skills)) && isAgeAfter(age)) {
-                        ResumeTo rTo = new ResumeTo(title, name,
-                                isAge(age) ? getExtract(age_field_extract, age) : isAge(age1) ? getExtract(age_field_extract, age1) : link,
+                    age = isAge(age) ? getExtract(age_field_extract, age) : isAge(age1) ? getExtract(age_field_extract, age1) : link;
+                    if (isToValid(freshen, join(title, workBefore, skills)) && isAgeValid(age) && !workBefore.equals(link)) {
+                        ResumeTo rTo = new ResumeTo(title, name, age,
                                 getToAddressWork(xssClear(element.getElementsByAttributeValueContaining("class", "add-bottom").prev().text())),
                                 getToSalary(xssClear(element.getElementsByAttributeValueStarting("class", "nowrap").tagName("span").text())),
                                 workBefore,

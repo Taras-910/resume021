@@ -24,10 +24,10 @@ public class AggregatorUtil {
 
     public static String getAnchor(Resume r) {
         String work = r.getWorkBefore();
-        for(String m : getDateWork(work)) {
+        for (String m : getDateWork(work)) {
             work = work.replaceAll(m, "");
         }
-        return join(" ", r.getTitle(), r.getName().equals(link) ? "" : r.getName(), work).toLowerCase();
+        return join(" ", r.getTitle(), work).toLowerCase();
     }
 
     public static Resume getForUpdate(Resume r, Resume resumeDb) {
@@ -66,7 +66,7 @@ public class AggregatorUtil {
         Matcher m = Pattern.compile(date_work_extract, Pattern.CASE_INSENSITIVE).matcher(text);
         while (m.find()) {
             String s = m.group();
-            if (s.matches(is_date_work)) {
+            if (s.matches(is_period_work)) {
                 list.add(s);
             }
         }

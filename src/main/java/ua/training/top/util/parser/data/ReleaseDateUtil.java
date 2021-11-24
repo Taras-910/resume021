@@ -20,11 +20,11 @@ public class ReleaseDateUtil {
         }
         String preText = formatToNumAndWord(originText);
         String text = getExtract(local_date_extract, preText);
-        if (isEmpty(preText) || !text.contains(" ") && !isNumberFormat(preText)) {
+        if (isEmpty(preText) || !text.contains(" ") && !text.matches(is_date)) {
             return defaultDate;
         }
         try {
-            if (!isNumberFormat(preText)) {
+            if (!text.matches(is_date)) {
                 int number = Integer.parseInt(text.split(" ")[0]);
                 String name = text.split(" ")[1];
                 LocalDate localDate = getLocalDate(number, name);

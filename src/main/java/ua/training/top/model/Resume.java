@@ -181,13 +181,13 @@ public class Resume extends AbstractBaseEntity {
         if (this == o) return true;
         if (o == null || getClass() != o.getClass()) return false;
         Resume resume = (Resume) o;
-        return Objects.equals(title.toLowerCase(), resume.title.toLowerCase()) &&
-                Objects.equals(workBefore.toLowerCase(), resume.workBefore.toLowerCase());
+        return Objects.equals(title, resume.title) &&
+                Objects.equals(workBefore, resume.workBefore);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title.toLowerCase(), workBefore.toLowerCase());
+        return Objects.hash(title, workBefore);
     }
 
     @Override

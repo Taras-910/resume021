@@ -101,7 +101,7 @@
         <table class="table table-striped table-bordered" id="datatable" style="width: 100%">
             <div class="row">
                 <thead>
-                <tr>
+                <tr style="text-align: center;">
                     <th hidden>id</th>
                     <th hidden>link</th>
                     <th class="col-auto" style="text-align: center;">Позиция</th>
@@ -109,8 +109,8 @@
                     <th class="col-auto"><h7>Возраст</h7></th>
                     <th class="col-auto"><h7>Место</h7></th>
                     <th class="col-auto"><h7>$USD</h7></th>
-                    <th class="col-auto" style="text-align: center;">Навыки</th>
-                    <th class="col-auto" style="text-align: center;"><h7>Предыдущий опыт</h7></th>
+                    <th class="col-auto">Навыки</th>
+                    <th class="col-auto"><h7>Предыдущий опыт</h7></th>
                     <th class="col-auto text-nowrap"></th>
                     <th class="toVote"></th>
                     <th hidden>work place</th>

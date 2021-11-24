@@ -51,7 +51,7 @@ public class ResumeService {
 
     public List<Resume> getAll() {
         log.info("getAll");
-        if(firstDownload) {
+        if (firstDownload) {
             offFirstDownload();
             return repository.getFirstPage(PageRequest.of(0, 200));
         }
@@ -110,6 +110,12 @@ public class ResumeService {
     }
 
     @Transactional
+    public void deleteList(List<Resume> list) {
+        log.info("deleteList");
+        repository.deleteList(list);
+    }
+
+    @Transactional
     public List<Resume> deleteOutDatedAndGetAll() {
         log.info("deleteOutDateAndGetAll reasonPeriodKeeping {}", reasonPeriodKeeping);
         freshenService.deleteOutDated(LocalDateTime.of(reasonPeriodKeeping, LocalTime.MIN));
@@ -120,10 +126,10 @@ public class ResumeService {
 
     @Transactional
     public void deleteExceedLimitDb(int exceed) {
-        log.info("deleteExceedLimitHeroku exceed {}", exceed);
+        log.info("deleteExceedLimitDb exceed {}", exceed);
         if (exceed > 0) {
             log.info("start delete exceed {}", exceed);
-            repository.deleteList(repository.getList(exceed));
+            deleteList(repository.getList(exceed));
             freshenService.deleteExceedLimit(limitResumesKeeping / 2);
             voteService.deleteExceedLimit(limitResumesKeeping / 2);
         }

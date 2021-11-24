@@ -151,13 +151,12 @@ public class ResumeTo extends BaseTo implements Serializable, Comparable<ResumeT
         if (o == null || getClass() != o.getClass()) return false;
         ResumeTo resumeTo = (ResumeTo) o;
         return  Objects.equals(title, resumeTo.title) &&
-                Objects.equals(name, resumeTo.name) &&
                 Objects.equals(workBefore, resumeTo.workBefore);
     }
 
     @Override
     public int hashCode() {
-        return Objects.hash(title, name, workBefore);
+        return Objects.hash(title, workBefore);
     }
 
     @Override

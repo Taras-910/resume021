@@ -3,12 +3,17 @@ package ua.training.top;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ua.training.top.model.Freshen;
-import ua.training.top.service.FreshenService;
+import ua.training.top.model.Resume;
+import ua.training.top.service.ResumeService;
+
+import java.util.List;
 
 import static ua.training.top.SecurityUtil.setTestAuthorizedUser;
 import static ua.training.top.model.Goal.UPGRADE;
 import static ua.training.top.testData.UserTestData.admin;
 import static ua.training.top.util.FreshenUtil.asNewFreshen;
+import static ua.training.top.util.ResumeUtil.offFirstDownload;
+import static ua.training.top.util.parser.data.DataUtil.link;
 
 public class Main {
     public static void main(String[] args) {
@@ -34,10 +39,10 @@ public class Main {
 
 
 //        ResumeRestController resumeRestController = appCtx.getBean(ResumeRestController.class);
-        FreshenService freshenService = appCtx.getBean(FreshenService.class);
+//        FreshenService freshenService = appCtx.getBean(FreshenService.class);
 //        AggregatorService aggregatorService = appCtx.getBean(AggregatorService.class);
 //        UserService userService = appCtx.getBean(UserService.class);
-//        ResumeService resumeService = appCtx.getBean(ResumeService.class);
+        ResumeService resumeService = appCtx.getBean(ResumeService.class);
 //        AggregatorService aggregatorService = appCtx.getBean(AggregatorService.class);
 //        FreshenService freshenService = appCtx.getBean(FreshenService.class);
 //        ResumeRepository resumeRepository = appCtx.getBean(ResumeRepository.class);
@@ -45,7 +50,21 @@ public class Main {
 
         System.out.println("=".repeat(40));
 
-        freshenService.getAll().forEach(System.out::println);
+        offFirstDownload();
+        List<Resume> list = resumeService.getAll();
+//        resumeService.deleteList(list.stream().filter(r -> r.getWorkBefore().equals(link)).collect(Collectors.toList()));
+        System.out.println("size       ="+ list.size());
+        System.out.println("title      ="+ list.stream().filter(r -> r.getTitle().equals(link)).count());
+        System.out.println("name       ="+ list.stream().filter(r -> r.getName().equals(link)).count());
+        System.out.println("age        ="+ list.stream().filter(r -> r.getAge().equals(link)).count());
+        System.out.println("address    ="+ list.stream().filter(r -> r.getAddress().equals(link)).count());
+        System.out.println("salary     ="+ list.stream().filter(r -> r.getSalary() == 1).count());
+        System.out.println("skills     ="+ list.stream().filter(r -> r.getSkills().equals(link)).count());
+        System.out.println("workBefore ="+ list.stream().filter(r -> r.getWorkBefore().equals(link)).count());
+        System.out.println("name + address ="+ list.stream().filter(r -> r.getName().equals(link) && r.getAddress().equals(link)).count());
+        System.out.println("age + address ="+ list.stream().filter(r -> r.getAge().equals(link) && r.getAddress().equals(link)).count());
+
+//        list.forEach(System.out::println);
 
         System.out.println(".".repeat(40));
         appCtx.close();

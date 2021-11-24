@@ -8,7 +8,6 @@ import static ua.training.top.aggregator.installation.Installation.maxAge;
 import static ua.training.top.aggregator.installation.Installation.maxLengthText;
 
 public class DataUtil {
-
     public static final LocalDate defaultDate = LocalDate.now().minusMonths(1);
     public static final String
             link = "see the card",
@@ -16,25 +15,25 @@ public class DataUtil {
             is_date = "^(\\d{4})-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])T\\d{2}:\\d{2}:\\d{2}\\+\\d{2}:\\d{2}$",
             is_age = ".*[1-7]\\d\\s?[годалетрківи]{3,}.*",
             is_month = ".*1?\\d\\s?[месяцевіь]{3,}.*",
-            is_date_work = "(.*\\d?\\d\\s?[годалетрківи]{3,})?\\s?и?\\s?1?\\d\\s?[месяцевіь]{3,}.*",
             is_number = "[\\d\\.]+",
+            is_period_work = "(.*\\d?\\d\\s?[годалетрківи]{3,})?\\s?и?\\s?1?\\d\\s?[месяцевіь]{3,}.*",
             date_work_extract = "((?:\\s?\\d?\\d)\\s?\\(?\\s?([летгодаyears])+)?(\\s?[иі,]?\\s?)?(?:\\s?\\d?\\d)\\s?\\(?\\s?([месяцеваmonths])+\\.*?",
             age_field_extract = "(?:[1-7]\\d)\\s([годалетрківи])+",
             address_field_extract = "(?:[а-яА-ЯіїєA-Za-z,\\s·]+)\\b",
             local_date_extract = "(?:\\d){1,2}\\s([а-яіїє])+|^[а-яіїє]{3,11}",
             document_user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1.2 Safari/605.1.15",
             internet_connection_error = "There may be no internet connection or exception={} by url={} ",
-            finish = "\nfinish is ok,\ncreated: {}\nupdated: {}\nFreshen: {}\n" + ":".repeat(125),
+            finish_message = "\nfinish is ok,\ntime: {}ms\ncreated: {}\nupdated: {}\nFreshen: {}\n" + ":".repeat(125),
             error = "There is error \ne={}\n for parse \n{}",
             common_number = "Common number resumeTos = {}",
             get_resume = "GetResumes city={} language={}",
             error_parse = "Error parse field={} e={}",
             document_url = "GetDocument url={}\n",
             error_select = "Select error e {}",
-            work = "WorkStrategyStrategy", rabota = "RabotaStrategy", djinni = "DjinniStrategy",
-            habr = "HabrStrategy", grc = "GrcStrategy",
-            hrn = "hrn", eur = "eur", gbp = "gbp", pln = "pln", rub = "rub", byn = "byn", kzt = "kzt", usd = "usd",
+            djinni = "DjinniStrategy", habr = "HabrStrategy",
+            grc = "GrcStrategy", work = "WorkStrategyStrategy", rabota = "RabotaStrategy",
             year = "year", hour = "hour", month = "month", day = "day", age_field = "age",
+            hrn = "hrn", eur = "eur", gbp = "gbp", pln = "pln", rub = "rub", byn = "byn", kzt = "kzt", usd = "usd",
             middle = "middle", trainee = "trainee", junior = "junior", senior = "senior", expert = "expert";
 
     public static final List<String>
@@ -77,10 +76,6 @@ public class DataUtil {
         return area.stream().anyMatch(text.toLowerCase()::contains);
     }
 
-    public static boolean isNumberFormat(String text) {
-        return text.matches(is_date);
-    }
-
     public static boolean isEmpty(String text) {
         return text == null || text.trim().isEmpty() || text.trim().equals("•");
     }
@@ -93,19 +88,16 @@ public class DataUtil {
         return list.stream().anyMatch(workplace.toLowerCase()::equals);
     }
 
-    public static boolean isAgeAfter(String age) {
-        return isEmpty(age) || !age.matches(is_age) || Integer.parseInt(age.substring(0, age.indexOf(" "))) >= maxAge;
+    public static boolean isAgeValid(String age) {
+        return age.equals(link) || Integer.parseInt(age.substring(0, age.indexOf(" "))) >= maxAge;
     }
 
     public static String getLimitation(String text) {
         return isEmpty(text) ? link : text.length() > maxLengthText ? text.substring(0, maxLengthText) : text;
     }
 
-    public static String getLinkIfEmpty(String text) {
-        return isEmpty(text) ? link : text; }
-
     public static String getUpperStart(String text) {
-        return isEmpty(text) || text.length() <= 1 ?  link : text.substring(0, 1).toUpperCase().concat(text.substring(1));
+        return isEmpty(text) || text.length() <= 1 ? link : text.substring(0, 1).toUpperCase().concat(text.substring(1));
     }
 
     public static String getReplace(String text, List<String> wasteWords, String replacement) {
