@@ -11,13 +11,15 @@ public class DataUtil {
     public static final LocalDate defaultDate = LocalDate.now().minusMonths(1);
     public static final String
             link = "see the card",
-            monetary_amount_regex = "((?:[\\d,\\.\\s  &nbsp]+\\b)(\\s*)?(\\p{Sc}|ƒ))|((?:\\p{Sc}|ƒ)(\\s*)?[\\d,\\.\\s  &nbsp]+\\b)",
+            extract_salary = "((?:[\\d,\\.[–до\\-k-  ]+\\s  &nbsp]+\\b)(\\s*)?[  ]?(\\p{Sc}|ƒ))|(" +
+                    "(?:\\p{Sc}|ƒ)(\\s*)?[  ]?[\\d,\\.[–до\\-k-  ]\\s  &nbsp]+\\b)",
+            monetary_amount_regex = "[-–—k(дот-]",
             is_date = "^(\\d{4})-(0?[1-9]|1[012])-(0?[1-9]|[12][0-9]|3[01])T\\d{2}:\\d{2}:\\d{2}\\+\\d{2}:\\d{2}$",
             is_age = ".*[1-7]\\d\\s?[годалетрківи]{3,}.*",
-            is_month = ".*1?\\d\\s?[месяцевіь]{3,}.*",
-            is_number = "[\\d\\.]+",
+            is_kilo = ".*\\d[\\d\\.-]+k.*",
+            is_number_format = "[\\d\\.]+",
             is_period_work = "(.*\\d?\\d\\s?[годалетрківи]{3,})?\\s?и?\\s?1?\\d\\s?[месяцевіь]{3,}.*",
-            date_work_extract = "((?:\\s?\\d?\\d)\\s?\\(?\\s?([летгодаyears])+)?(\\s?[иі,]?\\s?)?(?:\\s?\\d?\\d)\\s?\\(?\\s?([месяцеваmonths])+\\.*?",
+            date_period_extract = "((?:\\s?\\d?\\d)\\s?\\(?\\s?([летгодаyears])+)?(\\s?[иі,]?\\s?)?(?:\\s?\\d?\\d)\\s?\\(?\\s?([месяцеваmonths])+\\.*?",
             age_field_extract = "(?:[1-7]\\d)\\s([годалетрківи])+",
             address_field_extract = "(?:[а-яА-ЯіїєA-Za-z,\\s·]+)\\b",
             local_date_extract = "(?:\\d){1,2}\\s([а-яіїє])+|^[а-яіїє]{3,11}",
@@ -31,20 +33,21 @@ public class DataUtil {
             document_url = "GetDocument url={}\n",
             error_select = "Select error e {}",
             djinni = "DjinniStrategy", habr = "HabrStrategy",
-            grc = "GrcStrategy", work = "WorkStrategyStrategy", rabota = "RabotaStrategy",
-            year = "year", hour = "hour", month = "month", day = "day", age_field = "age",
-            hrn = "hrn", eur = "eur", gbp = "gbp", pln = "pln", rub = "rub", byn = "byn", kzt = "kzt", usd = "usd",
+            grc = "GrcStrategy", work = "WorkStrategyStrategy", rabota = "RabotaStrategy", age_field = "age",
             middle = "middle", trainee = "trainee", junior = "junior", senior = "senior", expert = "expert";
 
     public static final List<String>
-            ariaUsd = of("usd", "$"),
-            ariaEur = of("eur", "€"),
-            ariaPln = of("pln", "zł"),
-            ariaGbr = of("gbp", "£", "₤"),
-            ariaKzt = of("kzt", "тг", "₸"),
-            ariaHrn = of("hrn", "uah", "грн.", "грн", "₴"),
-            ariaRub = of("rub", "rur", "руб.", "руб", "₽"),
-            ariaByn = of("бел. руб.", "бел. руб", "бел руб", "br", "byn", "byr"),
+            yearAria = of("год", "рік", "year"),
+            dayAria = of("день", "day"),
+            hourAria = of("час", "годину", "hour"),
+            usdAria = of("usd", "$"),
+            eurAria = of("eur", "€"),
+            plnAria = of("pln", "zł"),
+            gbrAria = of("gbp", "£", "₤"),
+            kztAria = of("kzt", "тг", "₸"),
+            hrnAria = of("hrn", "uah", "грн.", "грн", "₴"),
+            rubAria = of("rub", "rur", "руб.", "руб", "₽"),
+            bynAria = of("бел. руб.", "бел. руб", "бел руб", "br", "byn", "byr"),
             allSalaries = of("грн", "uah", "hrn", "₴", "$", "usd", "eur", "€", "pln",
                     "zł", "gbp", "£", "₤", "руб", "₽", "kzt", "тг", "₸", "br", "byn"),
             wasteSalary = of(" ", " ", "&nbsp;", "[.]{2,}", "(\\p{Sc}|ƒ)", "\\s+"),
@@ -72,8 +75,8 @@ public class DataUtil {
                     "веб", "фулстек", "microservice", "микросервис", "програм", "program", "git", "spring", "maven",
                     "sql", "docker", "postgre", "rest", "mvc", "pattern");
 
-    public static boolean isContains(List<String> area, String text) {
-        return area.stream().anyMatch(text.toLowerCase()::contains);
+    public static boolean isMatch(List<String> area, String text) {
+        return area.stream().anyMatch(a -> text.toLowerCase().indexOf(a) > -1);
     }
 
     public static boolean isEmpty(String text) {

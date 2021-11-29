@@ -43,7 +43,7 @@ public class AggregatorService {
         if (!resumesNet.isEmpty()) {
             Freshen newFreshen = freshenService.create(freshen);
             List<Resume>
-                    resumesDb = resumeService.deleteOutDatedAndGetAll(),
+                    resumesDb = resumeService.getAll(),
                     resumesForCreate = new ArrayList<>(),
                     resumesForUpdate = new ArrayList<>();
             Map<String, Resume> mapDb = resumesDb.stream()
@@ -53,7 +53,7 @@ public class AggregatorService {
                 if (mapDb.containsKey(getAnchor(r))) {
                     resumesForUpdate.add(getForUpdate(r, mapDb.get(getAnchor(r))));
                 } else {
-                    if (!isContains(resumesForCreate.stream().map(AggregatorUtil::getAnchor).collect(Collectors.toList()), getAnchor(r))) {
+                    if (!isMatch(resumesForCreate.stream().map(AggregatorUtil::getAnchor).collect(Collectors.toList()), getAnchor(r))) {
                         resumesForCreate.add(r);
                     }
                 }
@@ -78,19 +78,18 @@ public class AggregatorService {
     public static void main(String[] args) throws IOException {
         setTestAuthorizedUser(asAdmin());
 
-        List<ResumeTo> resumeTos = getAllProviders().selectBy(asNewFreshen("java", "all", "all", UPGRADE));
+        List<ResumeTo> resumeTos = getAllProviders().selectBy(asNewFreshen("java", "all", "санкт-петербург", UPGRADE));
         AtomicInteger i = new AtomicInteger(1);
         resumeTos.forEach(vacancyNet -> log.info("\nvacancyNet № {}\n{}\n", i.getAndIncrement(), vacancyNet.toString()));
         log.info(common_number, resumeTos.size());
-
     }
 }
 //	      djinni   grc*10   habr  rabota   work  linkedin  total
 //all	    49	  49(0)	     1	     6	    16	   (100)	121
 //Украина	32	   4(0)	     -	     6	    30	     -	     72
+//remote 	 -	  49(0)	     1	     3	    12	    (5)	     65
 //foreign	49	   2(0)	     1	     1	     -	     -	     53
 //Киев	    15	   1(0)	     1	     3	    15	     -	     35
-//remote 	 -	  17(0)	     1	     3	    12	    (5)	     33
 //Минск	     1	  10(0)	     1	     6	     -	     -	     18
 //Львов	     6	    -	     -	     8	     2	     -	     16
 //Харьков	 5	    -	     -	     2	     5	     -	     12

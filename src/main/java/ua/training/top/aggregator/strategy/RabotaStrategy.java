@@ -16,9 +16,9 @@ import java.util.Set;
 
 import static java.lang.String.format;
 import static ua.training.top.aggregator.installation.Installation.reCall;
-import static ua.training.top.aggregator.installation.PagesCallNumber.getMaxPages;
 import static ua.training.top.util.parser.ElementUtil.getResumesRabota;
 import static ua.training.top.util.parser.data.DataUtil.*;
+import static ua.training.top.util.parser.data.PagesUtil.getMaxPages;
 import static ua.training.top.util.parser.data.UrlUtil.getLevel;
 import static ua.training.top.util.parser.data.WorkplaceUtil.getRabota;
 
@@ -39,7 +39,7 @@ public class RabotaStrategy implements Strategy {
     public List<ResumeTo> getResumes(Freshen freshen) throws IOException {
         String workplace = freshen.getWorkplace(), language = freshen.getLanguage();
         log.info(get_resume, workplace, language);
-        if (isContains(citiesRU, workplace)) {
+        if (isMatch(citiesRU, workplace)) {
             return new ArrayList<>();
         }
         Set<ResumeTo> set = new LinkedHashSet<>();

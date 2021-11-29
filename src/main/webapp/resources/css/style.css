@@ -93,15 +93,11 @@ tr[data-userEnabled="false"] {
     solid: #0397ba;
 }
 
+.uniqueClassName {
+    text-align: center;
+}
+
 .spinner-border {
-    visibility: hidden;
-}
-
-.count {
-    visibility: hidden;
-}
-
-.count1 {
     visibility: hidden;
 }
 

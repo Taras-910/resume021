@@ -2,21 +2,24 @@ package ua.training.top.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
 import ua.training.top.model.Vote;
 import ua.training.top.repository.VoteRepository;
 
-import java.time.LocalDate;
 import java.util.List;
 
 import static ua.training.top.SecurityUtil.authUserId;
+import static ua.training.top.aggregator.installation.Installation.limitVoteKeeping;
+import static ua.training.top.aggregator.installation.Installation.reasonPeriodKeeping;
 import static ua.training.top.util.DateTimeUtil.thisDay;
 import static ua.training.top.util.ValidationUtil.checkNotFoundData;
 import static ua.training.top.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
+@EnableScheduling
 public class VoteService {
     protected final Logger log = LoggerFactory.getLogger(getClass());
     private final VoteRepository repository;
@@ -89,13 +92,13 @@ public class VoteService {
     }
 
     @Transactional
-    public void deleteOutDated(LocalDate reasonLdt) {
-        log.info("deleteOutDated reasonPeriodToKeep {}", reasonLdt);
-        repository.deleteOutDated(reasonLdt);
+    public void deleteOutDated() {
+        log.info("deleteOutDated reasonPeriodToKeep {}", reasonPeriodKeeping);
+        repository.deleteOutDated(reasonPeriodKeeping);
     }
 
-    public void deleteExceedLimit(int limitVote) {
-        log.info("deleteExceedLimit limitVote {}", limitVote);
-        repository.deleteExceedLimit(limitVote);
+    public void deleteExceed() {
+        log.info("deleteExceedLimit limitVote {}", limitVoteKeeping);
+        repository.deleteExceedLimit(limitVoteKeeping);
     }
 }

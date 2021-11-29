@@ -17,23 +17,21 @@ import java.util.Set;
 import static java.lang.String.format;
 import static java.util.List.of;
 import static ua.training.top.aggregator.installation.Installation.reCall;
-import static ua.training.top.aggregator.installation.PagesCallNumber.getMaxPages;
 import static ua.training.top.util.parser.ElementUtil.getResumesDjinni;
 import static ua.training.top.util.parser.data.DataUtil.*;
+import static ua.training.top.util.parser.data.PagesUtil.getMaxPages;
 import static ua.training.top.util.parser.data.UrlUtil.getLevel;
 import static ua.training.top.util.parser.data.UrlUtil.getPageUrl;
 import static ua.training.top.util.parser.data.WorkplaceUtil.getDjinni;
 
 public class DjinniStrategy implements Strategy{
     private final static Logger log = LoggerFactory.getLogger(DjinniStrategy.class);
-    public static final String
-            remote = "&employment=remote",
-            url = "https://djinni.co/developers/?title=%s%s%s%s%s%s";
+    public static final String url = "https://djinni.co/developers/?title=%s%s%s%s%s%s";
 //    https://djinni.co/developers/?title=Java&location=kyiv&region=ukraine&exp_years=5y&employment=remote&page=3
 
     protected Document getDocument(String workplace, String language, String page, String level) {
         return DocumentUtil.getDocument(format(url, language, getLocationDjinni(workplace), getRegionDjinni(workplace),
-                getLevel(djinni, level), workplace.equals("remote") ? remote : "", getPageUrl(page)));
+                getLevel(djinni, level), workplace.equals("remote") ? "&employment=remote" : "", getPageUrl(page)));
     }
 
     @Override
@@ -55,15 +53,19 @@ public class DjinniStrategy implements Strategy{
     }
 
     public static String getRegionDjinni(String workplace) {
-        return !isContains(citiesUA, workplace) || isEquals(workplace, of("all", "санкт-петербург", "remote")) ?
-                "" : isContains(citiesUA, workplace) || isEquals(workplace, of("украина", "україна", "ukraine")) ?
-                "&region=ukraine" : isContains(citiesBY, workplace) ? "&region=belarus" : isContains(citiesRU, workplace) ?
+        return !isMatch(citiesUA, workplace) || isEquals(workplace, of("all", "санкт-петербург", "remote")) ?
+                "" : isMatch(citiesUA, workplace) || isEquals(workplace, of("украина", "україна", "ukraine")) ?
+                "&region=ukraine" : isMatch(citiesBY, workplace) ? "&region=belarus" : isMatch(citiesRU, workplace) ?
                 "&region=russia" : "&region=other";
     }
 
     public static String getLocationDjinni(String workplace) {
         return isEquals(workplace, of("all", "украина", "foreign", "remote")) ?
-                "" : isContains(citiesUA, workplace) || workplace.equals("москва") ? "&location=".concat(getDjinni(workplace)) :
+                "" : isMatch(citiesUA, workplace) || workplace.equals("москва") ? "&location=".concat(getDjinni(workplace)) :
                 workplace.equals("санкт-петербург") ? "&keywords=санкт-петербург" : "&keywords=".concat(workplace);
+    }
+
+    public static String getDjinniAddr(String address) {
+        return address.indexOf(" · Будь") > -1 ? address.replaceAll(" · Будь", "") : address;
     }
 }

@@ -24,8 +24,8 @@ public class AggregatorUtil {
 
     public static String getAnchor(Resume r) {
         String work = r.getWorkBefore();
-        for (String m : getDateWork(work)) {
-            work = work.replaceAll(m, "");
+        for (String period : getWorkPeriod(work)) {
+            work = work.replaceAll(period, "");
         }
         return join(" ", r.getTitle(), work).toLowerCase();
     }
@@ -43,7 +43,7 @@ public class AggregatorUtil {
 
     public static boolean isToValid(Freshen f, String text) {
         String temp = text.toLowerCase();
-        return (temp.contains(f.getLanguage()) || isContains(workersIT, temp))
+        return (temp.contains(f.getLanguage()) || isMatch(workersIT, temp))
                 && wasteWorkBefore.stream().noneMatch(temp::contains);
     }
 
@@ -60,10 +60,10 @@ public class AggregatorUtil {
         return list.size() > 0 ? list.get(0) : !regexName.contains("field") ? text : link;
     }
 
-    public static List<String> getDateWork(String text) {
+    public static List<String> getWorkPeriod(String text) {
         //https://stackoverflow.com/questions/63964529/a-regex-to-get-any-price-string
         List<String> list = new ArrayList<>();
-        Matcher m = Pattern.compile(date_work_extract, Pattern.CASE_INSENSITIVE).matcher(text);
+        Matcher m = Pattern.compile(date_period_extract, Pattern.CASE_INSENSITIVE).matcher(text);
         while (m.find()) {
             String s = m.group();
             if (s.matches(is_period_work)) {

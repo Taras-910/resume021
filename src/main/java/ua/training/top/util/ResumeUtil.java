@@ -10,20 +10,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static java.util.List.of;
-import static ua.training.top.util.ResumeCheckUtil.isAccuracy;
 import static ua.training.top.util.parser.data.DataUtil.link;
 
 public class ResumeUtil {
-    public static boolean firstDownload = true;
-
-    public static void offFirstDownload() {
-        ResumeUtil.firstDownload = false;
-    }
-
-    public static void setFirstDownload() {
-        ResumeUtil.firstDownload = true;
-    }
-
 
     private static List<ResumeTo> getEmpty() {
         return of(new ResumeTo(0, "", "", "", "", -1,
@@ -72,9 +61,23 @@ public class ResumeUtil {
         return resume;
     }
 
-    public static List<Resume> getFilterLanguage(List<Resume> resumes, Freshen f) {
-        return f.getLanguage().equals("all") ? resumes : resumes.stream()
-                .filter(r -> isAccuracy(f.getLanguage(), List.of(r.getSkills(),  r.getTitle(), r.getWorkBefore())))
+    public static List<Resume> getFilter(List<Resume> resumes, Freshen f) {
+        return f.getLanguage().equals("all") && f.getLevel().equals("all") && f.getWorkplace().equals("all") ? resumes : resumes.stream()
+                .filter(r -> f.getLanguage().equals("all") ||
+                        isFindExactly(List.of(r.getSkills(), r.getTitle(), r.getWorkBefore(), r.getFreshen().getLanguage()), f.getLanguage()))
+                .filter(r -> f.getLevel().equals("all") ||
+                        isContains(List.of(r.getTitle(), r.getWorkBefore(), r.getFreshen().getLevel()), f.getLevel()))
+                .filter(r -> f.getWorkplace().equals("all") ||
+                        isContains(List.of(r.getAddress(), r.getWorkBefore(), r.getFreshen().getWorkplace()), f.getWorkplace()))
                 .collect(Collectors.toList());
     }
+
+    public static boolean isFindExactly(List<String> list, String word) {
+        return list.stream().anyMatch( s -> s.toLowerCase().matches(".*\\b" + word + "\\b.*"));
+    }
+
+    public static boolean isContains(List<String> area, String word) {
+        return area.stream().anyMatch(s -> s.toLowerCase().indexOf(word) > -1);
+    }
+
 }

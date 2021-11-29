@@ -16,6 +16,8 @@ public class Installation {
             maxAge = 21,
             maxLengthText = 250,
             limitResumesKeeping = 3000,
+            limitFreshensFilterKeeping = 150,
+            limitVoteKeeping = 500,
             limitPages = 50,
             repeatOfCalls = 3;
 

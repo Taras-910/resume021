@@ -2,11 +2,9 @@ package ua.training.top.repository.datajpa;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Repository;
 import org.springframework.transaction.annotation.Transactional;
-import ua.training.top.model.Freshen;
 import ua.training.top.model.Resume;
 import ua.training.top.repository.ResumeRepository;
 
@@ -15,12 +13,13 @@ import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 
-import static ua.training.top.util.InformUtil.*;
+import static ua.training.top.util.InformUtil.exist_end_replace;
+import static ua.training.top.util.InformUtil.update_error_and_redirect;
 
 @Transactional(readOnly = true)
 @Repository
 public class DataJpaResumeRepository implements ResumeRepository {
-    private static final Sort SORT_DATE_NAME = Sort.by(Sort.Direction.DESC, "releaseDate", "title");
+    private static final Sort SORT_DATE_NAME = Sort.by(Sort.Direction.DESC, "releaseDate", "id");
     private final Logger log = LoggerFactory.getLogger(getClass());
     private final CrudResumeRepository resumeRepository;
 
@@ -77,13 +76,6 @@ public class DataJpaResumeRepository implements ResumeRepository {
     }
 
     @Override
-    public List<Resume> getByFilter(Freshen freshen) {
-        String language = freshen.getLanguage(), workplace = freshen.getWorkplace(), level = freshen.getLevel();
-        return resumeRepository.getByFilter(language.equals(all) ? "" : language, level.equals(all) ? "" : level,
-                workplace.equals(all) ? "" : workplace);
-    }
-
-    @Override
     public Resume get(int id) {
         return resumeRepository.findById(id).orElse(null);
     }
@@ -108,10 +100,5 @@ public class DataJpaResumeRepository implements ResumeRepository {
     @Transactional
     @Override
     public List<Resume>  getList(int limit) { return resumeRepository.getList(limit); }
-
-    @Override
-    public List<Resume> getFirstPage(PageRequest pageable) {
-        return resumeRepository.getFirstPage(pageable).getContent();
-    }
 }
 

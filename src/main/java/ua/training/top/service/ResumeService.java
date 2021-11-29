@@ -2,7 +2,7 @@ package ua.training.top.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.data.domain.PageRequest;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.training.top.model.Freshen;
@@ -11,13 +11,10 @@ import ua.training.top.repository.ResumeRepository;
 import ua.training.top.to.ResumeTo;
 import ua.training.top.util.ResumeUtil;
 
-import java.time.LocalDateTime;
-import java.time.LocalTime;
 import java.util.Collections;
 import java.util.List;
 
 import static ua.training.top.SecurityUtil.authUserId;
-import static ua.training.top.aggregator.installation.Installation.limitResumesKeeping;
 import static ua.training.top.aggregator.installation.Installation.reasonPeriodKeeping;
 import static ua.training.top.model.Goal.FILTER;
 import static ua.training.top.util.FreshenUtil.getFreshenFromTo;
@@ -27,6 +24,7 @@ import static ua.training.top.util.ValidationUtil.checkNotFoundWithId;
 import static ua.training.top.util.ValidationUtil.checkValidUrl;
 
 @Service
+@EnableScheduling
 public class ResumeService {
     private static final Logger log = LoggerFactory.getLogger(ResumeService.class);
     private final ResumeRepository repository;
@@ -51,10 +49,6 @@ public class ResumeService {
 
     public List<Resume> getAll() {
         log.info("getAll");
-        if (firstDownload) {
-            offFirstDownload();
-            return repository.getFirstPage(PageRequest.of(0, 200));
-        }
         return repository.getAll();
     }
 
@@ -68,7 +62,7 @@ public class ResumeService {
         log.info("getTosByFilter language={} level={} workplace={}", f.getLanguage(), f.getLevel(), f.getWorkplace());
         f.setGoals(Collections.singleton(FILTER));
         freshenService.create(f);
-        return getTos(getFilterLanguage(repository.getByFilter(f), f), voteService.getAllForAuth());
+        return getTos(getFilter(repository.getAll(), f), voteService.getAllForAuth());
     }
 
     @Transactional
@@ -110,18 +104,9 @@ public class ResumeService {
     }
 
     @Transactional
-    public void deleteList(List<Resume> list) {
-        log.info("deleteList");
-        repository.deleteList(list);
-    }
-
-    @Transactional
-    public List<Resume> deleteOutDatedAndGetAll() {
-        log.info("deleteOutDateAndGetAll reasonPeriodKeeping {}", reasonPeriodKeeping);
-        freshenService.deleteOutDated(LocalDateTime.of(reasonPeriodKeeping, LocalTime.MIN));
-        List<Resume> resumes = repository.deleteOutDated(reasonPeriodKeeping);
-        voteService.deleteOutDated(reasonPeriodKeeping);
-        return resumes;
+    public void deleteOutDated() {
+        log.info("deleteOutDated reasonPeriodKeeping {}", reasonPeriodKeeping);
+        repository.deleteOutDated(reasonPeriodKeeping);
     }
 
     @Transactional
@@ -129,9 +114,9 @@ public class ResumeService {
         log.info("deleteExceedLimitDb exceed {}", exceed);
         if (exceed > 0) {
             log.info("start delete exceed {}", exceed);
-            deleteList(repository.getList(exceed));
-            freshenService.deleteExceedLimit(limitResumesKeeping / 2);
-            voteService.deleteExceedLimit(limitResumesKeeping / 2);
+            repository.deleteList(repository.getList(exceed));
+            freshenService.deleteExceed();
+            voteService.deleteExceed();
         }
     }
 }

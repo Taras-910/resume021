@@ -23,31 +23,42 @@ public class AutoRefreshService {
     public static final Logger log = LoggerFactory.getLogger(AutoRefreshService.class);
 
     @Autowired
-    private FreshenService service;
+    private ResumeService resumeService;
+    @Autowired
+    private FreshenService freshenService;
+    @Autowired
+    private VoteService voteService;
 
     //    @Scheduled(cron = "0 0,5,10,15,20,25,30,35,40,45,50,55 6-23 * * *")
-//    @Scheduled(cron = "0 0,10,20,30,40,50 6-20 * * MON-SAT")
-    @Scheduled(cron = "0 0,20,40 8-20 * * MON-SAT")
+    @Scheduled(cron = "0 0,20,40 10-18 * * MON-FRI")
     public void weekDay() {
 //        int delayWithinMinutes = 4;
-//        int delayWithinMinutes = 9;
         int delayWithinMinutes = 19;
         log.info(delay, delayWithinMinutes);
         setRandomDelay(1000 * 60 * delayWithinMinutes);
         setTestAuthorizedUser(asAdmin());
         setAutoRefreshProviders();
         String level = mapLevel.get(getKey(3));
-        service.refreshDB(new Freshen(randomFreshen(mapWorkplace.get(getKey(8) + 2), mapLevel.get(3))));
+        freshenService.refreshDB(new Freshen(randomFreshen(mapWorkplace.get(getKey(8) + 2), mapLevel.get(3))));
         offAutoRefreshProviders();
     }
 
-    @Scheduled(cron = "0 0 9-17 * * SUN")
+    @Scheduled(cron = "0 0,30 11-17 * * SAT")
     public void weekEnd() {
-        int delayMinutesMax = 59;
+        int delayMinutesMax = 29;
         log.info(delay, delayMinutesMax);
         setRandomDelay(1000 * 60 * delayMinutesMax);
         setTestAuthorizedUser(asAdmin());
-        service.refreshDB(new Freshen(randomFreshen(mapWorkplace.get(getKey(3)), mapLevel.get(2))));
+        freshenService.refreshDB(new Freshen(randomFreshen(mapWorkplace.get(getKey(3)), mapLevel.get(2))));
+    }
+
+    @Scheduled(cron = "0 45 9,15 * * *")
+    public void everyDay() {
+        log.info("Scheduled everyDay");
+        setTestAuthorizedUser(asAdmin());
+        resumeService.deleteOutDated();
+        freshenService.deleteOutDated();
+        voteService.deleteOutDated();
     }
 }
 //	      djinni   grc*10   habr  rabota   work  linkedin  total

@@ -34,6 +34,7 @@ public class ProviderUtil {
         }
     }
 }
+
 //https://career.softserveinc.com/en-us/vacancies
 //https://jobs.ua/vacancy/kiev/rabota-java-developer
 //https://kiev.careerist.ru/jobs-java-developer/

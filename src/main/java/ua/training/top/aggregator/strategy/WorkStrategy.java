@@ -17,24 +17,22 @@ import java.util.Set;
 import static java.lang.String.format;
 import static java.lang.String.valueOf;
 import static ua.training.top.aggregator.installation.Installation.reCall;
-import static ua.training.top.aggregator.installation.PagesCallNumber.getMaxPages;
 import static ua.training.top.util.parser.ElementUtil.getResumesWork;
 import static ua.training.top.util.parser.data.DataUtil.get_resume;
 import static ua.training.top.util.parser.data.DataUtil.work;
+import static ua.training.top.util.parser.data.PagesUtil.getMaxPages;
 import static ua.training.top.util.parser.data.UrlUtil.getLevel;
 import static ua.training.top.util.parser.data.WorkplaceUtil.getWork;
 
 public class WorkStrategy implements Strategy {
     private final static Logger log = LoggerFactory.getLogger(WorkStrategy.class);
-    private final static String
-            period = "period=5",
-            URL = "https://www.work.ua/ru/resumes%s-%s/?%s%s%s%s";
+    private final static String URL = "https://www.work.ua/ru/resumes%s-%s/?%s%s%s%s";
 //      https://www.work.ua/ru/resumes-kyiv-java/?employment=76&experience=0&page=2
 
     protected Document getDocument(String workspace, String language, String level, String page) {
         return DocumentUtil.getDocument(format(URL, getPartUrlWork(getWork(workspace)), language, workspace.equals("remote") ?
                         "employment=76&" : "", level.equals("all") ? "" : "experience=" .concat(getLevel(work, level)),
-                page.equals("1") ? period : period.concat("&"), page.equals("1") ? "" : "page=" .concat(page)));
+                page.equals("1") ? "period=5" : "period=5&", page.equals("1") ? "" : "page=" .concat(page)));
     }
 
     @Override

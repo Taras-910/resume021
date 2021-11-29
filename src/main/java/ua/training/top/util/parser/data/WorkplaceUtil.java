@@ -89,7 +89,7 @@ public class WorkplaceUtil {
             case "дніпро", "днепр" -> "днепр";
             case "одеса", "одесса" -> "одесса";
             case "харків", "харьков" -> "харьков";
-            default -> isEquals(workplace, of("foreign", "россия", "минск")) || isContains(citiesWorld, workplace) ?
+            default -> isEquals(workplace, of("foreign", "россия", "минск")) || isMatch(citiesWorld, workplace) ?
                     "другие_страны" : "вся_украина";
         };
     }

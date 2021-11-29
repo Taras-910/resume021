@@ -4,8 +4,8 @@ import static ua.training.top.util.parser.data.DataUtil.*;
 
 public class UrlUtil {
 
-    public static String getToUrl(String text, String url){
-        String prefix = switch (text) {
+    public static String getToUrl(String site, String url){
+        String prefix = switch (site) {
             case work -> "https://www.work.ua";
             case rabota -> "https://rabota.ua";
             case grc -> "https://grc.ua";

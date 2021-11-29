@@ -125,7 +125,8 @@ $(function () {
                             return '<a href="' + data.url + '">-</a>'
                         }
                         return data.age;
-                    }
+                    },
+                    className: "uniqueClassName"
                 },
                 {
                     "data": function (data, type, row) {
@@ -133,7 +134,8 @@ $(function () {
                             return '<a href="' + data.url + '">-</a>'
                         }
                         return data.address;
-                    }
+                    },
+                    className: "uniqueClassName"
                 },
                 {
                     "data": function (data, type, row) {
@@ -144,8 +146,8 @@ $(function () {
                             return data.salary / 100;
                         }
                         return data.salary;
-
-                    }
+                    },
+                    className: "uniqueClassName"
                 },
                 {
                     "data": function (data, type, row) {
@@ -206,6 +208,10 @@ $(function () {
             "order": [
                 [
                     9,
+                    "desc"
+                ],
+                [
+                    0,
                     "desc"
                 ]
             ],

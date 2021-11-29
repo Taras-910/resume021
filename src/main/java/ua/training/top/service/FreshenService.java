@@ -11,8 +11,11 @@ import ua.training.top.model.Freshen;
 import ua.training.top.repository.FreshenRepository;
 
 import java.time.LocalDateTime;
+import java.time.LocalTime;
 import java.util.List;
 
+import static ua.training.top.aggregator.installation.Installation.reasonPeriodKeeping;
+import static ua.training.top.util.FreshenUtil.getExceedLimit;
 import static ua.training.top.util.InformUtil.must_not_null;
 import static ua.training.top.util.ValidationUtil.*;
 
@@ -60,14 +63,13 @@ public class FreshenService {
     }
 
     @Transactional
-    public void deleteOutDated(LocalDateTime reasonLdt) {
-        log.info("deleteOutDated reasonPeriodToKeep {}", reasonLdt);
-        repository.deleteOutDated(reasonLdt);
+    public void deleteOutDated() {
+        log.info("deleteOutDated reasonPeriodToKeep {}", LocalDateTime.of(reasonPeriodKeeping, LocalTime.MIN));
+        repository.deleteOutDated(LocalDateTime.of(reasonPeriodKeeping, LocalTime.MIN));
     }
 
-    @Transactional
-    public void deleteExceedLimit(int limitFreshen) {
-        log.info("deleteExceedLimit limitFreshen {}", limitFreshen);
-        repository.deleteExceedLimit(limitFreshen);
+    public void deleteExceed() {
+        log.info("deleteExceed");
+        repository.deleteList(getExceedLimit(getAll()));
     }
 }

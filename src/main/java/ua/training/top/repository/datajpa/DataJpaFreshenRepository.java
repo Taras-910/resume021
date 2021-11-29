@@ -9,7 +9,6 @@ import ua.training.top.model.Freshen;
 import ua.training.top.repository.FreshenRepository;
 
 import java.time.LocalDateTime;
-import java.util.ArrayList;
 import java.util.List;
 
 @Transactional(readOnly = true)
@@ -45,16 +44,6 @@ public class DataJpaFreshenRepository implements FreshenRepository {
         return freshenRepository.findAll(RECORDED_DATE);
     }
 
-    @Override
-    public List<Freshen> getBetween(LocalDateTime finish, LocalDateTime start) {
-        List<Freshen> freshens = new ArrayList<>();
-        try {
-            freshens.addAll(freshenRepository.getBetween(finish, start));
-        } catch (Exception ignored) {
-        }
-        return freshens;
-    }
-
     @Transactional
     @Override
     public void deleteList(List<Freshen> listToDelete) {
@@ -65,14 +54,6 @@ public class DataJpaFreshenRepository implements FreshenRepository {
     @Override
     public void deleteOutDated(LocalDateTime reasonLocalDateTime) {
         deleteList(freshenRepository.getOutDated(reasonLocalDateTime));
-    }
-
-    @Transactional
-    @Override
-    public void deleteExceedLimit(int limitFreshen) {
-        if (getAll().size() > limitFreshen) {
-            deleteList(freshenRepository.findExceeded(limitFreshen));
-        }
     }
 }
 

@@ -15,9 +15,9 @@ import java.util.Set;
 
 import static java.lang.String.format;
 import static ua.training.top.aggregator.installation.Installation.reCall;
-import static ua.training.top.aggregator.installation.PagesCallNumber.getMaxPages;
 import static ua.training.top.util.parser.ElementUtil.getResumesHabr;
 import static ua.training.top.util.parser.data.DataUtil.*;
+import static ua.training.top.util.parser.data.PagesUtil.getMaxPages;
 import static ua.training.top.util.parser.data.UrlUtil.getLevel;
 import static ua.training.top.util.parser.data.UrlUtil.getPageUrl;
 import static ua.training.top.util.parser.data.WorkplaceUtil.getHabr;

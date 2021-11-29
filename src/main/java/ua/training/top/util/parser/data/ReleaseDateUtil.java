@@ -38,7 +38,7 @@ public class ReleaseDateUtil {
     }
 
     static LocalDate getLocalDate(int number, String name) {
-        return isContains(monthsOfYear, name) ? LocalDate.of(now().getYear(), getMonth(name), number) :
+        return isMatch(monthsOfYear, name) ? LocalDate.of(now().getYear(), getMonth(name), number) :
                 switch (name) {
                     case "сейчас", "минуту", "минуты", "минут" -> LocalDateTime.now().minusMinutes(number).toLocalDate();
                     case "час", "часа", "часов" -> LocalDateTime.now().minusHours(number).toLocalDate();

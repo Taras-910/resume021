@@ -3,17 +3,12 @@ package ua.training.top;
 import org.springframework.context.ConfigurableApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 import ua.training.top.model.Freshen;
-import ua.training.top.model.Resume;
 import ua.training.top.service.ResumeService;
-
-import java.util.List;
 
 import static ua.training.top.SecurityUtil.setTestAuthorizedUser;
 import static ua.training.top.model.Goal.UPGRADE;
 import static ua.training.top.testData.UserTestData.admin;
 import static ua.training.top.util.FreshenUtil.asNewFreshen;
-import static ua.training.top.util.ResumeUtil.offFirstDownload;
-import static ua.training.top.util.parser.data.DataUtil.link;
 
 public class Main {
     public static void main(String[] args) {
@@ -50,9 +45,11 @@ public class Main {
 
         System.out.println("=".repeat(40));
 
-        offFirstDownload();
-        List<Resume> list = resumeService.getAll();
-//        resumeService.deleteList(list.stream().filter(r -> r.getWorkBefore().equals(link)).collect(Collectors.toList()));
+
+
+
+        //        resumeService.deleteList(list.stream().filter(r -> r.getWorkBefore().equals(link)).collect(Collectors.toList()));
+/*
         System.out.println("size       ="+ list.size());
         System.out.println("title      ="+ list.stream().filter(r -> r.getTitle().equals(link)).count());
         System.out.println("name       ="+ list.stream().filter(r -> r.getName().equals(link)).count());
@@ -63,6 +60,7 @@ public class Main {
         System.out.println("workBefore ="+ list.stream().filter(r -> r.getWorkBefore().equals(link)).count());
         System.out.println("name + address ="+ list.stream().filter(r -> r.getName().equals(link) && r.getAddress().equals(link)).count());
         System.out.println("age + address ="+ list.stream().filter(r -> r.getAge().equals(link) && r.getAddress().equals(link)).count());
+*/
 
 //        list.forEach(System.out::println);
 

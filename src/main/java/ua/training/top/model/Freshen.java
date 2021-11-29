@@ -1,7 +1,8 @@
 package ua.training.top.model;
 
 import com.fasterxml.jackson.annotation.JsonManagedReference;
-import org.hibernate.annotations.BatchSize;
+import org.hibernate.annotations.Fetch;
+import org.hibernate.annotations.FetchMode;
 import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
@@ -44,16 +45,15 @@ public class Freshen extends AbstractBaseEntity implements Serializable {
     @Enumerated(EnumType.STRING)
     @CollectionTable(name = "freshen_goal", joinColumns = @JoinColumn(name = "freshen_id"))
 //    @Fetch(FetchMode.SUBSELECT)
-    @BatchSize(size = 200)
+    @Fetch(FetchMode.JOIN)
     @ElementCollection(fetch = FetchType.EAGER)
     private Set<Goal> goals;
 
     @Column(name = "user_id")
     private Integer userId;
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "freshen"/*, cascade = {CascadeType.PERSIST, CascadeType.REMOVE, CascadeType.REFRESH}*/)
-    @JsonManagedReference(value = "freshen-movement")
-    //https://stackoverflow.com/questions/20119142/jackson-multiple-back-reference-properties-with-name-defaultreference
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "freshen")
+    @JsonManagedReference(value = "freshen-movement")  //https://stackoverflow.com/questions/20119142/jackson-multiple-back-reference-properties-with-name-defaultreference
     private List<Resume> resumes;
 
     public Freshen(Integer id, LocalDateTime recordedDate, String language, String level, String workplace, Collection<Goal> goals, Integer userId) {
@@ -65,7 +65,6 @@ public class Freshen extends AbstractBaseEntity implements Serializable {
         setGoals((Set<Goal>) goals);
         this.userId = userId;
     }
-
 
     public Freshen(Freshen f) {
         this(f.getId(), f.recordedDate, f.language, f.level, f.workplace, f.getGoals(), f.userId);
