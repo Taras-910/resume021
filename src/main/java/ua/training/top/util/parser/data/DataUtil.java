@@ -9,6 +9,16 @@ import static ua.training.top.aggregator.installation.Installation.maxLengthText
 
 public class DataUtil {
     public static final LocalDate defaultDate = LocalDate.now().minusMonths(1);
+    private static StringBuilder builder;
+
+    public static StringBuilder getBuild(String text) {
+        if (builder == null) {
+            builder = new StringBuilder(1024);
+        }
+        builder.setLength(0); //https://stackoverflow.com/questions/5192512/how-can-i-clear-or-empty-a-stringbuilder
+        return builder.append(text);
+    }
+
     public static final String
             link = "see the card",
             extract_salary = "((?:[\\d,\\.[–до\\-k-  ]+\\s  &nbsp]+\\b)(\\s*)?[  ]?(\\p{Sc}|ƒ))|(" +
@@ -51,6 +61,28 @@ public class DataUtil {
             allSalaries = of("грн", "uah", "hrn", "₴", "$", "usd", "eur", "€", "pln",
                     "zł", "gbp", "£", "₤", "руб", "₽", "kzt", "тг", "₸", "br", "byn"),
             wasteSalary = of(" ", " ", "&nbsp;", "[.]{2,}", "(\\p{Sc}|ƒ)", "\\s+"),
+            kievAria = of("kyiv", "kiev", "київ", "киев"),
+            ukraineAria = of("ukraine", "украина", "україна"),
+            dniproAria = of("дніпро", "днепр", "dnipro"),
+            kharkivAria = of("харків", "харьков", "kharkiv"),
+            lvivAria = of("львів", "львов", "lviv"),
+            odesaAria = of("одесса", "odesa", "одеса"),
+            mykolaivAria = of("mykolaiv", "миколаїв", "николаев"),
+            vinnitsiaAria = of("винница", "vinnitsia", "вінниця"),
+            zaporizhzhyaAria = of("запоріжжя", "запорожье", "zaporizhzhya"),
+            chernivtsiAria = of("chernivtsi", "чернівці", "черновцы"),
+            chernigivAria = of("чернігів", "чернигов", "chernigiv"),
+            ivano_frankivskAria = of("івано-франківськ", "ивано-франковск", "ivano-frankivsk"),
+            uzhgorodAria = of("ужгород", "uzhgorod"),
+            polandAria = of("польша", "poland", "polski"),
+            krakowAria = of("krakow", "краков"),
+            warszawaAria = of("варшава", "warszawa"),
+            wroclawAria = of("wroclaw", "вроцлав"),
+            gdanskAria = of("гданськ", "гданск"),
+            poznanAria = of("poznan", "познань"),
+            citiesPL = of("poland", "польща", "польша", "polski", "варшава", "warszawa", "krakow", "краков", "wroclaw",
+                    "вроцлав", "gdansk", "гданськ", "гданск", "poznan", "познань", "katowice", "катовіце", "катовице",
+                    "lodz", "лодзь"),
             citiesUA = of("ukraine", "украина", "україна", "kyiv", "kiev", "київ", "киев", "дніпро", "днепр", "dnipro",
                     "харків", "харьков", "kharkiv", "львів", "львов", "lviv", "mykolaiv", "одесса", "odesa", "одеса",
                     "винница", "vinnitsia", "вінниця", "запоріжжя", "запорожье", "zaporizhzhya", "chernivtsi", "чернівці",
@@ -79,6 +111,10 @@ public class DataUtil {
         return area.stream().anyMatch(a -> text.toLowerCase().indexOf(a) > -1);
     }
 
+    public static boolean isMatch(List<String> area, StringBuilder text) {
+        return isMatch(area, text.toString());
+    }
+
     public static boolean isEmpty(String text) {
         return text == null || text.trim().isEmpty() || text.trim().equals("•");
     }
@@ -100,7 +136,8 @@ public class DataUtil {
     }
 
     public static String getUpperStart(String text) {
-        return isEmpty(text) || text.length() <= 1 ? link : text.substring(0, 1).toUpperCase().concat(text.substring(1));
+        return isEmpty(text) || text.length() <= 1 ? link :
+                getBuild(text.substring(0, 1).toUpperCase()).append(text.substring(1)).toString();
     }
 
     public static String getReplace(String text, List<String> wasteWords, String replacement) {

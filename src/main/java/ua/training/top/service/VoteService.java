@@ -2,7 +2,6 @@ package ua.training.top.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -19,7 +18,6 @@ import static ua.training.top.util.ValidationUtil.checkNotFoundData;
 import static ua.training.top.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
-@EnableScheduling
 public class VoteService {
     protected final Logger log = LoggerFactory.getLogger(getClass());
     private final VoteRepository repository;
@@ -71,18 +69,10 @@ public class VoteService {
         checkNotFoundData(repository.deleteListByResumeId(resumeId), resumeId);
     }
 
-        @Transactional
-    public void deleteList(List<Vote> listToDelete) {
-        log.info("deleteList");
-        if (!listToDelete.isEmpty()) {
-            repository.deleteList(listToDelete);
-        }
-    }
-
     @Transactional
     public void setVote(int resumeId, boolean toVote) {
         log.info(toVote ? "enable {}" : "disable {}", resumeId);
-        if (!toVote){
+        if (!toVote) {
             log.info("deleteByResumeId {}", resumeId);
             checkNotFoundWithId(repository.deleteByResumeId(resumeId, authUserId()), resumeId);
         } else {
@@ -97,6 +87,7 @@ public class VoteService {
         repository.deleteOutDated(reasonPeriodKeeping);
     }
 
+    @Transactional
     public void deleteExceed() {
         log.info("deleteExceedLimit limitVote {}", limitVoteKeeping);
         repository.deleteExceedLimit(limitVoteKeeping);

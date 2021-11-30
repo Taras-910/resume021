@@ -10,7 +10,7 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static java.util.List.of;
-import static ua.training.top.util.parser.data.DataUtil.link;
+import static ua.training.top.util.parser.data.DataUtil.*;
 
 public class ResumeUtil {
 
@@ -68,16 +68,41 @@ public class ResumeUtil {
                 .filter(r -> f.getLevel().equals("all") ||
                         isContains(List.of(r.getTitle(), r.getWorkBefore(), r.getFreshen().getLevel()), f.getLevel()))
                 .filter(r -> f.getWorkplace().equals("all") ||
-                        isContains(List.of(r.getAddress(), r.getWorkBefore(), r.getFreshen().getWorkplace()), f.getWorkplace()))
+                        isMatch(getAria(f.getWorkplace()), getBuild(r.getAddress()).append(r.getWorkBefore())))
                 .collect(Collectors.toList());
     }
 
     public static boolean isFindExactly(List<String> list, String word) {
-        return list.stream().anyMatch( s -> s.toLowerCase().matches(".*\\b" + word + "\\b.*"));
+        return list.stream().anyMatch(s -> s.toLowerCase().matches(".*\\b" + word + "\\b.*"));
     }
 
     public static boolean isContains(List<String> area, String word) {
-        return area.stream().anyMatch(s -> s.toLowerCase().indexOf(word) > -1);
+        return area.stream().anyMatch(a -> a.toLowerCase().indexOf(word) > -1);
     }
 
+    private static List<String> getAria(String workplace) {
+        return switch (workplace) {
+            case "ukraine", "україна", "украина" -> ukraineAria;
+            case "київ", "киев", "kiev" -> kievAria;
+            case "foreign", "за_рубежем" -> citiesWorld;
+            case "харків", "харьков", "kharkiv" -> kharkivAria;
+            case "дніпро", "днепр", "dnipro" -> dniproAria;
+            case "одеса", "одесса", "odesa" -> odesaAria;
+            case "львів", "львов", "lviv" -> lvivAria;
+            case "запоріжжя", "запорожье", "zaporizhzhya" -> zaporizhzhyaAria;
+            case "миколаїв", "николаев", "mykolaiv" -> mykolaivAria;
+            case "чорновці", "черновцы", "chernivtsi" -> chernivtsiAria;
+            case "чернігів", "чернигов", "chernigiv" -> chernigivAria;
+            case "вінниця", "винница", "vinnitsia" -> vinnitsiaAria;
+            case "ужгород", "uzhgorod" -> uzhgorodAria;
+            case "івано-франківськ", "ивано-франковск", "ivano-frankivsk" -> ivano_frankivskAria;
+            case "польша", "poland", "polski" -> polandAria;
+            case "варшава", "warszawa" -> warszawaAria;
+            case "krakow", "краков" -> krakowAria;
+            case "wroclaw", "вроцлав" -> wroclawAria;
+            case "gdansk", "гданськ", "гданск" -> gdanskAria;
+            case "poznan", "познань" -> poznanAria;
+            default -> of(workplace);
+        };
+    }
 }

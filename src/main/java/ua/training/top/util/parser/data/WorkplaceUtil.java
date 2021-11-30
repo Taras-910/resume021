@@ -56,7 +56,8 @@ public class WorkplaceUtil {
             case "польща", "польша" -> "74";
             case "сша" -> "85";
             case "all" -> "all";
-            default -> workplace.equals("remote") ? "&schedule=remote" : "&area=".concat(workplace);
+            default -> workplace.equals("remote") ?
+                    "&schedule=remote" : getBuild("&area=").append(workplace).toString();
         };
     }
 

@@ -27,9 +27,9 @@ public class HabrStrategy implements Strategy {
     private static final String url = "https://career.habr.com/resumes?%scurrency=USD&order=last_visited%s%s%s%s%s";
 
     protected Document getDocument(String workplace, String language, String level, String page) {
-        String city = workplace.equals("all") ? "" : "city_ids[]=".concat(workplace).concat("&");
-        return DocumentUtil.getDocument(format(url, city, getPageUrl(page), "&q=".concat(language),
-                getLevel(habr ,level), workplace.equals("remote") ? "&remote=true" : "", getPartUrlsHabr(language)));
+        String city = workplace.equals("all") ? "" : getBuild("city_ids[]=").append(workplace).append("&").toString();
+        return DocumentUtil.getDocument(format(url, city, getPageUrl(page), getBuild("&q=").append(language).toString(),
+                getLevel(habr, level), workplace.equals("remote") ? "&remote=true" : "", getPartUrlsHabr(language)));
     }
 
     @Override
@@ -37,7 +37,7 @@ public class HabrStrategy implements Strategy {
         String workplace = getHabr(freshen.getWorkplace()), language = freshen.getLanguage();
         Set<ResumeTo> set = new LinkedHashSet<>();
         log.info(get_resume, freshen.getWorkplace(), language);
-        if((workplace).equals("-1")){
+        if ((workplace).equals("-1")) {
             return new ArrayList<>();
         }
         try {
@@ -69,7 +69,7 @@ public class HabrStrategy implements Strategy {
             case "c++" -> "172";
             default -> "1012";
         };
-        return "&skills[]=".concat(skills);
+        return getBuild("&skills[]=").append(skills).toString();
     }
 
     public static String getToSkillsHabr(String skills) {

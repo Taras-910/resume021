@@ -24,7 +24,7 @@ import static ua.training.top.util.parser.data.UrlUtil.getLevel;
 import static ua.training.top.util.parser.data.UrlUtil.getPageUrl;
 import static ua.training.top.util.parser.data.WorkplaceUtil.getDjinni;
 
-public class DjinniStrategy implements Strategy{
+public class DjinniStrategy implements Strategy {
     private final static Logger log = LoggerFactory.getLogger(DjinniStrategy.class);
     public static final String url = "https://djinni.co/developers/?title=%s%s%s%s%s%s";
 //    https://djinni.co/developers/?title=Java&location=kyiv&region=ukraine&exp_years=5y&employment=remote&page=3
@@ -45,7 +45,7 @@ public class DjinniStrategy implements Strategy{
             Elements elements = doc == null ? null : doc.select("span.candidate-header");
             if (elements == null || elements.size() == 0) break;
             set.addAll(getResumesDjinni(elements, freshen));
-            if(page < getMaxPages(djinni, workplace)) page++;
+            if (page < getMaxPages(djinni, workplace)) page++;
             else break;
         }
         reCall(set.size(), new DjinniStrategy());
@@ -60,12 +60,15 @@ public class DjinniStrategy implements Strategy{
     }
 
     public static String getLocationDjinni(String workplace) {
-        return isEquals(workplace, of("all", "украина", "foreign", "remote")) ?
-                "" : isMatch(citiesUA, workplace) || workplace.equals("москва") ? "&location=".concat(getDjinni(workplace)) :
-                workplace.equals("санкт-петербург") ? "&keywords=санкт-петербург" : "&keywords=".concat(workplace);
+        return isEquals(workplace, of("all", "украина", "foreign", "remote")) ? "" :
+                isMatch(citiesUA, workplace) || workplace.equals("москва") ?
+                        getBuild("&location=").append(getDjinni(workplace)).toString() :
+                        workplace.equals("санкт-петербург") ? "&keywords=санкт-петербург" :
+                                getBuild("&keywords=").append(workplace).toString();
     }
 
     public static String getDjinniAddr(String address) {
-        return address.indexOf(" · Будь") > -1 ? address.replaceAll(" · Будь", "") : address;
+        address = address.indexOf(" · Будь") > -1 ? address.replaceAll(" · Будь", "") : address;
+        return address;
     }
 }

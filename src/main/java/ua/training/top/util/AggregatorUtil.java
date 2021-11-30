@@ -9,7 +9,6 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static java.lang.String.join;
 import static ua.training.top.util.parser.data.DataUtil.*;
 
 public class AggregatorUtil {
@@ -27,7 +26,7 @@ public class AggregatorUtil {
         for (String period : getWorkPeriod(work)) {
             work = work.replaceAll(period, "");
         }
-        return join(" ", r.getTitle(), work).toLowerCase();
+        return getBuild(r.getTitle()).append(" ").append(work).toString().toLowerCase();
     }
 
     public static Resume getForUpdate(Resume r, Resume resumeDb) {
@@ -41,9 +40,9 @@ public class AggregatorUtil {
         return r;
     }
 
-    public static boolean isToValid(Freshen f, String text) {
-        String temp = text.toLowerCase();
-        return (temp.contains(f.getLanguage()) || isMatch(workersIT, temp))
+    public static boolean isToValid(Freshen f, StringBuilder text) {
+        String temp = text.toString().toLowerCase();
+        return (temp.indexOf(f.getLanguage()) > -1 || isMatch(workersIT, temp))
                 && wasteWorkBefore.stream().noneMatch(temp::contains);
     }
 
@@ -51,17 +50,16 @@ public class AggregatorUtil {
         if (isEmpty(text)) {
             return link;
         }
-        //https://stackoverflow.com/questions/63964529/a-regex-to-get-any-price-string
         List<String> list = new ArrayList<>();
+        //https://stackoverflow.com/questions/63964529/a-regex-to-get-any-price-string
         Matcher m = Pattern.compile(regexName, Pattern.CASE_INSENSITIVE).matcher(text);
         while (m.find()) {
             list.add(m.group());
         }
-        return list.size() > 0 ? list.get(0) : !regexName.contains("field") ? text : link;
+        return list.size() > 0 ? list.get(0) : regexName.indexOf("field") < 0 ? text : link;
     }
 
     public static List<String> getWorkPeriod(String text) {
-        //https://stackoverflow.com/questions/63964529/a-regex-to-get-any-price-string
         List<String> list = new ArrayList<>();
         Matcher m = Pattern.compile(date_period_extract, Pattern.CASE_INSENSITIVE).matcher(text);
         while (m.find()) {

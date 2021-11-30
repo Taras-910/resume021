@@ -21,13 +21,8 @@ import static ua.training.top.util.UserUtil.asAdmin;
 @EnableAsync
 public class AutoRefreshService {
     public static final Logger log = LoggerFactory.getLogger(AutoRefreshService.class);
-
     @Autowired
-    private ResumeService resumeService;
-    @Autowired
-    private FreshenService freshenService;
-    @Autowired
-    private VoteService voteService;
+    private AggregatorService aggregatorService;
 
     //    @Scheduled(cron = "0 0,5,10,15,20,25,30,35,40,45,50,55 6-23 * * *")
     @Scheduled(cron = "0 0,20,40 10-18 * * MON-FRI")
@@ -38,8 +33,7 @@ public class AutoRefreshService {
         setRandomDelay(1000 * 60 * delayWithinMinutes);
         setTestAuthorizedUser(asAdmin());
         setAutoRefreshProviders();
-        String level = mapLevel.get(getKey(3));
-        freshenService.refreshDB(new Freshen(randomFreshen(mapWorkplace.get(getKey(8) + 2), mapLevel.get(3))));
+        aggregatorService.refreshDB(new Freshen(randomFreshen(mapWorkplace.get(getKey(8) + 2), mapLevel.get(3))));
         offAutoRefreshProviders();
     }
 
@@ -49,16 +43,16 @@ public class AutoRefreshService {
         log.info(delay, delayMinutesMax);
         setRandomDelay(1000 * 60 * delayMinutesMax);
         setTestAuthorizedUser(asAdmin());
-        freshenService.refreshDB(new Freshen(randomFreshen(mapWorkplace.get(getKey(3)), mapLevel.get(2))));
+        setAutoRefreshProviders();
+        aggregatorService.refreshDB(new Freshen(randomFreshen(mapWorkplace.get(getKey(3)), mapLevel.get(2))));
+        offAutoRefreshProviders();
     }
 
     @Scheduled(cron = "0 45 9,15 * * *")
     public void everyDay() {
         log.info("Scheduled everyDay");
         setTestAuthorizedUser(asAdmin());
-        resumeService.deleteOutDated();
-        freshenService.deleteOutDated();
-        voteService.deleteOutDated();
+        aggregatorService.deleteOutDated();
     }
 }
 //	      djinni   grc*10   habr  rabota   work  linkedin  total

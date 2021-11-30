@@ -13,11 +13,11 @@ public class UrlUtil {
             case djinni -> "https://djinni.co";
             default -> link;
         };
-        return prefix + url;
+        return getBuild(prefix).append(url).toString();
     }
 
     public static String getPageUrl(String page) {
-        return page.equals("1") ? "" : "&page=".concat(page);
+        return page.equals("1") ? "" : getBuild("&page=").append(page).toString();
     }
 
     public static String getLevel(String site, String level) {

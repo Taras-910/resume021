@@ -30,9 +30,9 @@ public class RabotaStrategy implements Strategy {
             URL = "https://rabota.ua/candidates/%s/%s?%s%s%s%s";
 
     protected Document getDocument(String workplace, String language, String level, String page) {
-        return DocumentUtil.getDocument(format(URL, language, getRabota(workplace), page.equals("1") ?
-                "":"pg=".concat(page).concat("&"), periodPart, workplace.equals("remote") ? remotePart : "",
-                "&experienceIds=".concat(getLevel(rabota, level))));
+        return DocumentUtil.getDocument(format(URL, language, getRabota(workplace), page.equals("1") ? "" :
+                getBuild("pg=").append(page).append("&").toString(), periodPart, workplace.equals("remote") ?
+                remotePart : "", getBuild("&experienceIds=").append(getLevel(rabota, level)).toString()));
     }
 
     @Override
@@ -44,10 +44,10 @@ public class RabotaStrategy implements Strategy {
         }
         Set<ResumeTo> set = new LinkedHashSet<>();
         int page = 1;
-        while(true) {
+        while (true) {
             Document doc = getDocument(workplace, language, freshen.getLevel(), String.valueOf(page));
             Elements elements = doc == null ?
-                    null : doc.getElementsByAttributeValueStarting("class","santa-outline-none");
+                    null : doc.getElementsByAttributeValueStarting("class", "santa-outline-none");
             if (elements == null || elements.size() == 0) break;
             set.addAll(getResumesRabota(elements, freshen));
             if (page < getMaxPages(rabota, workplace)) page++;

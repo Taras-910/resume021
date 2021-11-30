@@ -11,7 +11,6 @@ import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 
-import static java.lang.String.join;
 import static ua.training.top.aggregator.installation.Installation.reasonDateLoading;
 import static ua.training.top.aggregator.strategy.DjinniStrategy.getDjinniAddr;
 import static ua.training.top.aggregator.strategy.HabrStrategy.getToSkillsHabr;
@@ -38,7 +37,7 @@ public class ElementUtil {
                     address = getDjinniAddr(getExtract(address_field_extract, xssClear(element.getElementsByAttributeValueStarting("class", "tiny-profile-details").text())));
                     workBefore = getLimitation(xssClear(element.nextElementSibling().ownText()));
                     skills = getLimitation(xssClear(element.nextElementSibling().nextElementSibling().ownText()));
-                    if (isToValid(freshen, join(title, workBefore, skills))) {
+                    if (isToValid(freshen, getBuild(title).append(workBefore).append(skills))) {
                         ResumeTo rTo = new ResumeTo(title, link, link, address,
                                 getToSalary(xssClear(element.getElementsByAttributeValueStarting("class", "profile-details-salary").text())),
                                 workBefore,
@@ -64,7 +63,7 @@ public class ElementUtil {
                     workBefore = getLimitation(xssClear(element.getElementsByAttributeValueStarting("data-qa", "resume-serp_resume-item-content").text()));
                     age = xssClear(element.getElementsByAttributeValueStarting("data-qa", "resume-serp__resume-age").text());
                     age = isAge(age) ? age : link;
-                    if (isToValid(freshen, join(title, workBefore)) && isAgeValid(age)) {
+                    if (isToValid(freshen, getBuild(title).append(workBefore)) && isAgeValid(age)) {
                         ResumeTo rTo = new ResumeTo(title, link, age, link,
                                 getToSalary(xssClear(element.getElementsByClass("bloko-text bloko-text_large bloko-text_strong").text())),
                                 workBefore,
@@ -96,7 +95,7 @@ public class ElementUtil {
                     } catch (Exception e) {
                         log.error(error_parse, age_field, e.getMessage());
                     }
-                    if (isToValid(freshen, join(title, workBefore, skills)) && isAgeValid(age)) {
+                    if (isToValid(freshen, getBuild(title).append(workBefore).append(skills)) && isAgeValid(age)) {
                         ResumeTo rTo = new ResumeTo(title, name, age, link,
                                 getToSalary(xssClear(element.getElementsByClass("resume-card__offer").addClass("preserve-line").tagName("span").text())),
                                 workBefore,
@@ -127,7 +126,7 @@ public class ElementUtil {
                     } catch (Exception e) {
                         log.error(error_parse, age_field, e.getMessage());
                     }
-                    if (isToValid(freshen, join(title, workBefore)) && isAgeValid(age)) {
+                    if (isToValid(freshen, getBuild(title).append(workBefore)) && isAgeValid(age)) {
                         ResumeTo rTo = new ResumeTo(title, name, age,
                                 getExtract(address_field_extract, xssClear(element.getElementsByAttributeValueStarting("class", "santa-flex-shrink-0").next().text())),
                                 getToSalary(xssClear(element.getElementsByAttributeValueStarting("class", "santa-flex-shrink-0").next().text())),
@@ -158,7 +157,7 @@ public class ElementUtil {
                     age = xssClear(element.getElementsByAttributeValueContaining("data-toggle", "popover").next().next().text().trim());
                     age1 = xssClear(element.getElementsByTag("b").addClass("text-muted").next().next().text());
                     age = isAge(age) ? getExtract(age_field_extract, age) : isAge(age1) ? getExtract(age_field_extract, age1) : link;
-                    if (isToValid(freshen, join(title, workBefore, skills)) && isAgeValid(age) && !workBefore.equals(link)) {
+                    if (isToValid(freshen, getBuild(title).append(workBefore).append(skills)) && isAgeValid(age) && !workBefore.equals(link)) {
                         ResumeTo rTo = new ResumeTo(title, name, age,
                                 getToAddressWork(xssClear(element.getElementsByAttributeValueContaining("class", "add-bottom").prev().text())),
                                 getToSalary(xssClear(element.getElementsByAttributeValueStarting("class", "nowrap").tagName("span").text())),

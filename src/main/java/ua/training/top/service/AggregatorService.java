@@ -3,6 +3,7 @@ package ua.training.top.service;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.training.top.model.Freshen;
@@ -20,21 +21,23 @@ import java.util.stream.Collectors;
 import static ua.training.top.SecurityUtil.setTestAuthorizedUser;
 import static ua.training.top.aggregator.ProviderUtil.getAllProviders;
 import static ua.training.top.aggregator.installation.Installation.limitResumesKeeping;
-import static ua.training.top.model.Goal.UPGRADE;
+import static ua.training.top.aggregator.strategy.TestStrategy.getTestList;
 import static ua.training.top.util.AggregatorUtil.getAnchor;
 import static ua.training.top.util.AggregatorUtil.getForUpdate;
-import static ua.training.top.util.FreshenUtil.asNewFreshen;
 import static ua.training.top.util.ResumeUtil.fromTos;
 import static ua.training.top.util.UserUtil.asAdmin;
 import static ua.training.top.util.parser.data.DataUtil.*;
 
 @Service
+@EnableScheduling
 public class AggregatorService {
     private final static Logger log = LoggerFactory.getLogger(AggregatorService.class);
     @Autowired
     private ResumeService resumeService;
     @Autowired
     private FreshenService freshenService;
+    @Autowired
+    private VoteService voteService;
 
     public void refreshDB(Freshen freshen) {
         log.info("refreshDB by freshen {}", freshen);
@@ -59,8 +62,7 @@ public class AggregatorService {
                 }
             });
             executeRefreshDb(resumesDb, resumesForCreate, resumesForUpdate);
-            Instant finish = Instant.now();
-            long timeElapsed = Duration.between(start, finish).toMillis();
+            long timeElapsed = Duration.between(start, Instant.now()).toMillis();
             log.info(finish_message, timeElapsed, resumesForCreate.size(), resumesForUpdate.size(), freshen);
         }
     }
@@ -75,13 +77,28 @@ public class AggregatorService {
         }
     }
 
+    @Transactional
+    public void deleteOutDated() {
+        resumeService.deleteOutDated();
+        freshenService.deleteOutDated();
+        voteService.deleteOutDated();
+    }
+
     public static void main(String[] args) throws IOException {
         setTestAuthorizedUser(asAdmin());
 
-        List<ResumeTo> resumeTos = getAllProviders().selectBy(asNewFreshen("java", "all", "санкт-петербург", UPGRADE));
+//        List<ResumeTo> resumeTos = getAllProviders().selectBy(asNewFreshen("java", "all", "санкт-петербург", UPGRADE));
+//        AtomicInteger i = new AtomicInteger(1);
+//        resumeTos.forEach(vacancyNet -> log.info("\nvacancyNet № {}\n{}\n", i.getAndIncrement(), vacancyNet.toString()));
+//        log.info(common_number, resumeTos.size());
+
+        List<ResumeTo> testList = getTestList();
+
         AtomicInteger i = new AtomicInteger(1);
-        resumeTos.forEach(vacancyNet -> log.info("\nvacancyNet № {}\n{}\n", i.getAndIncrement(), vacancyNet.toString()));
-        log.info(common_number, resumeTos.size());
+
+        testList.forEach(r -> {
+            System.out.println(getBuild(String.valueOf(i.getAndIncrement())).append(r.getAddress()).append(r.getName()));
+        });
     }
 }
 //	      djinni   grc*10   habr  rabota   work  linkedin  total

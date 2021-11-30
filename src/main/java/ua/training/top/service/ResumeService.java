@@ -2,7 +2,6 @@ package ua.training.top.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.scheduling.annotation.EnableScheduling;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.training.top.model.Freshen;
@@ -24,7 +23,6 @@ import static ua.training.top.util.ValidationUtil.checkNotFoundWithId;
 import static ua.training.top.util.ValidationUtil.checkValidUrl;
 
 @Service
-@EnableScheduling
 public class ResumeService {
     private static final Logger log = LoggerFactory.getLogger(ResumeService.class);
     private final ResumeRepository repository;

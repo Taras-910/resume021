@@ -18,8 +18,7 @@ import static java.lang.String.format;
 import static java.lang.String.valueOf;
 import static ua.training.top.aggregator.installation.Installation.reCall;
 import static ua.training.top.util.parser.ElementUtil.getResumesWork;
-import static ua.training.top.util.parser.data.DataUtil.get_resume;
-import static ua.training.top.util.parser.data.DataUtil.work;
+import static ua.training.top.util.parser.data.DataUtil.*;
 import static ua.training.top.util.parser.data.PagesUtil.getMaxPages;
 import static ua.training.top.util.parser.data.UrlUtil.getLevel;
 import static ua.training.top.util.parser.data.WorkplaceUtil.getWork;
@@ -30,9 +29,10 @@ public class WorkStrategy implements Strategy {
 //      https://www.work.ua/ru/resumes-kyiv-java/?employment=76&experience=0&page=2
 
     protected Document getDocument(String workspace, String language, String level, String page) {
-        return DocumentUtil.getDocument(format(URL, getPartUrlWork(getWork(workspace)), language, workspace.equals("remote") ?
-                        "employment=76&" : "", level.equals("all") ? "" : "experience=" .concat(getLevel(work, level)),
-                page.equals("1") ? "period=5" : "period=5&", page.equals("1") ? "" : "page=" .concat(page)));
+        return DocumentUtil.getDocument(format(URL, getPartUrlWork(getWork(workspace)), language,
+                workspace.equals("remote") ? "employment=76&" : "", level.equals("all") ? "" :
+                        getBuild("experience=").append(getLevel(work, level)).toString(), page.equals("1") ?
+                        "period=5" : "period=5&", page.equals("1") ? "" : getBuild("page=").append(page).toString()));
     }
 
     @Override
@@ -55,10 +55,11 @@ public class WorkStrategy implements Strategy {
     }
 
     public static String getToAddressWork(String address) {
-        return address.contains("·") ? address.substring(address.lastIndexOf("·") + 1).trim() : address;
+        return address.indexOf("·") > -1 ? address.substring(address.lastIndexOf("·") + 1).trim() : address;
     }
 
     public static String getPartUrlWork(String workplace) {
-        return workplace.equals("all") ||workplace.equals("remote") || workplace.equals("ua") ? "" : "-" .concat(workplace);
+        return workplace.equals("all") || workplace.equals("remote") || workplace.equals("ua") ?
+                "" : getBuild("-").append(workplace).toString();
     }
 }

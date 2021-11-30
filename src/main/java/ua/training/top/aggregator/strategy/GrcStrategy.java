@@ -17,8 +17,7 @@ import java.util.Set;
 import static java.lang.String.format;
 import static ua.training.top.aggregator.installation.Installation.reCall;
 import static ua.training.top.util.parser.ElementUtil.getResumesGrc;
-import static ua.training.top.util.parser.data.DataUtil.get_resume;
-import static ua.training.top.util.parser.data.DataUtil.grc;
+import static ua.training.top.util.parser.data.DataUtil.*;
 import static ua.training.top.util.parser.data.PagesUtil.getMaxPages;
 import static ua.training.top.util.parser.data.UrlUtil.getLevel;
 import static ua.training.top.util.parser.data.UrlUtil.getPageUrl;
@@ -34,8 +33,9 @@ public class GrcStrategy implements Strategy {
 
     protected Document getDocument(String workplace, String language, String level, String page) {
         return DocumentUtil.getDocument(format(url, language,
-                workplace.equals("&schedule=remote") || workplace.equals("all")? "" : "&area=".concat(workplace),
-                workplace.equals("all") ? "" : relocation, level.isEmpty()? "" : level,
+                workplace.equals("&schedule=remote") || workplace.equals("all") ? "" :
+                        getBuild("&area=").append(workplace).toString(),
+                workplace.equals("all") ? "" : relocation, level.isEmpty() ? "" : level,
                 workplace.equals("&schedule=remote") ? workplace : "", getPageUrl(page)));
     }
 
