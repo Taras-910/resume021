@@ -6,9 +6,8 @@ import static ua.training.top.util.parser.data.DataUtil.*;
 
 public class PagesUtil {
 
-    public static int getMaxPages(String site, String city) {
-        int pages;
-        pages = switch (city) {
+    public static int getMaxPages(String site, String workplace) {
+        int pages = switch (workplace) {
             case "all" -> switch (site) {
                 case djinni, grc -> 49;
                 case rabota -> 6;

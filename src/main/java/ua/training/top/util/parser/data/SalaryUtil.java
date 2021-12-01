@@ -71,7 +71,7 @@ public class SalaryUtil {
 
     private static int getPoint(String str) {
         int decimalPoint = str.length() - str.lastIndexOf(".");
-        return str.indexOf(".") == -1 ? 100 : decimalPoint == 3 ? 1 : decimalPoint == 2 ? 10 : 100;
+        return str.indexOf(".") < 0 ? 100 : decimalPoint == 3 ? 1 : decimalPoint == 2 ? 10 : 100;
     }
 
     public static String getCurrencyCode(String text) {

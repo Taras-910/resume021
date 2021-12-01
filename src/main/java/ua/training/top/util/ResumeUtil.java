@@ -63,16 +63,14 @@ public class ResumeUtil {
 
     public static List<Resume> getFilter(List<Resume> resumes, Freshen f) {
         return f.getLanguage().equals("all") && f.getLevel().equals("all") && f.getWorkplace().equals("all") ? resumes : resumes.stream()
-                .filter(r -> f.getLanguage().equals("all") ||
-                        isFindExactly(List.of(r.getSkills(), r.getTitle(), r.getWorkBefore(), r.getFreshen().getLanguage()), f.getLanguage()))
-                .filter(r -> f.getLevel().equals("all") ||
-                        isContains(List.of(r.getTitle(), r.getWorkBefore(), r.getFreshen().getLevel()), f.getLevel()))
-                .filter(r -> f.getWorkplace().equals("all") ||
-                        isMatch(getAria(f.getWorkplace()), getBuild(r.getAddress()).append(r.getWorkBefore())))
+                .filter(r -> (f.getLanguage().equals("all") ||
+                        isExactly(of(r.getSkills(), r.getTitle(), r.getWorkBefore(), r.getFreshen().getLanguage()), f.getLanguage()))
+                && (f.getLevel().equals("all") || isContains(of(r.getTitle(), r.getWorkBefore(), r.getFreshen().getLevel()), f.getLevel()))
+                && (f.getWorkplace().equals("all") || isMatch(getAria(f.getWorkplace()), getBuild(r.getAddress()).append(r.getWorkBefore()))))
                 .collect(Collectors.toList());
     }
 
-    public static boolean isFindExactly(List<String> list, String word) {
+    public static boolean isExactly(List<String> list, String word) {
         return list.stream().anyMatch(s -> s.toLowerCase().matches(".*\\b" + word + "\\b.*"));
     }
 

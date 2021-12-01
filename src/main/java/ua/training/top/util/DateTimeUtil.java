@@ -1,21 +1,19 @@
 package ua.training.top.util;
 
 import org.springframework.lang.Nullable;
-import org.springframework.util.StringUtils;
 
 import java.time.LocalDate;
 import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
+import static ua.training.top.util.parser.data.DataUtil.isEmpty;
+
 public class DateTimeUtil {
     public static final String
             DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm";
     public static final DateTimeFormatter
             DATE_TIME_FORMATTER = DateTimeFormatter.ofPattern(DATE_TIME_PATTERN);
-    public static final LocalDateTime
-            tomorrow = LocalDate.now().plusDays(1).atStartOfDay(),
-            yesterday = LocalDate.now().minusDays(1).atStartOfDay();
     public static final LocalDate
             testDate = LocalDate.of(2020, 7, 30),
             thisDay = LocalDate.now();
@@ -26,16 +24,14 @@ public class DateTimeUtil {
 
     public static @Nullable
     LocalTime parseLocalTime(@Nullable String str) {
-        return StringUtils.isEmpty(str) ? null : LocalTime.parse(str);
+        return isEmpty(str) ? null : LocalTime.parse(str);
     }
 
     public static @Nullable
     LocalDate parseLocalDate(@Nullable String str) {
-        return StringUtils.isEmpty(str) ? null : LocalDate.parse(str);
+        return isEmpty(str) ? null : LocalDate.parse(str);
     }
 
     public static @Nullable
-    LocalDateTime parseLocalDateTime(@Nullable String str) {
-        return StringUtils.isEmpty(str) ? null : LocalDateTime.parse(str);
-    }
+    LocalDateTime parseLocalDateTime(@Nullable String str) { return isEmpty(str) ? null : LocalDateTime.parse(str); }
 }

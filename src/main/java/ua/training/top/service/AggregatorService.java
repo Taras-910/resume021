@@ -21,9 +21,10 @@ import java.util.stream.Collectors;
 import static ua.training.top.SecurityUtil.setTestAuthorizedUser;
 import static ua.training.top.aggregator.ProviderUtil.getAllProviders;
 import static ua.training.top.aggregator.installation.Installation.limitResumesKeeping;
-import static ua.training.top.aggregator.strategy.TestStrategy.getTestList;
+import static ua.training.top.model.Goal.UPGRADE;
 import static ua.training.top.util.AggregatorUtil.getAnchor;
 import static ua.training.top.util.AggregatorUtil.getForUpdate;
+import static ua.training.top.util.FreshenUtil.asNewFreshen;
 import static ua.training.top.util.ResumeUtil.fromTos;
 import static ua.training.top.util.UserUtil.asAdmin;
 import static ua.training.top.util.parser.data.DataUtil.*;
@@ -87,18 +88,10 @@ public class AggregatorService {
     public static void main(String[] args) throws IOException {
         setTestAuthorizedUser(asAdmin());
 
-//        List<ResumeTo> resumeTos = getAllProviders().selectBy(asNewFreshen("java", "all", "санкт-петербург", UPGRADE));
-//        AtomicInteger i = new AtomicInteger(1);
-//        resumeTos.forEach(vacancyNet -> log.info("\nvacancyNet № {}\n{}\n", i.getAndIncrement(), vacancyNet.toString()));
-//        log.info(common_number, resumeTos.size());
-
-        List<ResumeTo> testList = getTestList();
-
+        List<ResumeTo> resumeTos = getAllProviders().selectBy(asNewFreshen("java", "all", "санкт-петербург", UPGRADE));
         AtomicInteger i = new AtomicInteger(1);
-
-        testList.forEach(r -> {
-            System.out.println(getBuild(String.valueOf(i.getAndIncrement())).append(r.getAddress()).append(r.getName()));
-        });
+        resumeTos.forEach(vacancyNet -> log.info("\nvacancyNet № {}\n{}\n", i.getAndIncrement(), vacancyNet.toString()));
+        log.info(common_number, resumeTos.size());
     }
 }
 //	      djinni   grc*10   habr  rabota   work  linkedin  total
