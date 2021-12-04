@@ -19,20 +19,39 @@
                         <form class="col-sm-8 form-row needs-validation" id="filter">
                             <div class="col-md-4 mb-3 col-form-label">
                                 <input class="form-control" type="text" name="language" id="language"
-                                       list="language_name" style="width:98%;border:2px solid #0397ba"
-                                       placeholder="please enter language...">
+                                       list="language_name" style="width:98%;border:2px solid #0397ba" placeholder="please enter language...">
                                 <datalist id="language_name">
                                     <option value='all' selected>all</option>
                                     <option value='Java'>Java</option>
-                                    <option value='Php'>Php</option>
                                     <option value='Ruby'>Ruby</option>
-                                    <option value='JavaScript'>JavaScript</option>
-                                    <option value='TypeScript'>TypeScript</option>
                                     <option value='Kotlin'>Kotlin</option>
                                     <option value='Python'>Python</option>
-                                    <option value='C#'>C#</option>
+                                    <option value='JavaScript'>JavaScript</option>
+                                    <option value='TypeScript'>TypeScript</option>
+                                    <option value='Php'>Php</option>
+                                    <option value='React'>React</option>
+                                    <option value='Angular'>Angular</option>
+                                    <option value='Android'>Android</option>
                                     <option value='C++'>C++</option>
+                                    <option value='C#'>C#</option>
+                                    <option value='.Net'>.Net</option>
+                                    <option value='Ios'>Ios</option>
+                                    <option value='Node.js'>Node.js</option>
+                                    <option value='Sql'>Sql</option>
+                                    <option value='Goland'>Goland</option>
+                                    <option value='Ruby on rails'>Ruby on rails</option>
                                     <option value='Scala'>Scala</option>
+                                    <option value='Asw'>Asw</option>
+                                    <option value='Azure'>Azure</option>
+                                    <option value='Html&css'>Html&css</option>
+                                    <option value='Html'>Html</option>
+                                    <option value='css'>css</option>
+                                    <option value='Spark'>Spark</option>
+                                    <option value='React native'>React native</option>
+                                    <option value='Vue.js'>Vue.js</option>
+                                    <option value='Flutter'>Flutter</option>
+                                    <option value='Elixir'>Elixir</option>
+                                    <option value='Hadoop'>Hadoop</option>
                                 </datalist>
                             </div>
                             <div class="col-md-4 mb-3 col-form-label">
@@ -305,25 +324,47 @@
                             <h7 class="btn-outline-info"><em>please enter language...</em></h7>
                         </label>
                         <input class="form-control" type="text" name="language" id="languageTask"
-                               list="language_name_2">
+                               list="language_name_2" placeholder="please enter any language">
                         <datalist id="language_name_2">
+                            <option value='all' selected>all</option>
                             <option value='Java'>Java</option>
-                            <option value='Php'>Php</option>
                             <option value='Ruby'>Ruby</option>
-                            <option value='JavaScript'>JavaScript</option>
-                            <option value='TypeScript'>TypeScript</option>
                             <option value='Kotlin'>Kotlin</option>
                             <option value='Python'>Python</option>
-                            <option value='C#'>C#</option>
+                            <option value='JavaScript'>JavaScript</option>
+                            <option value='TypeScript'>TypeScript</option>
+                            <option value='Php'>Php</option>
+                            <option value='React'>React</option>
+                            <option value='Angular'>Angular</option>
+                            <option value='Android'>Android</option>
                             <option value='C++'>C++</option>
+                            <option value='C#'>C#</option>
+                            <option value='.Net'>.Net</option>
+                            <option value='Ios'>Ios</option>
+                            <option value='Node.js'>Node.js</option>
+                            <option value='Sql'>Sql</option>
+                            <option value='Goland'>Goland</option>
+                            <option value='Ruby on rails'>Ruby on rails</option>
                             <option value='Scala'>Scala</option>
+                            <option value='Asw'>Asw</option>
+                            <option value='Azure'>Azure</option>
+                            <option value='Html&css'>Html&css</option>
+                            <option value='css'>css</option>
+                            <option value='Html'>Html</option>
+                            <option value='Spark'>Spark</option>
+                            <option value='React native'>React native</option>
+                            <option value='Vue.js'>Vue.js</option>
+                            <option value='Flutter'>Flutter</option>
+                            <option value='Elixir'>Elixir</option>
+                            <option value='Hadoop'>Hadoop</option>
                         </datalist>
                     </div>
                     <div class="form-group">
                         <label for="levelTask">
                             <h7 class="btn-outline-info"><em>level...</em></h7>
                         </label>
-                        <input class="form-control" type="text" name="level" id="levelTask" list="level_2">
+                        <input class="form-control" type="text" name="level" id="levelTask" list="level_2"
+                               placeholder="please enter any level">
                         <datalist id="level_2">
                             <option value='Trainee'>(без опыта разработки)</option>
                             <option value='Junior'>(опыт до 1 года)</option>
@@ -337,7 +378,8 @@
                         <label for="workplaceTask">
                             <h7 class="btn-outline-info"><em>location...</em></h7>
                         </label>
-                        <input class="form-control" type="text" name="workplace" id="workplaceTask" list="city_name_2">
+                        <input class="form-control" type="text" name="workplace" id="workplaceTask" list="city_name_2"
+                        placeholder="please enter the place of work you need">
                         <datalist id="city_name_2">
                             <option value='Киев'>Киев</option>
                             <option value='Минск'>Минск</option>

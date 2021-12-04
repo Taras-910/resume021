@@ -69,7 +69,6 @@ public class ResumeUtil {
                 .collect(Collectors.toList());
     }
 
-
     public static boolean isSuit(Resume r, String field, String fieldKind) {
         String text = fieldKind.equals("language") ?
                 getBuild(r.getSkills()).append(r.getTitle()).append(r.getFreshen().getLanguage()).toString().toLowerCase():
@@ -87,7 +86,6 @@ public class ResumeUtil {
                             && ukraineAria.stream().noneMatch(cityUA -> text.toLowerCase().indexOf(cityUA) > -1));
         };
     }
-
 
     private static List<String> getAria(String text) {
         return switch (text) {
