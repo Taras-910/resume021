@@ -94,7 +94,7 @@ public class ResumeUtil {
             case "middle" -> middleAria;
             case "senior" -> seniorAria;
             case "expert", "lead", "тимлид", "team lead" -> expertAria;
-            case "ukraine", "україна", "украина", "ua" -> ukraineAria;
+            case "ukraine", "україна", "украина", "ua" -> citiesUA;
             case "russia", "россия", "росія", "ru" -> russiaAria;
             case "київ", "киев", "kiev", "kyiv" -> kievAria;
             case "foreign", "за_рубежем", "за рубежем", "за кордоном", "другие страны" -> getForeign();
