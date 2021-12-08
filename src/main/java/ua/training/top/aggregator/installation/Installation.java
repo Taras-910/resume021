@@ -15,7 +15,7 @@ public class Installation {
     public static int
             maxAge = 21,
             maxLengthText = 250,
-            limitResumesKeeping = 3000,
+            limitResumesKeeping = 3100,
             limitFreshensFilterKeeping = 150,
             limitVoteKeeping = 500,
             limitPages = 50,
