@@ -116,6 +116,9 @@ public class ResumeUtil {
             case "wroclaw", "вроцлав" -> wroclawAria;
             case "gdansk", "гданськ", "гданск" -> gdanskAria;
             case "poznan", "познань" -> poznanAria;
+            case "st petersburg", "санкт петербург", "санкт-петербург", "spb" -> ptbAria;
+            case "moskov", "moskow", "москва", "msk" -> mskAria;
+            case "minsk", "минск", "мінськ" -> minskAria;
             default -> of(text);
         };
     }

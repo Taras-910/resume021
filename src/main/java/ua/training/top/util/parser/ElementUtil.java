@@ -63,7 +63,7 @@ public class ElementUtil {
                     workBefore = getLimitation(xssClear(element.getElementsByAttributeValueStarting("data-qa", "resume-serp_resume-item-content").text()));
                     age = xssClear(element.getElementsByAttributeValueStarting("data-qa", "resume-serp__resume-age").text());
                     age = isAge(age) ? age : link;
-                    if (isToValid(freshen, getBuild(title).append(workBefore)) && isAgeValid(age)) {
+                    if (isToValid(freshen, getBuild(title).append(workBefore)) && isAgeValid(age) && !workBefore.equals(link)) {
                         ResumeTo rTo = new ResumeTo(title, link, age, link,
                                 getToSalary(xssClear(element.getElementsByClass("bloko-text bloko-text_large bloko-text_strong").text())),
                                 workBefore,
