@@ -11,6 +11,9 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static java.util.List.of;
+import static ua.training.top.util.parser.data.CommonUtil.getJoin;
+import static ua.training.top.util.parser.data.CommonUtil.isMatch;
+import static ua.training.top.util.parser.data.ConstantsUtil.*;
 import static ua.training.top.util.parser.data.DataUtil.*;
 
 public class ResumeUtil {
@@ -71,10 +74,10 @@ public class ResumeUtil {
 
     public static boolean isSuit(Resume r, String field, String fieldKind) {
         String text = fieldKind.equals("language") ?
-                getBuild(r.getSkills()).append(r.getTitle()).append(r.getFreshen().getLanguage()).toString().toLowerCase():
+                getJoin(r.getSkills(), r.getTitle(), r.getFreshen().getLanguage()).toLowerCase():
                 fieldKind.equals("level") ?
-                        getBuild(r.getTitle()).append(r.getWorkBefore()).append(r.getFreshen().getLevel()).toString().toLowerCase() :
-                        getBuild(r.getAddress()).append(r.getWorkBefore()).toString().toLowerCase();
+                        getJoin(r.getTitle(), r.getWorkBefore(), r.getFreshen().getLevel()).toLowerCase() :
+                        getJoin(r.getAddress(), r.getWorkBefore()).toLowerCase();
         return switch (field.toLowerCase()) {
             case "all" -> true;
             case "java", "react", "ruby" -> text.matches(".*\\b" + field + "\\b.*");
@@ -83,7 +86,7 @@ public class ResumeUtil {
                     .anyMatch(a -> text.matches(".*\\b" + a + "\\b.*"));
             default -> getAria(field).size() == 1 ? text.indexOf(field) > -1 : getAria(field).stream()
                     .anyMatch(a -> !isMatch(getForeign(), field) ? text.indexOf(a) > -1 : text.indexOf(a) > -1
-                            && ukraineAria.stream().noneMatch(cityUA -> text.toLowerCase().indexOf(cityUA) > -1));
+                            && uaAria.stream().noneMatch(cityUA -> text.toLowerCase().indexOf(cityUA) > -1));
         };
     }
 
@@ -95,7 +98,6 @@ public class ResumeUtil {
             case "senior" -> seniorAria;
             case "expert", "lead", "тимлид", "team lead" -> expertAria;
             case "ukraine", "україна", "украина", "ua" -> citiesUA;
-            case "russia", "россия", "росія", "ru" -> russiaAria;
             case "київ", "киев", "kiev", "kyiv" -> kievAria;
             case "foreign", "за_рубежем", "за рубежем", "за кордоном", "другие страны" -> getForeign();
             case "remote", "relocate", "релокейт", "удаленно", "віддалено" -> remoteAria;
@@ -116,16 +118,14 @@ public class ResumeUtil {
             case "wroclaw", "вроцлав" -> wroclawAria;
             case "gdansk", "гданськ", "гданск" -> gdanskAria;
             case "poznan", "познань" -> poznanAria;
-            case "st petersburg", "санкт петербург", "санкт-петербург", "spb" -> ptbAria;
-            case "moskov", "moskow", "москва", "msk" -> mskAria;
             case "minsk", "минск", "мінськ" -> minskAria;
             default -> of(text);
         };
     }
 
     public static List<String> getForeign() {
-        List<String> foreign = new ArrayList<>(citiesWorld);
-        foreign.addAll(citiesPL);
+        List<String> foreign = new ArrayList<>(otherAria);
+        foreign.addAll(citiesPl);
         foreign.addAll(foreignAria);
         return foreign;
     }

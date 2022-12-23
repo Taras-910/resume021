@@ -13,7 +13,7 @@ import static java.time.LocalDateTime.now;
 import static java.util.Collections.singleton;
 import static org.springframework.util.StringUtils.hasText;
 import static ua.training.top.SecurityUtil.authUserId;
-import static ua.training.top.aggregator.installation.Installation.limitFreshensFilterKeeping;
+import static ua.training.top.aggregator.Installation.limitFreshensFilterKeeping;
 import static ua.training.top.model.Goal.FILTER;
 import static ua.training.top.model.Goal.UPGRADE;
 

@@ -13,8 +13,10 @@ import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
-import static ua.training.top.aggregator.installation.Installation.reasonDateLoading;
+import static ua.training.top.aggregator.Installation.reasonDateLoading;
 import static ua.training.top.util.AggregatorUtil.createTo;
+import static ua.training.top.util.parser.data.CommonUtil.isMatch;
+import static ua.training.top.util.parser.data.ConstantsUtil.citiesRU;
 import static ua.training.top.util.parser.data.DataUtil.common_number;
 import static ua.training.top.util.parser.data.DataUtil.error_select;
 
@@ -31,6 +33,9 @@ public class Dispatcher implements AggregatorInterface {
 
     @Override
     public List<ResumeTo> selectBy(Freshen freshen) {
+        if(isMatch(citiesRU, freshen.getWorkplace())){
+            return new ArrayList<>();
+        }
         allProviders = new ArrayDeque<>(Arrays.asList(providers));
         Set<ResumeTo> set = new HashSet<>();
         while (allProviders.peek() != null) {
@@ -40,6 +45,7 @@ public class Dispatcher implements AggregatorInterface {
                 log.error(error_select, e.getMessage());
             }
         }
+
         List<ResumeTo> resumeTos = set.parallelStream()
                 .filter(rTo -> reasonDateLoading.isBefore(rTo.getReleaseDate()))
                 .filter(ResumeCheckUtil::checkNullDataResumeTo)

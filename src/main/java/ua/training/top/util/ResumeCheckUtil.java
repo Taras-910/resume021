@@ -10,7 +10,7 @@ import java.util.List;
 import static ua.training.top.SecurityUtil.authUserId;
 import static ua.training.top.util.InformUtil.*;
 import static ua.training.top.util.UserUtil.asAdmin;
-import static ua.training.top.util.parser.data.DataUtil.isEmpty;
+import static ua.training.top.util.parser.data.CommonUtil.isEmpty;
 
 public class ResumeCheckUtil {
     public static Logger log = LoggerFactory.getLogger(ResumeCheckUtil.class);

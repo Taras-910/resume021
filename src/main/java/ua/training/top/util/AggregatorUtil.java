@@ -9,6 +9,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
+import static ua.training.top.util.parser.data.CommonUtil.*;
+import static ua.training.top.util.parser.data.ConstantsUtil.link;
+import static ua.training.top.util.parser.data.ConstantsUtil.workersIT;
 import static ua.training.top.util.parser.data.DataUtil.*;
 
 public class AggregatorUtil {
@@ -26,7 +29,7 @@ public class AggregatorUtil {
         for (String period : getWorkPeriod(work)) {
             work = work.replaceAll(period, "");
         }
-        return getBuild(r.getTitle()).append(" ").append(work).toString().toLowerCase();
+        return getJoin(r.getTitle(), " ", work).toLowerCase();
     }
 
     public static Resume getForUpdate(Resume r, Resume resumeDb) {
@@ -40,7 +43,7 @@ public class AggregatorUtil {
         return r;
     }
 
-    public static boolean isToValid(Freshen f, StringBuilder text) {
+    public static boolean isToValid(Freshen f, String text) {
         String temp = text.toString().toLowerCase();
         return (temp.indexOf(f.getLanguage()) > -1 || isMatch(workersIT, temp))
                 && wasteWorkBefore.stream().noneMatch(temp::contains);

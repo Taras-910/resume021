@@ -10,8 +10,8 @@ import org.springframework.stereotype.Component;
 import ua.training.top.model.Freshen;
 
 import static ua.training.top.SecurityUtil.setTestAuthorizedUser;
-import static ua.training.top.aggregator.installation.Installation.offAutoRefreshProviders;
-import static ua.training.top.aggregator.installation.Installation.setAutoRefreshProviders;
+import static ua.training.top.aggregator.Installation.offAutoRefreshProviders;
+import static ua.training.top.aggregator.Installation.setAutoRefreshProviders;
 import static ua.training.top.util.AutoRefreshUtil.*;
 import static ua.training.top.util.InformUtil.delay;
 import static ua.training.top.util.UserUtil.asAdmin;
@@ -24,27 +24,25 @@ public class AutoRefreshService {
     @Autowired
     private AggregatorService aggregatorService;
 
-    //    @Scheduled(cron = "0 0,5,10,15,20,25,30,35,40,45,50,55 6-23 * * *")
-    @Scheduled(cron = "0 0,12,24,36,48 10-17 * * MON-FRI")
+    @Scheduled(cron = "0 0 10-16 * * MON-FRI")
     public void weekDay() {
-//        int delayWithinMinutes = 4;
-        int delayWithinMinutes = 11;
+        int delayWithinMinutes = 59;
         log.info(delay, delayWithinMinutes);
         setRandomDelay(1000 * 60 * delayWithinMinutes);
         setTestAuthorizedUser(asAdmin());
         setAutoRefreshProviders();
-        aggregatorService.refreshDB(new Freshen(randomFreshen(mapWorkplace.get(getKey(8) + 2), mapLevel.get(3))));
+        aggregatorService.refreshDB(new Freshen(randomFreshen(mapWorkplace.get(getKey(8)), mapLevel.get(3))));
         offAutoRefreshProviders();
     }
 
-    @Scheduled(cron = "0 0,30 11-17 * * SAT")
+    @Scheduled(cron = "0 0 11 * * SAT")
     public void weekEnd() {
-        int delayMinutesMax = 29;
+        int delayMinutesMax = 360;
         log.info(delay, delayMinutesMax);
         setRandomDelay(1000 * 60 * delayMinutesMax);
         setTestAuthorizedUser(asAdmin());
         setAutoRefreshProviders();
-        aggregatorService.refreshDB(new Freshen(randomFreshen(mapWorkplace.get(getKey(3)), mapLevel.get(2))));
+        aggregatorService.refreshDB(new Freshen(randomFreshen(mapWorkplace.get(getKey(8)), mapLevel.get(2))));
         offAutoRefreshProviders();
     }
 
@@ -54,17 +52,14 @@ public class AutoRefreshService {
         setTestAuthorizedUser(asAdmin());
         aggregatorService.deleteOutDated();
     }
-}
-//	      djinni   grc*10   habr  rabota   work  linkedin  total
-//all	    49	  49(0)	     1	     6	    16	   (100)	121
-//Украина	32	   4(0)	     -	     6	    30	     -	     72
-//foreign	49	   2(0)	     1	     1	     -	     -	     53
-//Киев	    15	   1(0)	     1	     3	    15	     -	     35
-//remote 	 -	  17(0)	     1	     3	    12	    (5)	     33
-//Минск	     1	  10(0)	     1	     6	     -	     -	     18
-//Львов	     6	    -	     -	     8	     2	     -	     16
-//Харьков	 5	    -	     -	     2	     5	     -	     12
-//Одесса	 5	    -	     -	     2	     4	     -	     11
-//Санкт-П	 5	   5(0)	     1	     -	     -	     -	     11
-//Москва	 -	   8(0)	     1	     -	     -	     -	      9
 
+    @Scheduled(cron = "0 0 10 * * MON,THU")
+    public void TwiceByWeek() {
+        log.info("Scheduled everyDay");
+        int delayWithinMinutes = 480; // 8 hours
+        log.info("There is set delay within {} minutes", delayWithinMinutes);
+        setRandomDelay(1000 * 60 * delayWithinMinutes);
+        setTestAuthorizedUser(asAdmin());
+        aggregatorService.updateRateDB();
+    }
+}

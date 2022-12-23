@@ -1,4 +1,6 @@
 DELETE
+FROM rate;
+DELETE
 FROM freshen;
 DELETE
 FROM vote;
@@ -39,3 +41,14 @@ INSERT INTO vote (local_date, resume_id, user_id)
 VALUES ('2020-10-25', 100004, 100000),
        ('2020-10-25', 100005, 100001);
 
+INSERT INTO rate (name, value, local_date)
+VALUES ('USDUSD', 1.0, '2020-10-25'),
+       ('USDUAH', 36.53, '2020-10-25'),
+       ('USDPLN', 4.8544, '2020-10-25'),
+       ('USDKZT', 469.5, '2020-10-25'),
+       ('USDGBP', 0.87148, '2020-10-25'),
+       ('USDEUR', 1.00711, '2020-10-25'),
+       ('USDCZK', 24.7275, '2020-10-25'),
+       ('USDCAD', 1.35791, '2020-10-25'),
+       ('USDBGN', 1.9701, '2020-10-25'),
+       ('USDBYR', 2.52, '2020-10-25');

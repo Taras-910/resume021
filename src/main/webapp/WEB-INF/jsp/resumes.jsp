@@ -75,7 +75,6 @@
                                     <option value='all' selected>all</option>
                                     <option value='Киев'>Киев</option>
                                     <option value='Минск'>Минск</option>
-                                    <option value='Санкт-Петербург'>Санкт-Петербург</option>
                                     <option value='Львов'>Львов</option>
                                     <option value='Харьков'>Харьков</option>
                                     <option value='Днепр'>Днепр</option>
@@ -383,12 +382,10 @@
                         <datalist id="city_name_2">
                             <option value='Киев'>Киев</option>
                             <option value='Минск'>Минск</option>
-                            <option value='Санкт-Петербург'>Санкт-Петербург</option>
                             <option value='Львов'>Львов</option>
                             <option value='Харьков'>Харьков</option>
                             <option value='Днепр'>Днепр</option>
                             <option value='Украина'>Украина</option>
-                            <option value='Россия'>Россия</option>
                             <option value='remote'>удаленно</option>
                             <option value='foreign'>другие страны</option>
                             <option value='all'>all</option>

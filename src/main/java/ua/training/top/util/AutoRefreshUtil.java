@@ -3,7 +3,8 @@ package ua.training.top.util;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.training.top.aggregator.Provider;
-import ua.training.top.aggregator.strategy.*;
+import ua.training.top.aggregator.strategy.DjinniStrategy;
+import ua.training.top.aggregator.strategy.WorkStrategy;
 import ua.training.top.model.Freshen;
 
 import java.util.Map;
@@ -15,7 +16,7 @@ import static ua.training.top.model.Goal.UPGRADE;
 import static ua.training.top.util.InformUtil.all;
 import static ua.training.top.util.InformUtil.setting_delay;
 import static ua.training.top.util.UserUtil.asAdmin;
-import static ua.training.top.util.parser.data.DataUtil.*;
+import static ua.training.top.util.parser.data.ConstantsUtil.*;
 
 public class AutoRefreshUtil {
     private final static Logger log = LoggerFactory.getLogger(AutoRefreshUtil.class);
@@ -38,10 +39,7 @@ public class AutoRefreshUtil {
     public static final Map<Integer, Provider> mapStrategies =
             Map.ofEntries(
                     Map.entry(0, new Provider(new DjinniStrategy())),
-                    Map.entry(1, new Provider(new GrcStrategy())),
-                    Map.entry(2, new Provider(new RabotaStrategy())),
-                    Map.entry(3, new Provider(new WorkStrategy())),
-                    Map.entry(4, new Provider(new HabrStrategy()))
+                    Map.entry(1, new Provider(new WorkStrategy()))
             );
 
     public static final Map<Integer, String> mapWorkplace =
@@ -51,11 +49,9 @@ public class AutoRefreshUtil {
                     2, "foreign",
                     3, "киев",
                     4, "remote",
-                    5, "минск",
-                    6, "харьков",
-                    7, "одесса",
-                    8, "санкт-петербург",
-                    9, "москва"
+                    5, "toronto",
+                    6, "варшава",
+                    7, "львов"
             );
 
     public static final Map<Integer, String> mapLevel =

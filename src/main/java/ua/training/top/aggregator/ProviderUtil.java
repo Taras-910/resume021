@@ -3,10 +3,12 @@ package ua.training.top.aggregator;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.training.top.aggregator.dispatcher.Dispatcher;
-import ua.training.top.aggregator.strategy.*;
+import ua.training.top.aggregator.strategy.DjinniStrategy;
+import ua.training.top.aggregator.strategy.TestStrategy;
+import ua.training.top.aggregator.strategy.WorkStrategy;
 
-import static ua.training.top.aggregator.installation.Installation.autoRefreshProviders;
-import static ua.training.top.aggregator.installation.Installation.testProvider;
+import static ua.training.top.aggregator.Installation.autoRefreshProviders;
+import static ua.training.top.aggregator.Installation.testProvider;
 import static ua.training.top.util.AutoRefreshUtil.getKey;
 import static ua.training.top.util.AutoRefreshUtil.mapStrategies;
 
@@ -19,16 +21,15 @@ public class ProviderUtil {
         } else if (autoRefreshProviders) {
             log.info("autoRefreshProviders");
             return new Dispatcher(
-                    mapStrategies.get(getKey(2)),
+                    mapStrategies.get(getKey(3)))
+                    /*,
                     mapStrategies.get(getKey(2) + 2),
-                    mapStrategies.get(4));
+                    mapStrategies.get(4)*/
+                    ;
         } else {
             log.info("allProviders");
             return new Dispatcher(
                     new Provider(new DjinniStrategy()),      /*ua, foreign, remote, all  50pages */
-                    new Provider(new GrcStrategy()),         /*меняет salary, date */
-                    new Provider(new HabrStrategy()),        /*нет за_рубежем*/
-                    new Provider(new RabotaStrategy()),      /*оч мало - до 10*/
                     new Provider(new WorkStrategy())         /*нет за_рубежем*/
             );
         }

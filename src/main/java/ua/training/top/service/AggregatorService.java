@@ -19,15 +19,17 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 import static ua.training.top.SecurityUtil.setTestAuthorizedUser;
+import static ua.training.top.aggregator.Installation.limitResumesKeeping;
 import static ua.training.top.aggregator.ProviderUtil.getAllProviders;
-import static ua.training.top.aggregator.installation.Installation.limitResumesKeeping;
 import static ua.training.top.model.Goal.UPGRADE;
 import static ua.training.top.util.AggregatorUtil.getAnchor;
 import static ua.training.top.util.AggregatorUtil.getForUpdate;
 import static ua.training.top.util.FreshenUtil.asNewFreshen;
 import static ua.training.top.util.ResumeUtil.fromTos;
 import static ua.training.top.util.UserUtil.asAdmin;
-import static ua.training.top.util.parser.data.DataUtil.*;
+import static ua.training.top.util.parser.data.CommonUtil.isMatch;
+import static ua.training.top.util.parser.data.DataUtil.common_number;
+import static ua.training.top.util.parser.data.DataUtil.finish_message;
 
 @Service
 @EnableScheduling
@@ -37,6 +39,8 @@ public class AggregatorService {
     private ResumeService resumeService;
     @Autowired
     private FreshenService freshenService;
+    @Autowired
+    private RateService rateService;
     @Autowired
     private VoteService voteService;
 
@@ -85,15 +89,24 @@ public class AggregatorService {
         voteService.deleteOutDated();
     }
 
+    public void updateRateDB() {
+        rateService.updateRateDB();
+    }
+
     public static void main(String[] args) throws IOException {
         setTestAuthorizedUser(asAdmin());
 
-        List<ResumeTo> resumeTos = getAllProviders().selectBy(asNewFreshen("java", "all", "санкт-петербург", UPGRADE));
+        List<ResumeTo> resumeTos = getAllProviders().selectBy(asNewFreshen("all", "all", "all", UPGRADE));
         AtomicInteger i = new AtomicInteger(1);
         resumeTos.forEach(vacancyNet -> log.info("\nvacancyNet № {}\n{}\n", i.getAndIncrement(), vacancyNet.toString()));
         log.info(common_number, resumeTos.size());
+
+
+//        work address
     }
+
 }
+
 //	      djinni   grc*10   habr  rabota   work  linkedin  total
 //all	    49	  49(0)	     1	     6	    16	   (100)	121
 //Украина	32	   4(0)	     -	     6	    30	     -	     72

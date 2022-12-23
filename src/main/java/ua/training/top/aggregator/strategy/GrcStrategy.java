@@ -15,12 +15,15 @@ import java.util.List;
 import java.util.Set;
 
 import static java.lang.String.format;
-import static ua.training.top.aggregator.installation.Installation.reCall;
+import static ua.training.top.aggregator.Installation.reCall;
 import static ua.training.top.util.parser.ElementUtil.getResumesGrc;
-import static ua.training.top.util.parser.data.DataUtil.*;
+import static ua.training.top.util.parser.data.CommonUtil.getJoin;
+import static ua.training.top.util.parser.data.CommonUtil.isMatch;
+import static ua.training.top.util.parser.data.ConstantsUtil.grc;
+import static ua.training.top.util.parser.data.DataUtil.get_resume;
 import static ua.training.top.util.parser.data.PagesUtil.getMaxPages;
+import static ua.training.top.util.parser.data.PagesUtil.getPage;
 import static ua.training.top.util.parser.data.UrlUtil.getLevel;
-import static ua.training.top.util.parser.data.UrlUtil.getPageUrl;
 import static ua.training.top.util.parser.data.WorkplaceUtil.getGrc;
 
 public class GrcStrategy implements Strategy {
@@ -32,17 +35,17 @@ public class GrcStrategy implements Strategy {
 //https://grc.ua/search/resume?clusters=true&exp_period=all_time&items_on_page=100&logic=normal&no_magic=true&order_by=relevance&ored_clusters=true&pos=full_text&text=java&search_period=365
 
     protected Document getDocument(String workplace, String language, String level, String page) {
-        return DocumentUtil.getDocument(format(url, language,
-                workplace.equals("&schedule=remote") || workplace.equals("all") ? "" :
-                        getBuild("&area=").append(workplace).toString(),
+        return DocumentUtil.getDocument(format(url,
+                language,
+                isMatch(List.of("&schedule=remote", "all"), workplace) ? "" : getJoin("&area=", workplace),
                 workplace.equals("all") ? "" : relocation, level.isEmpty() ? "" : level,
-                workplace.equals("&schedule=remote") ? workplace : "", getPageUrl(page)));
+                workplace.equals("&schedule=remote") ? workplace : "", getPage(grc, page)));
     }
 
     @Override
     public List<ResumeTo> getResumes(Freshen freshen) throws IOException {
         String workplace = freshen.getWorkplace(), level = freshen.getLevel(), language = freshen.getLanguage();
-        log.info(get_resume, workplace, language);
+        log.info(get_resume, language, level, workplace);
         Set<ResumeTo> set = new LinkedHashSet<>();
         int page = 1;
         while (true) {

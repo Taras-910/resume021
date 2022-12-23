@@ -1,30 +1,12 @@
 package ua.training.top.util.parser.data;
 
 import static java.util.List.of;
-import static ua.training.top.util.parser.data.DataUtil.*;
+import static ua.training.top.util.parser.data.CommonUtil.getJoin;
+import static ua.training.top.util.parser.data.CommonUtil.isMatch;
+import static ua.training.top.util.parser.data.ConstantsUtil.otherAria;
+import static ua.training.top.util.parser.data.DataUtil.isEquals;
 
 public class WorkplaceUtil {
-
-    public static String getDjinni(String workplace) {
-        workplace = workplace.toLowerCase();
-        return switch (workplace) {
-            case "київ", "киев", "kiev" -> "kyiv";
-            case "дніпро", "днепр", "dnepr" -> "dnipro";
-            case "харків", "харьков" -> "kharkiv";
-            case "одеса", "одесса" -> "odesa";
-            case "львів", "львов" -> "lviv";
-            case "миколаїв", "николаев" -> "mykolaiv";
-            case "вінниця", "винница" -> "vinnitsia";
-            case "запоріжжя", "запорожье" -> "zaporizhzhya";
-            case "чорновці", "черновцы" -> "chernivtsi";
-            case "чернігів", "чернигов" -> "chernigiv";
-            case "івано-франківськ", "ивано-франковск" -> "ivano-frankivsk";
-            case "ужгород" -> "uzhgorod";
-            case "минск" -> "minsk";
-            case "москва" -> "moskow";
-            default -> workplace;
-        };
-    }
 
     public static String getGrc(String workplace) {
         return switch (workplace) {
@@ -57,7 +39,7 @@ public class WorkplaceUtil {
             case "сша" -> "85";
             case "all" -> "all";
             default -> workplace.equals("remote") ?
-                    "&schedule=remote" : getBuild("&area=").append(workplace).toString();
+                    "&schedule=remote" : getJoin("&area=", workplace);
         };
     }
 
@@ -90,29 +72,49 @@ public class WorkplaceUtil {
             case "дніпро", "днепр" -> "днепр";
             case "одеса", "одесса" -> "одесса";
             case "харків", "харьков" -> "харьков";
-            default -> isEquals(workplace, of("foreign", "россия", "минск")) || isMatch(citiesWorld, workplace) ?
+            default -> isEquals(workplace, of("foreign", "россия", "минск")) || isMatch(otherAria, workplace) ?
                     "другие_страны" : "вся_украина";
         };
     }
 
-    public static String getWork(String workplace) {
+    /*public static String getDjinni(String workplace) {
         return switch (workplace) {
-            case "україна", "украина" -> "ua";
             case "київ", "киев", "kiev" -> "kyiv";
-            case "запоріжжя", "запорожье" -> "zaporizhzhya";
-            case "миколаїв", "николаев" -> "mykolaiv";
-            case "чорновці", "черновцы" -> "chernivtsi";
-            case "чернігів", "чернигов" -> "chernigiv";
-            case "вінниця", "винница" -> "vinnitsia";
+            case "дніпро", "днепр", "dnepr" -> "dnipro";
             case "харків", "харьков" -> "kharkiv";
-            case "дніпро", "днепр" -> "dnipro";
             case "одеса", "одесса" -> "odesa";
             case "львів", "львов" -> "lviv";
-            case "ужгород" -> "uzhgorod";
-            case "remote" -> "remote";
-            case "all" -> "all";
+            case "миколаїв", "николаев" -> "mykolaiv";
+            case "вінниця", "винница" -> "vinnitsia";
+            case "запоріжжя", "запорожье" -> "zaporizhzhya";
+            case "чорновці", "черновцы" -> "chernivtsi";
+            case "чернігів", "чернигов" -> "chernigiv";
             case "івано-франківськ", "ивано-франковск" -> "ivano-frankivsk";
-            default -> "other";
+            case "ужгород" -> "uzhgorod";
+            case "минск" -> "minsk";
+            default -> workplace;
+        };
+    }*/
+    public static String getUA_en(String workplace) {
+        return switch (workplace) {
+            case "київ", "киев", "kiev", "kyiv" -> "Kyiv";
+            case "запоріжжя", "запорожье", "zaporizhzhya" -> "Zaporizhzhya";
+            case "миколаїв", "николаев", "mykolaiv" -> "Mykolaiv";
+            case "чорновці", "черновцы", "chernivtsi" -> "Chernivtsi";
+            case "чернігів", "чернигов", "chernigiv" -> "Chernigiv";
+            case "вінниця", "винница", "vinnitsia" -> "Vinnitsia";
+            case "харків", "харьков", "kharkiv" -> "Kharkiv";
+            case "дніпро", "днепр", "dnipro", "dnepr" -> "Dnipro";
+            case "одеса", "одесса", "odessa" -> "Odesa";
+            case "львів", "львов", "lviv" -> "Lviv";
+            case "ужгород", "uzhgorod" -> "Uzhgorod";
+            case "івано-франківськ", "ивано-франковск" -> "Ivano-Frankivsk";
+            case "тернопіль", "тернополь", "ternopil" -> "Ternopil";
+            case "минск", "мінськ", "minsk" -> "minsk";
+            default -> "";
         };
     }
+
+
+
 }

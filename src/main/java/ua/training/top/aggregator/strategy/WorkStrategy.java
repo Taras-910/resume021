@@ -16,29 +16,36 @@ import java.util.Set;
 
 import static java.lang.String.format;
 import static java.lang.String.valueOf;
-import static ua.training.top.aggregator.installation.Installation.reCall;
+import static ua.training.top.aggregator.Installation.reCall;
 import static ua.training.top.util.parser.ElementUtil.getResumesWork;
-import static ua.training.top.util.parser.data.DataUtil.*;
+import static ua.training.top.util.parser.data.CommonUtil.*;
+import static ua.training.top.util.parser.data.ConstantsUtil.*;
+import static ua.training.top.util.parser.data.DataUtil.get_resume;
 import static ua.training.top.util.parser.data.PagesUtil.getMaxPages;
+import static ua.training.top.util.parser.data.PagesUtil.getPage;
 import static ua.training.top.util.parser.data.UrlUtil.getLevel;
-import static ua.training.top.util.parser.data.WorkplaceUtil.getWork;
+import static ua.training.top.util.parser.data.WorkplaceUtil.getUA_en;
 
 public class WorkStrategy implements Strategy {
     private final static Logger log = LoggerFactory.getLogger(WorkStrategy.class);
-    private final static String URL = "https://www.work.ua/ru/resumes%s-%s/?%s%s%s%s";
+    private final static String URL = "https://www.work.ua/resumes%s-it%s/%s%s";
 //      https://www.work.ua/ru/resumes-kyiv-java/?employment=76&experience=0&page=2
 
     protected Document getDocument(String workspace, String language, String level, String page) {
-        return DocumentUtil.getDocument(format(URL, getPartUrlWork(getWork(workspace)), language,
-                workspace.equals("remote") ? "employment=76&" : "", level.equals("all") ? "" :
-                        getBuild("experience=").append(getLevel(work, level)).toString(), page.equals("1") ?
-                        "period=5" : "period=5&", page.equals("1") ? "" : getBuild("page=").append(page).toString()));
+        String city = isMatch(citiesUA, workspace) ? getUA_en(workspace).toLowerCase() :
+                isMatch(remoteAria, workspace) ? "remote" : "other";
+        return DocumentUtil.getDocument(format(URL,
+                isMatch(uaAria, workspace) || workspace.equals("all") ? "" : getJoin("-", city),
+                language.equals("all") ? "" : getJoin("-", language),
+                level.equals("all") ? "" : getJoin("?experience=", getLevel(work, level)),
+                getJoin(level.equals("all") ? (page.equals("1") ? "" : "?") : "&", getPage(work, page))));
     }
 
     @Override
     public List<ResumeTo> getResumes(Freshen freshen) throws IOException {
-        String workplace = freshen.getWorkplace(), language = freshen.getLanguage();
-        log.info(get_resume, workplace, language);
+        String workplace = freshen.getWorkplace(), language = freshen.getLanguage(), level = freshen.getLevel();
+
+        log.info(get_resume, language, level, workplace);
         Set<ResumeTo> set = new LinkedHashSet<>();
         int page = 1;
         while (true) {
@@ -55,11 +62,6 @@ public class WorkStrategy implements Strategy {
     }
 
     public static String getToAddressWork(String address) {
-        return address.indexOf("·") > -1 ? address.substring(address.lastIndexOf("·") + 1).trim() : address;
-    }
-
-    public static String getPartUrlWork(String workplace) {
-        return workplace.equals("all") || workplace.equals("remote") || workplace.equals("ua") ?
-                "" : getBuild("-").append(workplace).toString();
+        return isContains(address,"·") ? address.substring(address.lastIndexOf("·") + 1).trim() : address;
     }
 }

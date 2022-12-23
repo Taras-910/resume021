@@ -13,7 +13,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.util.List;
 
-import static ua.training.top.aggregator.installation.Installation.reasonPeriodKeeping;
+import static ua.training.top.aggregator.Installation.reasonPeriodKeeping;
 import static ua.training.top.util.FreshenUtil.getExceedLimit;
 import static ua.training.top.util.InformUtil.must_not_null;
 import static ua.training.top.util.ValidationUtil.*;
