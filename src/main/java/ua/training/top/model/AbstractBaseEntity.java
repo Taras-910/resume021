@@ -1,5 +1,6 @@
 package ua.training.top.model;
 
+import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.Hibernate;
 import org.springframework.util.Assert;
 
@@ -16,7 +17,7 @@ public abstract class AbstractBaseEntity {
     @Id
     @SequenceGenerator(name = "global_seq", sequenceName = "global_seq", allocationSize = 1, initialValue = START_SEQ)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "global_seq")
-
+    @ApiModelProperty(hidden = true)
 //  See https://hibernate.atlassian.net/browse/HHH-3718 and https://hibernate.atlassian.net/browse/HHH-12034
 //  Proxy initialization when accessing its identifier managed now by JPA_PROXY_COMPLIANCE setting
     protected Integer id;

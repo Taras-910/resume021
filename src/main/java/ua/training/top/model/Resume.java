@@ -1,6 +1,7 @@
 package ua.training.top.model;
 
 import com.fasterxml.jackson.annotation.JsonBackReference;
+import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.format.annotation.DateTimeFormat;
@@ -56,6 +57,7 @@ public class Resume extends AbstractBaseEntity {
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
     private LocalDate releaseDate;
 
+    @ApiModelProperty(hidden = true)
     @Fetch(FetchMode.JOIN)
     @ManyToOne(fetch = EAGER)
     @JoinColumn(name = "freshen_id", nullable = false)
