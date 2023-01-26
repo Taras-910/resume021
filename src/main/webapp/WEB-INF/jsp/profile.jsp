@@ -1,7 +1,8 @@
 <%@ page contentType="text/html" pageEncoding="UTF-8" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="spring" uri="http://www.springframework.org/tags" %>
-<%@ taglib prefix="vacancy" tagdir="/WEB-INF/tags" %>
+<%@ taglib prefix="resume" tagdir="/WEB-INF/tags" %>
+<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c" %>
 <html>
 <jsp:include page="fragments/headTag.jsp"/>
 <body>
@@ -10,21 +11,21 @@
     <div class="container">
         <div class="row">
             <div class="col-5 offset-3">
-                <h3>${register ? 'регистрация' : 'профиль'} ${user.name}</h3>
-                <form:form class="form-group" modelAttribute="user" method="post"
-                           action="${register ? 'profile/register' : 'profile'}"
+                <h3><spring:message code="${register ? 'common.register' : 'common.profile'}"/><br>${user.name}</h3>
+                <form:form class="form-group" modelAttribute="user" method="post" action="${register ? 'profile/register' : 'profile'}"
                            charset="utf-8" accept-charset="UTF-8">
-                    <vacancy:inputField labelCode="Имя" name="name"/>
-                    <vacancy:inputField labelCode="email" name="email"/>
-                    <vacancy:inputField labelCode="Пароль" name="password" inputType="password"/>
+                    <input name="id" value="${user.id}" type="hidden">
+                    <resume:inputField labelCode="user.name" name="name"/>
+                    <resume:inputField labelCode="user.email" name="email"/>
+                    <resume:inputField labelCode="user.password" name="password" inputType="password"/>
                     <div class="text-right">
                         <a class="btn btn-secondary" href="#" onclick="window.history.back()">
                             <span class="fa fa-close"></span>
-                            Выйти
+                            <spring:message code="common.close"/>
                         </a>
                         <button type="submit" class="btn btn-primary">
                             <span class="fa fa-check"></span>
-                            Сохранить
+                            <spring:message code="common.save"/>
                         </button>
                     </div>
                 </form:form>

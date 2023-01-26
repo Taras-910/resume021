@@ -31,7 +31,7 @@ public class AutoRefreshService {
         setRandomDelay(1000 * 60 * delayWithinMinutes);
         setTestAuthorizedUser(asAdmin());
         setAutoRefreshProviders();
-        aggregatorService.refreshDB(new Freshen(randomFreshen(mapWorkplace.get(getKey(8)), mapLevel.get(3))));
+        aggregatorService.refreshDB(new Freshen(randomFreshen(mapWorkplace.get(getKey(5)), mapLevel.get(3))));
         offAutoRefreshProviders();
     }
 
@@ -42,7 +42,7 @@ public class AutoRefreshService {
         setRandomDelay(1000 * 60 * delayMinutesMax);
         setTestAuthorizedUser(asAdmin());
         setAutoRefreshProviders();
-        aggregatorService.refreshDB(new Freshen(randomFreshen(mapWorkplace.get(getKey(8)), mapLevel.get(2))));
+        aggregatorService.refreshDB(new Freshen(randomFreshen(mapWorkplace.get(getKey(5)), mapLevel.get(3))));
         offAutoRefreshProviders();
     }
 
@@ -57,7 +57,7 @@ public class AutoRefreshService {
     public void TwiceByWeek() {
         log.info("Scheduled everyDay");
         int delayWithinMinutes = 480; // 8 hours
-        log.info("There is set delay within {} minutes", delayWithinMinutes);
+        log.info("Set delay within {} minutes", delayWithinMinutes);
         setRandomDelay(1000 * 60 * delayWithinMinutes);
         setTestAuthorizedUser(asAdmin());
         aggregatorService.updateRateDB();

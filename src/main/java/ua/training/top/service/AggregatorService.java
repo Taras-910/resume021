@@ -25,11 +25,11 @@ import static ua.training.top.model.Goal.UPGRADE;
 import static ua.training.top.util.AggregatorUtil.getAnchor;
 import static ua.training.top.util.AggregatorUtil.getForUpdate;
 import static ua.training.top.util.FreshenUtil.asNewFreshen;
+import static ua.training.top.util.InformUtil.common_number;
+import static ua.training.top.util.InformUtil.finish_message;
 import static ua.training.top.util.ResumeUtil.fromTos;
 import static ua.training.top.util.UserUtil.asAdmin;
 import static ua.training.top.util.parser.data.CommonUtil.isMatch;
-import static ua.training.top.util.parser.data.DataUtil.common_number;
-import static ua.training.top.util.parser.data.DataUtil.finish_message;
 
 @Service
 @EnableScheduling
@@ -46,6 +46,7 @@ public class AggregatorService {
 
     public void refreshDB(Freshen freshen) {
         log.info("refreshDB by freshen {}", freshen);
+        boolean isRateOld = rateService.CurrencyRatesMapInit();
         Instant start = Instant.now();
         List<Resume> resumesNet = fromTos(getAllProviders().selectBy(freshen));
         if (!resumesNet.isEmpty()) {
@@ -69,6 +70,9 @@ public class AggregatorService {
             executeRefreshDb(resumesDb, resumesForCreate, resumesForUpdate);
             long timeElapsed = Duration.between(start, Instant.now()).toMillis();
             log.info(finish_message, timeElapsed, resumesForCreate.size(), resumesForUpdate.size(), freshen);
+            if (isRateOld) {
+                updateRateDB();
+            }
         }
     }
 
@@ -100,12 +104,11 @@ public class AggregatorService {
         AtomicInteger i = new AtomicInteger(1);
         resumeTos.forEach(vacancyNet -> log.info("\nvacancyNet № {}\n{}\n", i.getAndIncrement(), vacancyNet.toString()));
         log.info(common_number, resumeTos.size());
-
-
-//        work address
     }
 
 }
+
+//        work address
 
 //	      djinni   grc*10   habr  rabota   work  linkedin  total
 //all	    49	  49(0)	     1	     6	    16	   (100)	121

@@ -8,17 +8,14 @@
 <div class="jumbotron">
     <div class="container text-center">
         <br>
-        <%--<h4 class="my-3">${status}</h4>--%>
+        <h4 class="my-3">${status}</h4>
+        <h2>${typeMessage}</h2>
         <h4 class="my-5">${message}</h4>
-        <h3>Ошибка проверки данных</h3>
-        <h4 class="my-5">${exception}</h4>
     </div>
 </div>
-<%--
-<c:forEach items="${exception.stackTrace}" var="stackTrace">
+<%--<c:forEach items="${exception.stackTrace}" var="stackTrace">
     ${stackTrace}
-</c:forEach>
---%>
+</c:forEach>--%>
 <jsp:include page="fragments/footer.jsp"/>
 </body>
 </html>

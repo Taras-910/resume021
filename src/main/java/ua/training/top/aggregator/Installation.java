@@ -20,14 +20,15 @@ public class Installation {
             limitResumesKeeping = 3100,
             limitFreshensFilterKeeping = 150,
             limitVoteKeeping = 500,
-//            limitPages = 50,
-//            repeatOfCalls = 3;
-    limitPages = 1,
-    repeatOfCalls = 1;
+            limitPages = 10,
+            repeatOfCalls = 3;
+//            limitPages = 1,
+//            repeatOfCalls = 1;
 
     public static LocalDate
             reasonDateLoading = LocalDateTime.now().toLocalDate().minusDays(90),
             reasonPeriodKeeping = LocalDateTime.now().toLocalDate().minusDays(120);
+    public static final LocalDate reasonValidRate = LocalDateTime.now().toLocalDate().minusDays(7);
 
 //    public static boolean testProvider = true;
     public static boolean testProvider = false;

@@ -9,10 +9,9 @@ import java.util.List;
 import java.util.regex.Matcher;
 import java.util.regex.Pattern;
 
-import static ua.training.top.util.parser.data.CommonUtil.*;
-import static ua.training.top.util.parser.data.ConstantsUtil.link;
-import static ua.training.top.util.parser.data.ConstantsUtil.workersIT;
-import static ua.training.top.util.parser.data.DataUtil.*;
+import static ua.training.top.util.parser.data.CommonUtil.getJoin;
+import static ua.training.top.util.parser.data.CommonUtil.isMatch;
+import static ua.training.top.util.parser.data.ConstantsUtil.*;
 
 public class AggregatorUtil {
 
@@ -44,22 +43,9 @@ public class AggregatorUtil {
     }
 
     public static boolean isToValid(Freshen f, String text) {
-        String temp = text.toString().toLowerCase();
-        return (temp.indexOf(f.getLanguage()) > -1 || isMatch(workersIT, temp))
-                && wasteWorkBefore.stream().noneMatch(temp::contains);
-    }
-
-    public static String getExtract(String regexName, String text) {
-        if (isEmpty(text)) {
-            return link;
-        }
-        List<String> list = new ArrayList<>();
-        //https://stackoverflow.com/questions/63964529/a-regex-to-get-any-price-string
-        Matcher m = Pattern.compile(regexName, Pattern.CASE_INSENSITIVE).matcher(text);
-        while (m.find()) {
-            list.add(m.group());
-        }
-        return list.size() > 0 ? list.get(0) : regexName.indexOf("field") < 0 ? text : link;
+        String temp = text.toLowerCase();
+        return (allLanguages.stream().anyMatch(temp::contains) || temp.contains(f.getLanguage())
+                || isMatch(workersIT, temp)) && wasteSkills.stream().noneMatch(temp::contains);
     }
 
     public static List<String> getWorkPeriod(String text) {

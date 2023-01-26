@@ -13,7 +13,6 @@ import java.util.Random;
 import static java.time.LocalDateTime.now;
 import static java.util.Collections.singleton;
 import static ua.training.top.model.Goal.UPGRADE;
-import static ua.training.top.util.InformUtil.all;
 import static ua.training.top.util.InformUtil.setting_delay;
 import static ua.training.top.util.UserUtil.asAdmin;
 import static ua.training.top.util.parser.data.ConstantsUtil.*;

@@ -2,9 +2,8 @@ package ua.training.top.util;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.dao.DataIntegrityViolationException;
+import org.springframework.context.support.MessageSourceAccessor;
 import ua.training.top.model.AbstractBaseEntity;
-import ua.training.top.model.User;
 import ua.training.top.util.exception.ErrorType;
 import ua.training.top.util.exception.IllegalRequestDataException;
 import ua.training.top.util.exception.NotFoundException;
@@ -12,6 +11,8 @@ import ua.training.top.util.exception.NotFoundException;
 import javax.servlet.http.HttpServletRequest;
 
 import static ua.training.top.util.InformUtil.*;
+import static ua.training.top.util.parser.data.ConstantsUtil.email_matcher;
+import static ua.training.top.util.parser.data.ConstantsUtil.url_matcher;
 
 public class ValidationUtil {
     public static final Logger log = LoggerFactory.getLogger(ValidationUtil.class);
@@ -91,15 +92,13 @@ public class ValidationUtil {
         }
     }
 
-    public static void checkExistThisEmail(User user) {
-        if (user != null) {
-            throw new DataIntegrityViolationException(user_exist + user.getEmail());
-        }
-    }
-
     public static void checkNotFoundData(boolean found, Object id) {
         if (!found) {
             log.error(not_found, id);
         }
+    }
+
+    public static String getMessageField(String uri, String value, MessageSourceAccessor messageSourceAccessor) {
+        return uri.contains("/rest") ? value : messageSourceAccessor.getMessage(value);
     }
 }

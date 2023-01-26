@@ -1,6 +1,7 @@
 package ua.training.top.aggregator.strategy;
 
 import org.jsoup.nodes.Document;
+import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,34 +14,27 @@ import java.util.ArrayList;
 import java.util.LinkedHashSet;
 import java.util.List;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 import static java.lang.String.format;
 import static java.util.List.of;
 import static ua.training.top.aggregator.Installation.reCall;
+import static ua.training.top.util.InformUtil.get_resume;
 import static ua.training.top.util.parser.ElementUtil.getResumesDjinni;
 import static ua.training.top.util.parser.data.CommonUtil.*;
 import static ua.training.top.util.parser.data.ConstantsUtil.*;
-import static ua.training.top.util.parser.data.DataUtil.get_resume;
-import static ua.training.top.util.parser.data.PagesUtil.getMaxPages;
-import static ua.training.top.util.parser.data.PagesUtil.getPage;
+import static ua.training.top.util.parser.data.PageUtil.getMaxPages;
+import static ua.training.top.util.parser.data.PageUtil.getPage;
 import static ua.training.top.util.parser.data.WorkplaceUtil.getUA_en;
 
 public class DjinniStrategy implements Strategy {
     private final static Logger log = LoggerFactory.getLogger(DjinniStrategy.class);
-    public static final String url = "https://djinni.co/developers/?%s%s%s%s%s";
-//    https://djinni.co/developers/?region=UKR&title=Java&keywords=middle&options=full_text&location=kyiv&page=2
-//https://djinni.co/developers/?%s%s%s%s%s
-//
-//region (workplace.equals(all) ? “ :   workplace.equals(remote) ? employment=remote :
-// getJoin(region= , isMatches(of(uaAria, citiesU, workplace) ?   UKR :   isMatches(of(plAria, citiesPl), workplace) ?   POL :  isMatches(of(deAria, citiesDe), workplace) ?   DEU : isMatches(of(deAria, citiesDe), workplace) ?   DEU :  isMatch(foreignAria, workplace) ?   eu :   other   )
-//language  (language.equals(all) ? “ : getJoin(workplace.equals(all) ? “ : &, title=, language  )
-//
-//level(all?   “” :   getJoin(language.equals(all) && workplace.equals(all) ? “ : &, keywords=, level, &options=full_text ) ),
-//
-//workplace(  workplace.equals(all) || !isMatch(citiesUA, workplace) ? “ : getJoin(&location=, workplace  )   )
-//page(page.equals(1) ? “ : getJoin( &page=,page)
+    public static final String url = "https://djinni.co/developers/%s%s%s%s%s%s";
+    //https://djinni.co/developers/?%s%s%s%s%s
+
     protected Document getDocument(String workplace, String language, String page, String level) {
         return DocumentUtil.getDocument(format(url,
+                workplace.equals("all") && language.equals("all") && page.equals("1") && level.equals("all") ? "" : "?",
                 getRegion(workplace),
                 language.equals("all") ? "" : getJoin(workplace.equals("all") ? "" : "&", "title=", getUpperStart(language)),
                 level.equals("all") ? "" : getJoin(language.equals("all") && workplace.equals("all") ? "" : "&", "keywords=", level, "&options=full_text" ),
@@ -57,7 +51,7 @@ public class DjinniStrategy implements Strategy {
         int page = 1;
         while (true) {
             Document doc = getDocument(workplace, language, String.valueOf(page), freshen.getLevel());
-            Elements elements = doc == null ? null : doc.select("div.candidate-header");
+            Elements elements = doc == null ? null : doc.getElementsByClass("card");
             if (elements == null || elements.size() == 0) break;
             set.addAll(getResumesDjinni(elements, freshen));
             if (page < getMaxPages(djinni, workplace)) page++;
@@ -68,15 +62,48 @@ public class DjinniStrategy implements Strategy {
     }
 
     private String getRegion(String workplace) {
-        return (workplace.equals("all") ? "" :   workplace.equals("remote") ? "employment=remote" :
+        return (workplace.equals("all") ? "" :
+                workplace.equals("remote") ? "employment=remote" :
                 getJoin("region=", isMatches(of(uaAria, citiesUA), workplace) ?
                         "UKR" : isMatches(of(plAria, citiesPl), workplace) ?
                         "POL" : isMatches(of(deAria, citiesDe), workplace) ?
                         "DEU" : isMatch(foreignAria, workplace) ? "eu" : "other"));
     }
 
-    public static String getDjinniAddr(String address) {
-        address = isContains(address," · Будь") ? address.replaceAll(" · Будь", "") : address;
-        return address;
+    public static String getDjinniDate(String date) {
+        date = isContains(date,"хв") ? date.replaceAll("хв", " хв") :
+                isContains(date,"год") ? date.replaceAll("год", " год") :
+                        isContains(date,"Онлайн") ? date.replaceAll("Онлайн", "1 хв") : date;
+        return date;
+    }
+
+    public static String[] getInfo(Element element, String workBefore) {
+        List<String> info = getListInfo(element);
+        StringBuilder sbAddress = new StringBuilder();
+        StringBuilder sbSkills = new StringBuilder();
+        boolean addr = true;
+        for(int j = 0; j < info.size(); j++) {
+            String e = info.get(j);
+//            log.info("*{}*", e);
+            if (e.matches(".*(місяц|рік|роки|років|досвід).*")){
+                addr = false;
+                workBefore = getJoin(e, ". ", workBefore);
+                continue;
+            }
+            if (addr) {
+                sbAddress.append(sbAddress.isEmpty() ? "" : ", ").append(e);
+            } else {
+                sbSkills.append(sbSkills.isEmpty() ? "" : ", ").append(e);
+            }
+        }
+        return new String[]{sbAddress.toString(), workBefore, getJoin("English knowledge: ", sbSkills.toString())};
+    }
+
+    public static List<String> getListInfo(Element element) {
+        return element.getElementsByTag("span").stream()
+                .map(Element::ownText)
+                .distinct()
+                .filter(e -> !e.isEmpty() && e.length() > 1 && !e.matches(".*(Написати|Опубліковано).*"))
+                .collect(Collectors.toList());
     }
 }

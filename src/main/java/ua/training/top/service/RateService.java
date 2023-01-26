@@ -5,23 +5,26 @@ import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
+import ua.training.top.model.AbstractBaseEntity;
 import ua.training.top.model.Rate;
 import ua.training.top.repository.RateRepository;
 
-import javax.annotation.PostConstruct;
+import java.io.Serializable;
+import java.util.Comparator;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
 import static ua.training.top.aggregator.Installation.baseCurrency;
+import static ua.training.top.aggregator.Installation.reasonValidRate;
 import static ua.training.top.aggregator.Provider.getRates;
 import static ua.training.top.util.ValidationUtil.checkNew;
 import static ua.training.top.util.ValidationUtil.checkNotFoundWithId;
 
 @Service
-public class RateService {
+public class RateService extends AbstractBaseEntity implements Serializable {
     private final static Logger log = LoggerFactory.getLogger(RateService.class);
-    public static Map<String, Rate> mapRates = new HashMap<>();
+    public final static Map<String, Rate> mapRates = new HashMap<>();
 
     @Autowired
     private RateRepository repository;
@@ -77,11 +80,12 @@ public class RateService {
         if(repository != null) repository.saveAll(ratesNew);
     }
 
-    @PostConstruct
-    public void CurrencyRatesMapInit() {
-        log.info("currency rates map init \n{}\n", ": <|> ".repeat(20));
-        List<Rate> rates = getAll();
-        rates.forEach(r -> mapRates.put(r.getName(), r));
-        System.out.println("\nmapRates=\n"+mapRates.toString());
+    public boolean CurrencyRatesMapInit() {
+        log.info("currency rates map init \n{}", ": <|> ".repeat(20));
+        getAll().forEach(r -> mapRates.put(r.getName(), r));
+        Rate rate = mapRates.values().stream().min(Comparator.comparing(Rate::getDateRate)).orElse(null);
+        mapRates.entrySet().forEach(k -> System.out.println(k + " : " + mapRates.get(k)));
+        return rate == null || rate.getDateRate().isBefore(reasonValidRate);
     }
+
 }

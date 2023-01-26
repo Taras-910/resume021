@@ -56,7 +56,6 @@ public class UserService implements UserDetailsService {
         Assert.notNull(user, must_not_null);
         checkNew(user);
         checkValidEmail(user.getEmail());
-        checkExistThisEmail(repository.getByEmail(user.getEmail()));
         return prepareAndSave(user, null);
     }
 

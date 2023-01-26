@@ -9,7 +9,7 @@ import java.io.IOException;
 import java.time.LocalDate;
 import java.util.List;
 
-import static ua.training.top.util.parser.data.DataUtil.get_resume;
+import static ua.training.top.util.InformUtil.get_resume;
 
 public class TestStrategy implements Strategy {
     private final static Logger log = LoggerFactory.getLogger(TestStrategy.class);

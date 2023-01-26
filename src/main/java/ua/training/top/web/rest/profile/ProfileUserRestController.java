@@ -8,6 +8,7 @@ import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.support.ServletUriComponentsBuilder;
 import ua.training.top.model.User;
 import ua.training.top.service.UserService;
+import ua.training.top.web.AbstractUserController;
 
 import java.net.URI;
 
@@ -15,7 +16,7 @@ import static ua.training.top.SecurityUtil.authUserId;
 
 @RestController
 @RequestMapping(ProfileUserRestController.REST_URL)
-public class ProfileUserRestController {
+public class ProfileUserRestController extends AbstractUserController {
     static final String REST_URL = "/rest/profile/users";
 
     @Autowired

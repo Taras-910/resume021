@@ -77,6 +77,7 @@ function successNoty(key) {
     }).show();
 }
 
+/*
 function failNoty(jqXHR) {
     closeNoty();
     var errorInfo = jqXHR.responseJSON;
@@ -86,6 +87,18 @@ function failNoty(jqXHR) {
         type: "error",
         layout: "bottomRight"
     }).show();
+}
+*/
+
+function failNoty(jqXHR) {
+    closeNoty();
+    var errorInfo = jqXHR.responseJSON ? jqXHR.responseJSON : JSON.parse(jqXHR.responseText);
+    failedNote = new Noty({
+        text: "<span class='fa fa-lg fa-exclamation-circle'></span> &nbsp;" + errorInfo.typeMessage + ": " + jqXHR.status + "<br>" + errorInfo.details.join("<br>"),
+        type: "error",
+        layout: "bottomRight"
+    });
+    failedNote.show()
 }
 
 function renderEditBtn(data, type, row) {

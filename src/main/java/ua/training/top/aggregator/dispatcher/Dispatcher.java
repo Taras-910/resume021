@@ -15,10 +15,10 @@ import java.util.stream.Collectors;
 
 import static ua.training.top.aggregator.Installation.reasonDateLoading;
 import static ua.training.top.util.AggregatorUtil.createTo;
+import static ua.training.top.util.InformUtil.common_number;
+import static ua.training.top.util.InformUtil.error_select;
 import static ua.training.top.util.parser.data.CommonUtil.isMatch;
 import static ua.training.top.util.parser.data.ConstantsUtil.citiesRU;
-import static ua.training.top.util.parser.data.DataUtil.common_number;
-import static ua.training.top.util.parser.data.DataUtil.error_select;
 
 @Repository
 public class Dispatcher implements AggregatorInterface {

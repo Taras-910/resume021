@@ -12,6 +12,7 @@ import java.util.regex.Matcher;
 import static java.time.LocalDate.now;
 import static java.time.LocalDate.parse;
 import static java.util.List.of;
+import static ua.training.top.util.InformUtil.error;
 import static ua.training.top.util.parser.data.CommonUtil.*;
 import static ua.training.top.util.parser.data.ConstantsUtil.*;
 import static ua.training.top.util.parser.data.PatternUtil.*;
@@ -56,16 +57,16 @@ public class DateToUtil {
         return isMatch(monthsOfYearAria, name) ? LocalDate.of(now().getYear(), getMonth(name), number) :
                 isMatch(minuteAriaDate, name) ? LocalDateTime.now().minusMinutes(number).toLocalDate() :
                         isMatch(hourAria, name) ? LocalDateTime.now().minusHours(number).toLocalDate() :
-                                isMatch(dayAria, name) ? now().minusDays(number) :
-                                        isMatch(weekAriaDate, name) ? now().minusWeeks(number) :
+                                isMatch(weekAriaDate, name) ? now().minusWeeks(number) :
+                                        isMatch(dayAria, name) ? now().minusDays(number) :
                                                 isMatch(monthAriaDate, name) ? now().minusMonths(number) : defaultDate;
     }
 
     static String formatToNumAndWord(String originText) {
-        originText = getReplace(originText, of("einem", "Il y a un", "temu", "einem"), "1");
-        originText = getReplace(originText, of("nowa", "нове", "сейчас", "только что"), "0 минут");
-        originText = getReplace(originText, of("сьогодні", "сегодня", "today", "днес", "heute"), "0 сьогодні");
-        originText = getReplace(originText, of("yesterday", "вчера", "вчора", "gestern"), "1 сьогодні");
+        originText = getReplace(originText, of("einem", "Il y a un", "temu", "einem", "una", "un", "před"), "1");
+        originText = getReplace(originText, of("nowa", "нове", "сейчас", "только что", "щойно"), "0 минут");
+        originText = getReplace(originText, of("сьогодні", "сегодня", "today", "днес", "heute"), "0 дней");
+        originText = getReplace(originText, of("yesterday", "вчера", "вчора", "gestern"), "1 дней");
         return originText;
     }
 

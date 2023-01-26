@@ -23,7 +23,6 @@ import static ua.training.top.util.UserUtil.asAdmin;
 @RequestMapping(value = "/profile/freshen", produces = MediaType.APPLICATION_JSON_VALUE)
 public class FreshenUIController {
     public static final Logger log = LoggerFactory.getLogger(FreshenUIController.class);
-
     @Autowired
     private FreshenService service;
 

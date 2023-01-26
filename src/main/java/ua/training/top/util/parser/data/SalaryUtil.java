@@ -11,10 +11,13 @@ import java.util.regex.Matcher;
 
 import static java.util.List.of;
 import static ua.training.top.service.RateService.mapRates;
+import static ua.training.top.util.InformUtil.error;
+import static ua.training.top.util.InformUtil.wrong_salary_value;
 import static ua.training.top.util.parser.data.CommonUtil.*;
 import static ua.training.top.util.parser.data.ConstantsUtil.*;
 import static ua.training.top.util.parser.data.PatternUtil.pattern_find_salary;
 import static ua.training.top.util.parser.data.PatternUtil.pattern_salary_transform_points;
+import static ua.training.top.util.parser.data.RateUtil.mapRatesTest;
 
 public class SalaryUtil {
     public static final Logger log = LoggerFactory.getLogger(SalaryUtil.class);
@@ -58,7 +61,7 @@ public class SalaryUtil {
                 exceed = true;
                 log.error(wrong_salary_value, a/100);
             }
-            result[i] = a < 30000 ? 1 : !exceed ? a : Math.min(a / 12, 5000000);
+            result[i] = a < 10000 ? 1 : !exceed ? a : Math.min(a / 12, 5000000);
         }
         return result;
     }
@@ -125,9 +128,10 @@ public class SalaryUtil {
         };
         Rate r = mapRates.getOrDefault(name, new Rate(null, 1.0, LocalDate.now()));
         if(r.getName() == null){
-            log.error("currency rate not found for currency {}", name);
+            r = mapRatesTest.get(name);
+//            log.error("don't found a rate of currency {}\nso use default rate from rateTest {}", name, r);
         }
-        return r.getValue();
+        return r.getValueRate();
     }
 
     public static boolean isFrom(String originText) {

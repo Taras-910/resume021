@@ -21,21 +21,21 @@ public class Rate  extends AbstractBaseEntity implements Serializable {
     private String name;
 
     @NotNull
-    @Column(name = "value")
-    private Double value;
+    @Column(name = "value_rate")
+    private Double valueRate;
 
-    @Column(name = "local_date")
+    @Column(name = "date_rate")
     @DateTimeFormat(iso = DateTimeFormat.ISO.DATE)
-    private LocalDate localDate;
+    private LocalDate dateRate;
 
-    public Rate(@NotNull @Size(min = 6, max = 6) String name, @NotNull Double value, LocalDate localDate) {
+    public Rate(@NotNull @Size(min = 6, max = 6) String name, @NotNull Double valueRate, LocalDate dateRate) {
         this.name = name;
-        this.value = value;
-        this.localDate = localDate;
+        this.valueRate = valueRate;
+        this.dateRate = dateRate;
     }
 
-    public Rate(Integer id, @NotNull @Size(min = 6, max = 6) String name, @NotNull Double value, LocalDate localDate) {
-        this(name, value, localDate);
+    public Rate(Integer id, @NotNull @Size(min = 6, max = 6) String name, @NotNull Double valueRate, LocalDate dateRate) {
+        this(name, valueRate, dateRate);
         this.id = id;
     }
 
@@ -49,17 +49,17 @@ public class Rate  extends AbstractBaseEntity implements Serializable {
         this.name = name;
     }
 
-    public Double getValue() {
-        return value;
+    public Double getValueRate() {
+        return valueRate;
     }
 
-    public void setValue(Double value) {
-        this.value = value;
+    public void setValueRate(Double value) {
+        this.valueRate = value;
     }
 
-    public LocalDate getLocalDate() { return localDate; }
+    public LocalDate getDateRate() { return dateRate; }
 
-    public void setLocalDate(LocalDate localDate) { this.localDate = localDate; }
+    public void setDateRate(LocalDate localDate) { this.dateRate = localDate; }
 
     @Override
     public boolean equals(Object o) {
@@ -79,8 +79,8 @@ public class Rate  extends AbstractBaseEntity implements Serializable {
         return "Rate{" +
                 "id=" + id +
                 ", name='" + name + '\'' +
-                ", value=" + value +
-                ", localDate=" + localDate +
+                ", valueRate=" + valueRate +
+                ", localDate=" + dateRate +
                 '}';
     }
 }

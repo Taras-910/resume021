@@ -11,10 +11,8 @@ import java.util.List;
 import java.util.stream.Collectors;
 
 import static java.util.List.of;
-import static ua.training.top.util.parser.data.CommonUtil.getJoin;
-import static ua.training.top.util.parser.data.CommonUtil.isMatch;
+import static ua.training.top.util.parser.data.CommonUtil.*;
 import static ua.training.top.util.parser.data.ConstantsUtil.*;
-import static ua.training.top.util.parser.data.DataUtil.*;
 
 public class ResumeUtil {
 
@@ -67,8 +65,9 @@ public class ResumeUtil {
 
     public static List<Resume> getFilter(List<Resume> resumes, Freshen f) {
         return resumes.stream().
-                filter(r -> isSuit(r, f.getLanguage(), "language") && isSuit(r, f.getLevel(), "level") &&
-                        isSuit(r, f.getWorkplace(), "workplace"))
+                filter(r -> isSuit(r, f.getLanguage(), "language")
+                        && isSuit(r, f.getLevel(), "level") 
+                        && isSuit(r, f.getWorkplace(), "workplace"))
                 .collect(Collectors.toList());
     }
 
@@ -81,12 +80,11 @@ public class ResumeUtil {
         return switch (field.toLowerCase()) {
             case "all" -> true;
             case "java", "react", "ruby" -> text.matches(".*\\b" + field + "\\b.*");
-            case "trainee", "стажировка", "стажер", "internship", "интерн",
-                    "intern" -> getAria(field).stream()
+            case "trainee", "стажировка", "стажер", "internship", "интерн", "intern" -> getAria(field).stream()
                     .anyMatch(a -> text.matches(".*\\b" + a + "\\b.*"));
-            default -> getAria(field).size() == 1 ? text.indexOf(field) > -1 : getAria(field).stream()
-                    .anyMatch(a -> !isMatch(getForeign(), field) ? text.indexOf(a) > -1 : text.indexOf(a) > -1
-                            && uaAria.stream().noneMatch(cityUA -> text.toLowerCase().indexOf(cityUA) > -1));
+            default -> getAria(field).size() == 1 ? isContains(text, field) : getAria(field).stream()
+                    .anyMatch(a -> !isMatch(getForeign(), field) ? isContains(text, a) : isContains(text, a)
+                            && uaAria.stream().noneMatch(cityUA -> isContains(text.toLowerCase(), cityUA)));
         };
     }
 
@@ -129,4 +127,30 @@ public class ResumeUtil {
         foreign.addAll(foreignAria);
         return foreign;
     }
+
+    public static final List<String>
+            juniorAria = of("junior", "младший", "без опыта", "обучение"),
+            middleAria = of("middle", "средний"),
+            seniorAria = of("senior", "старший"),
+            expertAria = of("expert", "lead", "team lead", "ведущий", "тимлид"),
+            kievAria = of("kyiv", "kiev", "київ", "киев"),
+            dniproAria = of("дніпро", "днепр", "dnipro"),
+            kharkivAria = of("харків", "харьков", "kharkiv"),
+            lvivAria = of("львів", "львов", "lviv"),
+            odesaAria = of("одесса", "odesa", "одеса"),
+            mykolaivAria = of("mykolaiv", "миколаїв", "николаев"),
+            vinnitsiaAria = of("винница", "vinnitsia", "вінниця"),
+            zaporizhzhyaAria = of("запоріжжя", "запорожье", "zaporizhzhya"),
+            chernivtsiAria = of("chernivtsi", "чернівці", "черновцы"),
+            chernigivAria = of("чернігів", "чернигов", "chernigiv"),
+            ivano_frankivskAria = of("івано-франківськ", "ивано-франковск", "ivano-frankivsk"),
+            uzhgorodAria = of("ужгород", "uzhgorod"),
+            polandAria = of("польша", "poland", "polski"),
+            krakowAria = of("krakow", "краков"),
+            warszawaAria = of("варшава", "warszawa"),
+            wroclawAria = of("wroclaw", "вроцлав"),
+            gdanskAria = of("гданськ", "гданск"),
+            poznanAria = of("poznan", "познань"),
+            minskAria = of("minsk", "минск", "мінськ");
+
 }

@@ -55,6 +55,26 @@
     <context:component-scan base-package="ua.training.**.repository"/>
     <jpa:repositories base-package="ua.training.**.repository"/>
 
+<!--    <beans profile="h2">
+        <jdbc:initialize-database data-source="dataSource" enabled="${database.init}">
+            <jdbc:script location="${jdbc.initLocation}"/>
+            <jdbc:script encoding="utf-8" location="classpath:db/populateDB.sql"/>
+        </jdbc:initialize-database>
+
+        <bean class="org.springframework.beans.factory.config.MethodInvokingBean">
+            <property name="staticMethod" value="org.slf4j.bridge.SLF4JBridgeHandler.install"/>
+        </bean>
+        <context:property-placeholder location="classpath:db/h2.properties" system-properties-mode="OVERRIDE"/>
+
+        &lt;!&ndash;no pooling&ndash;&gt;
+        <bean id="dataSource"
+              class="org.springframework.jdbc.datasource.DriverManagerDataSource"
+              p:driverClassName="org.h2.Driver"
+              p:url="${database.url}"
+              p:username="${database.username}"
+              p:password="${database.password}"/>
+    </beans>-->
+
     <beans profile="postgres">
         <!--
             For postgres driver logging

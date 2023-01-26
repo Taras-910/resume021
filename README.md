@@ -21,7 +21,7 @@ and vote resume which like him, reload DB by every reques (language, workplace, 
 
 Java Enterprise: Maven/ Spring/ Security/ JPA(Hibernate)/ REST(Jackson).
 =======================================================================
-- основные классы приложения: [Vacancy, Employer, User, Vote, Freshen]
+- основные классы приложения: [Resume, User, Vote, Freshen, Rate]
 - все данные хранятся в базе данных [PostgreSQL, Heroku PostgreSQL]
 - обслуживаются запросы авторизованных пользователей (profile)
 - анонимных пользователям (anonymous) предлагается пройти регистрацию и авторизацию
@@ -45,7 +45,9 @@ Java Enterprise: Maven/ Spring/ Security/ JPA(Hibernate)/ REST(Jackson).
 - обработка ошибок [ExceptionInfoHandler, GlobalExceptionHandler]
 - приложение развернуто на Heroku `http://resume021.herokuapp.com`
 
-- `curl` - примеры команд тестирования для rest profile:
+примеры команд тестирования для rest profile:
+-  Swagger Rest Ipi documentation
+- `curl` :
 
 #### rest profile resumes getAll
 `curl --location --request GET 'http://localhost:8080/resume/rest/profile/resumes' \

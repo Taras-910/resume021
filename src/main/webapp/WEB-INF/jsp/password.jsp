@@ -12,19 +12,19 @@
         <div class="row">
             <div class="col-5 offset-3">
                 <form>
-                    <label>Password: </label>
-                    <input name="password" type="password" onChange="onChange()"/> <br/>
-                    <label>Confirm : </label><br/>
-                    <input name="confirm" type="password" onChange="onChange()"/>
-                    <input type="submit"/>
+                    <label><spring:message code="password.password"/> </label>
+                    <input name="password" type="password" onChange="onChange()" /> <br />
+                    <label><spring:message code="password.confirm"/> </label><br />
+                    <input name="confirm"  type="password" onChange="onChange()" />
+                    <input type="submit" />
                 </form>
                 <div class="modal-body">
                     <button type="button" class="btn btn-secondary" data-dismiss="modal" onChange="onChange()">
                         <span class="fa fa-close"></span>
-                        Отменить
+                        back
                     </button>
                     <button type="button" class="btn btn-info" onclick="sendRefresh()">
-                        Обновить
+                        sava
                         <span class="spinner-border spinner-border-sm" id="spinner" style="visibility: hidden"></span>
                     </button>
                 </div>

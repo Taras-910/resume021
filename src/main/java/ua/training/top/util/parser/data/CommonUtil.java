@@ -39,10 +39,6 @@ public class CommonUtil {
         return text == null || text.trim().isEmpty() || text.trim().equals("•");
     }
 
-    public static String getLinkIfEmpty(String text) {
-        return isEmpty(text) ? link : text;
-    }
-
     public static String getUpperStart(String text) {
         return !isEmpty(text) && text.length() > 1 ? getJoin(text.substring(0, 1).toUpperCase(),text.substring(1)) : link;
     }
@@ -64,5 +60,9 @@ public class CommonUtil {
 
     public static boolean isContains(String text, String s) {
         return text.indexOf(s) != -1;
+    }
+
+    public static boolean isEquals(String workplace, List<String> list) {
+        return list.stream().anyMatch(workplace.toLowerCase()::equals);
     }
 }

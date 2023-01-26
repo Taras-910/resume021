@@ -25,6 +25,7 @@
 
     <!--DB-->
     <postgresql.version>42.5.0</postgresql.version>
+<!--    <h2database.version>1.4.200</h2database.version>-->
 
     <!-- Hibernate -->
     <hibernate.version>5.6.12.Final</hibernate.version>
@@ -375,6 +376,20 @@
   </dependencies>
 
   <profiles>
+
+<!--
+    <profile>
+      <id>h2</id>
+      <dependencies>
+        <dependency>
+          <groupId>com.h2database</groupId>
+          <artifactId>h2</artifactId>
+          <version>${h2database.version}</version>
+        </dependency>
+      </dependencies>
+    </profile>
+-->
+
     <profile>
       <id>postgres</id>
       <dependencies>

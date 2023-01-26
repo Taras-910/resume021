@@ -5,13 +5,13 @@ import static ua.training.top.aggregator.Installation.limitPages;
 import static ua.training.top.util.parser.data.CommonUtil.getJoin;
 import static ua.training.top.util.parser.data.ConstantsUtil.*;
 
-public class PagesUtil {
+public class PageUtil {
 
     public static String getPage(String site, String page) {
-//        return page.equals("1") ? "" : getJoin("&page=", page);
         return switch (site) {
-            case djinni, grc -> page.equals("1") ? "" : getJoin("&page=", page);
+            case djinni -> page.equals("1") ? "" : getJoin("&page=", page);
             case work -> page.equals("1") ? "" : getJoin("page=", page);
+            case recruit -> page.equals("1") ? "" : getJoin("page/", page, "/");
             default -> "";
         };
     }
