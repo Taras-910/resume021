@@ -408,7 +408,7 @@
                 </form>
             </div>
             <span class="d-flex justify-content-center" id="spinner2" style="visibility: hidden">
-                <h7><em>и<spring:message code="resume.wait"/></em><h6 class="fa fa-filter text-info"> <spring:message code="resume.filter"/></h6>
+                <h7><em><spring:message code="resume.wait"/></em><h6 class="fa fa-filter text-info"> <spring:message code="resume.filter"/></h6>
                 </h7>
             </span>
             <h7 class="modal-title"></h7>

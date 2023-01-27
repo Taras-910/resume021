@@ -37,7 +37,7 @@ public class VoteRestController {
     }
 
     @GetMapping("/auth")
-    public List<Vote> getAllForAuthUser() {
+    public List<Vote> getAllAuth() {
         log.info("get all for authUserId");
         return service.getAllForAuth();
     }

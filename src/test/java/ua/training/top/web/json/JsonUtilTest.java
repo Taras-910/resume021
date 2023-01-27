@@ -16,7 +16,7 @@ import static ua.training.top.testData.ResumeTestData.*;
 class JsonUtilTest {
 
     @Test
-    void readWriteValue() throws Exception {
+    void readWriteValue() {
         String json = JsonUtil.writeValue(resume1);
         System.out.println(json);
         Resume vacancy = JsonUtil.readValue(json, Resume.class);
@@ -24,7 +24,7 @@ class JsonUtilTest {
     }
 
     @Test
-    void readWriteValues() throws Exception {
+    void readWriteValues() {
         String json = JsonUtil.writeValue(getListResumes());
         System.out.println(json);
         List<Resume> resumes = JsonUtil.readValues(json, Resume.class);
@@ -32,7 +32,7 @@ class JsonUtilTest {
     }
 
     @Test
-    void writeOnlyAccess() throws Exception {
+    void writeOnlyAccess() {
         String json = JsonUtil.writeValue(UserTestData.user);
         System.out.println(json);
         assertThat(json, containsString("password"));

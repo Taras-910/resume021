@@ -55,7 +55,6 @@ public class UserService implements UserDetailsService {
         log.info("create {}", user);
         Assert.notNull(user, must_not_null);
         checkNew(user);
-        checkValidEmail(user.getEmail());
         return prepareAndSave(user, null);
     }
 

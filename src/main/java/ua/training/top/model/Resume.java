@@ -5,7 +5,6 @@ import io.swagger.annotations.ApiModelProperty;
 import org.hibernate.annotations.Fetch;
 import org.hibernate.annotations.FetchMode;
 import org.springframework.format.annotation.DateTimeFormat;
-import org.springframework.lang.Nullable;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotNull;
@@ -67,21 +66,9 @@ public class Resume extends AbstractBaseEntity {
     public Resume() {
     }
 
-    public Resume(Integer id, @NotNull String title, @NotNull String name, @Nullable String age, @NotNull String address,
-                  @NotNull Integer salary, @NotNull String workBefore, String url,
-                  @NotNull String skills, LocalDate releaseDate, Freshen freshen) {
-        this(id, title, name, age, address, salary, workBefore, url, skills, releaseDate);
-        this.freshen = freshen;
-    }
-
-    public Resume(Integer id, @NotNull String title, @NotNull String name, String age, @NotNull String address,
-                  @NotNull Integer salary, @NotNull String workBefore, String url, @NotNull String skills, LocalDate releaseDate) {
-        this(title, name, age, address, salary, workBefore, url, skills, releaseDate);
-        this.id = id;
-    }
-
-    public Resume(@NotNull String title, @NotNull String name, String age, @NotNull String address, @NotNull Integer salary,
+    public Resume(Integer id, @NotNull String title, @NotNull String name, String age, @NotNull String address, @NotNull Integer salary,
                   @NotNull String workBefore, String url, @NotNull String skills, LocalDate releaseDate) {
+        super(id);
         this.title = title;
         this.name = name;
         this.age = age;

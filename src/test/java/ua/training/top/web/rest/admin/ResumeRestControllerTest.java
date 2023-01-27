@@ -6,6 +6,7 @@ import org.springframework.http.MediaType;
 import org.springframework.test.web.servlet.ResultActions;
 import org.springframework.test.web.servlet.request.MockMvcRequestBuilders;
 import org.springframework.transaction.annotation.Transactional;
+import ua.training.top.AbstractControllerTest;
 import ua.training.top.model.Resume;
 import ua.training.top.service.ResumeService;
 import ua.training.top.service.VoteService;
@@ -13,12 +14,12 @@ import ua.training.top.testData.ResumeToTestData;
 import ua.training.top.to.ResumeTo;
 import ua.training.top.util.ResumeUtil;
 import ua.training.top.util.exception.NotFoundException;
-import ua.training.top.web.AbstractControllerTest;
 import ua.training.top.web.json.JsonUtil;
 
 import java.util.List;
 
 import static org.junit.jupiter.api.Assertions.assertThrows;
+import static org.springframework.security.test.web.servlet.request.SecurityMockMvcRequestPostProcessors.csrf;
 import static org.springframework.test.web.servlet.result.MockMvcResultHandlers.print;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.content;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
@@ -31,10 +32,11 @@ import static ua.training.top.testData.UserTestData.admin;
 import static ua.training.top.testData.UserTestData.not_found;
 import static ua.training.top.util.ResumeUtil.fromTo;
 import static ua.training.top.util.ResumeUtil.getTos;
+import static ua.training.top.web.rest.admin.ResumeRestController.REST_URL;
 
 @Transactional
 class ResumeRestControllerTest extends AbstractControllerTest {
-    private static final String REST_URL = ResumeRestController.REST_URL + '/';
+    private static final String REST_URL_SLASH = REST_URL + '/';
     @Autowired
     private ResumeService resumeService;
     @Autowired
@@ -42,7 +44,7 @@ class ResumeRestControllerTest extends AbstractControllerTest {
 
     @Test
     void get() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + resume1_id)
+        perform(MockMvcRequestBuilders.get(REST_URL_SLASH + resume1_id)
                 .with(userHttpBasic(admin)))
                 .andExpect(status().isOk())
                 .andDo(print())
@@ -52,10 +54,10 @@ class ResumeRestControllerTest extends AbstractControllerTest {
 
     @Test
     void getNotFound() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + not_found)
+        perform(MockMvcRequestBuilders.get(REST_URL_SLASH + not_found)
                 .with(userHttpBasic(admin)))
                 .andDo(print())
-                .andExpect(status().isNotFound());
+                .andExpect(status().isUnprocessableEntity());
     }
 
     @Test
@@ -71,8 +73,8 @@ class ResumeRestControllerTest extends AbstractControllerTest {
     @Test
     @Transactional
     void delete() throws Exception {
-        perform(MockMvcRequestBuilders.delete(REST_URL + resume1_id)
-                .with(userHttpBasic(admin)))
+        perform(MockMvcRequestBuilders.delete(REST_URL_SLASH + resume1_id)
+                .with(userHttpBasic(admin)).with(csrf()))
                 .andExpect(status().isNoContent());
         setTestAuthorizedUser(admin);
         assertThrows(NotFoundException.class, () -> resumeService.delete(resume1_id));
@@ -80,20 +82,19 @@ class ResumeRestControllerTest extends AbstractControllerTest {
 
     @Test
     void deleteNotFound() throws Exception {
-        perform(MockMvcRequestBuilders.delete(REST_URL + not_found)
-                .with(userHttpBasic(admin)))
-                .andExpect(status().isNotFound());
+        perform(MockMvcRequestBuilders.delete(REST_URL_SLASH + not_found)
+                .with(userHttpBasic(admin)).with(csrf()))
+                .andExpect(status().isUnprocessableEntity());
     }
 
     @Test
     @Transactional
     void update() throws Exception {
         ResumeTo updated = new ResumeTo(ResumeToTestData.getToUpdated());
-        perform(MockMvcRequestBuilders
-                .put(REST_URL + resume1_id)
+        perform(MockMvcRequestBuilders.put(REST_URL_SLASH + resume1_id)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(updated))
-                .with(userHttpBasic(admin)))
+                .with(userHttpBasic(admin)).with(csrf()))
                 .andDo(print())
                 .andExpect(status().isNoContent());
         setTestAuthorizedUser(admin);
@@ -105,10 +106,10 @@ class ResumeRestControllerTest extends AbstractControllerTest {
     void updateInvalid() throws Exception {
         ResumeTo invalid = new ResumeTo(ResumeToTestData.getToUpdated());
         invalid.setTitle(null);
-        perform(MockMvcRequestBuilders.put(REST_URL + resume2_id)
+        perform(MockMvcRequestBuilders.put(REST_URL_SLASH + resume2_id)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(invalid))
-                .with(userHttpBasic(admin)))
+                .with(userHttpBasic(admin)).with(csrf()))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity());
     }
@@ -118,7 +119,7 @@ class ResumeRestControllerTest extends AbstractControllerTest {
     void create() throws Exception {
         ResumeTo newResumeTo = new ResumeTo(ResumeToTestData.getNew());
         ResultActions action = perform(MockMvcRequestBuilders.post(REST_URL)
-                .with(userHttpBasic(admin))
+                .with(userHttpBasic(admin)).with(csrf())
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(newResumeTo)))
                 .andDo(print())
@@ -132,7 +133,6 @@ class ResumeRestControllerTest extends AbstractControllerTest {
                 voteService.getAllForAuth()), newResumeTo);
     }
 
-
     @Test
     @Transactional
     void createInvalid() throws Exception {
@@ -141,7 +141,7 @@ class ResumeRestControllerTest extends AbstractControllerTest {
         perform(MockMvcRequestBuilders.post(REST_URL)
                 .contentType(MediaType.APPLICATION_JSON)
                 .content(JsonUtil.writeValue(invalid))
-                .with(userHttpBasic(admin)))
+                .with(userHttpBasic(admin)).with(csrf()))
                 .andDo(print())
                 .andExpect(status().isUnprocessableEntity());
     }
@@ -149,7 +149,7 @@ class ResumeRestControllerTest extends AbstractControllerTest {
     @Test
     void getByFilter() throws Exception {
         setTestAuthorizedUser(admin);
-        perform(MockMvcRequestBuilders.get(REST_URL + "filter")
+        perform(MockMvcRequestBuilders.get(REST_URL_SLASH + "filter")
                 .param("language", "php")
                 .param("workplace", "киев")
                 .param("level", "middle")
@@ -162,7 +162,7 @@ class ResumeRestControllerTest extends AbstractControllerTest {
     @Test
     void getByFilterInvalid() throws Exception {
         setTestAuthorizedUser(admin);
-        perform(MockMvcRequestBuilders.get(REST_URL + "filter")
+        perform(MockMvcRequestBuilders.get(REST_URL_SLASH + "filter")
                 .param("language", "")
                 .param("workplace", "")
                 .param("level", "")
@@ -173,7 +173,7 @@ class ResumeRestControllerTest extends AbstractControllerTest {
 
     @Test
     void getUnAuth() throws Exception {
-        perform(MockMvcRequestBuilders.get(REST_URL + resume1_id))
+        perform(MockMvcRequestBuilders.get(REST_URL_SLASH + resume1_id))
                 .andExpect(status().isUnauthorized());
     }
 }

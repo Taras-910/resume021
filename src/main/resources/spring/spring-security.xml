@@ -15,7 +15,6 @@
         <intercept-url pattern="/rest/profile/register" access="isAnonymous()"/>
         <intercept-url pattern="/rest/profile/users/register" access="isAnonymous()"/>
         <intercept-url pattern="/**" access="isAuthenticated()"/>
-        <csrf disabled="true"/>
     </http>
 
     <beans:bean class="org.springframework.security.crypto.factory.PasswordEncoderFactories" id="passwordEncoder"
@@ -26,6 +25,7 @@
         <intercept-url pattern="/swagger-ui.html" access="permitAll()"/>
         <intercept-url pattern="/swagger-resources/**" access="permitAll()"/>
         <intercept-url pattern="/v2/api-docs/**" access="permitAll()"/>
+        <intercept-url pattern="/profile/freshen" access="isAuthenticated()"/>
 
         <intercept-url pattern="/profile/register" access="isAnonymous()"/>
         <intercept-url pattern="/admin/**" access="hasRole('ADMIN')"/>
@@ -35,7 +35,6 @@
                     authentication-failure-url="/login?error=true"
                     login-processing-url="/spring_security_check"/>
         <logout logout-success-url="/login"/>
-        <csrf disabled="true"/>
     </http>
 
     <authentication-manager>
@@ -44,4 +43,3 @@
         </authentication-provider>
     </authentication-manager>
 </beans:beans>
-

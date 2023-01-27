@@ -13,7 +13,6 @@ FROM users;
 
 ALTER SEQUENCE global_seq RESTART WITH 100000;
 
-
 INSERT INTO users (name, email, password, registered)
 VALUES ('Admin', 'admin@gmail.com', '{noop}admin', '2020-01-30 8:00:00'),
        ('User', 'user@yandex.ru', '{noop}password', '2020-01-30 8:00:00');

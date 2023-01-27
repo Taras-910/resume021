@@ -57,7 +57,7 @@ public class UserRestController {
 
     @PutMapping(value = "/{id}", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(value = HttpStatus.NO_CONTENT)
-    public void update(@RequestBody User user, @PathVariable int id) {
+    public void update(@RequestBody @Valid User user, @PathVariable int id) {
         service.update(user, id);
     }
 

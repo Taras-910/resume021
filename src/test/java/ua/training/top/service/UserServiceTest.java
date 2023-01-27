@@ -1,25 +1,50 @@
 package ua.training.top.service;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.dao.DataAccessException;
-import ua.training.top.model.Role;
+import ua.training.top.AbstractServiceTest;
 import ua.training.top.model.User;
 import ua.training.top.testData.UserTestData;
 import ua.training.top.util.exception.NotFoundException;
 
+import javax.validation.ConstraintViolationException;
 import java.util.List;
 
-import static org.junit.Assert.assertThrows;
+import static ua.training.top.model.Role.USER;
 import static ua.training.top.testData.UserTestData.*;
 
-public class UserServiceTest extends AbstractServiceTest {
+class UserServiceTest extends AbstractServiceTest {
 
     @Autowired
     private UserService service;
 
     @Test
-    public void create() throws Exception {
+    void get() {
+        User user = service.get(user_id);
+        user_matcher.assertMatch(user, UserTestData.user);
+    }
+
+    @Test
+    void getNotFound() {
+        validateRootCause(NotFoundException.class, () -> service.get(not_found));
+    }
+
+    @Test
+    void getByEmail() {
+        User user = service.getByEmail("admin@gmail.com");
+        user_matcher.assertMatch(user, admin);
+    }
+
+    @Test
+    void getAll() {
+        List<User> all = service.getAll();
+        user_matcher.assertMatch(all, admin, user);
+    }
+
+    @Test
+    void create() {
         User created = service.create(getNew());
         int newId = created.id();
         User newUser = getNew();
@@ -29,49 +54,46 @@ public class UserServiceTest extends AbstractServiceTest {
     }
 
     @Test
-    public void duplicateMailCreate() throws Exception {
-        assertThrows(DataAccessException.class, () ->
-                service.create(new User(null, "Duplicate", "user@yandex.ru", "newPass", Role.USER)));
+    void createDuplicate() {
+        Assertions.assertThrows(DataAccessException.class, () ->
+                service.create(new User(null, "Duplicate", "user@yandex.ru", "newPass", USER)));
     }
 
     @Test
-    public void delete() throws Exception {
-        service.delete(user_id);
-        assertThrows(NotFoundException.class, () -> service.get(user_id));
+    void createInvalid(){
+        validateRootCause(ConstraintViolationException.class, () -> service.create(new User(null, null, "mail@yandex.ru", "password", USER)));
+        validateRootCause(ConstraintViolationException.class, () -> service.create(new User(null, "  ", "mail@yandex.ru", "password", USER)));
+        validateRootCause(NullPointerException.class, () -> service.create(new User(null, "User", null, "password", USER)));
+        validateRootCause(ConstraintViolationException.class, () -> service.create(new User(null, "User", "  ", "password", USER)));
+        validateRootCause(IllegalArgumentException.class, () -> service.create(new User(null, "User", "mail@yandex.ru", null, USER)));
     }
 
-    @Test
-    public void deletedNotFound() throws Exception {
-        assertThrows(NotFoundException.class, () -> service.delete(not_found));
-    }
 
     @Test
-    public void get() throws Exception {
-        User user = service.get(user_id);
-        user_matcher.assertMatch(user, UserTestData.user);
-    }
-
-    @Test
-    public void getNotFound() throws Exception {
-        assertThrows(NotFoundException.class, () -> service.get(not_found));
-    }
-
-    @Test
-    public void getByEmail() throws Exception {
-        User user = service.getByEmail("admin@gmail.com");
-        user_matcher.assertMatch(user, admin);
-    }
-
-    @Test
-    public void update() throws Exception {
+    void update() {
         User updated = getUpdated();
         service.update(updated, admin_id);
         user_matcher.assertMatch(service.get(admin_id), getUpdated());
     }
 
     @Test
-    public void getAll() throws Exception {
-        List<User> all = service.getAll();
-        user_matcher.assertMatch(all, admin, user);
+    void updateInvalid(){
+        validateRootCause(ConstraintViolationException.class, () -> service.update(new User(null, null, "mail@yandex.ru", "password", USER), user_id));
+        validateRootCause(ConstraintViolationException.class, () -> service.update(new User(null, "  ", "mail@yandex.ru", "password", USER), user_id));
+        validateRootCause(NullPointerException.class, () -> service.update(new User(null, "user", null, "password", USER), user_id));
+        validateRootCause(IllegalArgumentException.class, () -> service.update(new User(null, "user", "  ", "password", USER), user_id));
+        validateRootCause(IllegalArgumentException.class, () -> service.update(new User(null, "user", "mail@yandex.ru", null, USER), user_id));
     }
+
+    @Test
+    void delete() {
+        service.delete(user_id);
+        validateRootCause(NotFoundException.class, () -> service.get(user_id));
+    }
+
+    @Test
+    void deletedNotFound() {
+        validateRootCause(NotFoundException.class, () -> service.delete(not_found));
+    }
+
 }

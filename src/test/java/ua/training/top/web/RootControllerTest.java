@@ -1,6 +1,7 @@
 package ua.training.top.web;
 
 import org.junit.jupiter.api.Test;
+import ua.training.top.AbstractControllerTest;
 import ua.training.top.testData.UserTestData;
 
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;

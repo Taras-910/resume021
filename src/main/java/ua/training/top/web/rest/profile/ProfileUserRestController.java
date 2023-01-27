@@ -10,6 +10,7 @@ import ua.training.top.model.User;
 import ua.training.top.service.UserService;
 import ua.training.top.web.AbstractUserController;
 
+import javax.validation.Valid;
 import java.net.URI;
 
 import static ua.training.top.SecurityUtil.authUserId;
@@ -36,7 +37,7 @@ public class ProfileUserRestController extends AbstractUserController {
 
     @PostMapping(value = "/register", consumes = MediaType.APPLICATION_JSON_VALUE)
     @ResponseStatus(HttpStatus.CREATED)
-    public ResponseEntity<User> register(@RequestBody User user) {
+    public ResponseEntity<User> register(@RequestBody @Valid User user) {
         User created = service.create(user);
         URI uriOfNewResource = ServletUriComponentsBuilder.fromCurrentContextPath()
                 .path(REST_URL).build().toUri();

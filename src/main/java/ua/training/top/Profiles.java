@@ -5,15 +5,19 @@ import static ua.training.top.util.InformUtil.not_find_driver;
 public class Profiles {
     public static final String
             POSTGRES_DB = "postgres",
-            HEROKU = "heroku";
+            HEROKU = "heroku",
+            HSQL_DB = "resume_test";
 
     //  Get DB profile depending of DB driver in classpath
     public static String getActiveDbProfile() {
         if (isClassExists("org.postgresql.Driver")) {
             return POSTGRES_DB;
+        } else if (isClassExists("org.hsqldb.jdbcDriver")) {
+            return HSQL_DB;
         } else {
             throw new IllegalStateException(not_find_driver);
         }
+
     }
 
     private static boolean isClassExists(String name) {

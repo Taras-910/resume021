@@ -16,12 +16,10 @@
        http://www.springframework.org/schema/data/jpa
        http://www.springframework.org/schema/data/jpa/spring-jpa.xsd">
 
-    <!--
-        <jdbc:initialize-database data-source="dataSource" enabled="${database.init}">
+        <!--<jdbc:initialize-database data-source="dataSource" enabled="${database.init}">
             <jdbc:script location="${jdbc.initLocation}"/>
-            <jdbc:script encoding="utf-8" location="classpath:db/populateDB.sql"/>
-        </jdbc:initialize-database>
-    -->
+            <jdbc:script encoding="utf-8" location="classpath:db/h2populate.sql"/>
+        </jdbc:initialize-database>-->
 
     <tx:annotation-driven/>
 
@@ -55,25 +53,25 @@
     <context:component-scan base-package="ua.training.**.repository"/>
     <jpa:repositories base-package="ua.training.**.repository"/>
 
-<!--    <beans profile="h2">
+    <beans profile="resume_test">
         <jdbc:initialize-database data-source="dataSource" enabled="${database.init}">
             <jdbc:script location="${jdbc.initLocation}"/>
-            <jdbc:script encoding="utf-8" location="classpath:db/populateDB.sql"/>
+            <jdbc:script encoding="utf-8" location="classpath:db/hsqldb_populate.sql"/>
         </jdbc:initialize-database>
 
         <bean class="org.springframework.beans.factory.config.MethodInvokingBean">
             <property name="staticMethod" value="org.slf4j.bridge.SLF4JBridgeHandler.install"/>
         </bean>
-        <context:property-placeholder location="classpath:db/h2.properties" system-properties-mode="OVERRIDE"/>
+        <context:property-placeholder location="classpath:db/hsqldb.properties" system-properties-mode="OVERRIDE"/>
 
-        &lt;!&ndash;no pooling&ndash;&gt;
+        <!--no pooling-->
         <bean id="dataSource"
               class="org.springframework.jdbc.datasource.DriverManagerDataSource"
-              p:driverClassName="org.h2.Driver"
+              p:driverClassName="org.hsqldb.jdbcDriver"
               p:url="${database.url}"
               p:username="${database.username}"
               p:password="${database.password}"/>
-    </beans>-->
+    </beans>
 
     <beans profile="postgres">
         <!--

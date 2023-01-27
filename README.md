@@ -10,10 +10,10 @@ Design and implement:
 The task is:
 Build a vacancies search, choice and store in dataBase, which are filling from public resources
 The most popular IT resources were selected:
-# Djinni, HH, Habr, LinkedIn, Robota, Work, Yandex
+# Djinni, Recruitika, Work
 All query statistics (updates, filtering, voting) are stored in the database
 
-2 types of users: admin and regular users
+2 types of users: ADMIN and USER
 Admin can input/delete/update/get a resumes and users, reload DB by every reques (language, workplace, level)
 
 Users can control own profile, get a resumes, input/delete/update only one own resume, 
@@ -39,8 +39,7 @@ Java Enterprise: Maven/ Spring/ Security/ JPA(Hibernate)/ REST(Jackson).
   `/rest/profile/**` - 'USER'
   `/anonymous/**`    - доступ для регистрации
 - для UI учетные данные авторизованного юзера хранятся в сессии
-- тестирование REST контроллеров [Junit5]
-- тестирование сервисов [Junit4]
+- тестирование [Profile `resume_test`], через базу данных [HSQLDB] всех REST контроллеров и сервисов [Junit5]
 - браузер [AJAX, DataTables, jQuery, jQuery notification plugin, Bootstrap]   
 - обработка ошибок [ExceptionInfoHandler, GlobalExceptionHandler]
 - приложение развернуто на Heroku `http://resume021.herokuapp.com`
