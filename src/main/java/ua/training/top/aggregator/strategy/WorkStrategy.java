@@ -48,7 +48,6 @@ public class WorkStrategy implements Strategy {
     @Override
     public List<ResumeTo> getResumes(Freshen freshen) throws IOException {
         String workplace = freshen.getWorkplace(), language = freshen.getLanguage(), level = freshen.getLevel();
-
         log.info(get_resume, language, level, workplace);
         Set<ResumeTo> set = new LinkedHashSet<>();
         int page = 1;

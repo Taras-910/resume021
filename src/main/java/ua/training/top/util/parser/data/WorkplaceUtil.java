@@ -1,10 +1,9 @@
 package ua.training.top.util.parser.data;
 
 import static java.util.List.of;
-import static ua.training.top.util.parser.data.CommonUtil.isEquals;
 import static ua.training.top.util.parser.data.CommonUtil.isMatch;
-import static ua.training.top.util.parser.data.ConstantsUtil.all;
-import static ua.training.top.util.parser.data.ConstantsUtil.otherAria;
+import static ua.training.top.util.parser.data.CommonUtil.isMatches;
+import static ua.training.top.util.parser.data.ConstantsUtil.*;
 
 public class WorkplaceUtil {
 
@@ -15,7 +14,7 @@ public class WorkplaceUtil {
             case "дніпро", "днепр" -> "днепр";
             case "одеса", "одесса" -> "одесса";
             case "харків", "харьков" -> "харьков";
-            default -> isEquals(workplace, of("foreign", "россия", "минск")) || isMatch(otherAria, workplace) ?
+            default -> isMatches(of(foreignAria, otherAria), workplace) || isMatch(otherAria, workplace) ?
                     "другие_страны" : "вся_украина";
         };
     }

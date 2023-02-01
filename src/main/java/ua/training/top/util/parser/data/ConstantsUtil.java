@@ -22,7 +22,7 @@ public class ConstantsUtil {
             is_period_work = "(.*\\d?\\d\\s?[годалетрківи]{3,})?\\s?и?\\s?1?\\d\\s?[месяцевіь]{3,}.*",
             date_period_extract = "((?:\\s?\\d?\\d)\\s?\\(?\\s?([летгодаyears])+)?(\\s?[иі,]?\\s?)?(?:\\s?\\d?\\d)\\s?\\(?\\s?([месяцеваmonths])+\\.*?",
             document_user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1.2 Safari/605.1.15",
-            work = "WorkStrategyStrategy", rabota = "RabotaStrategy", djinni = "DjinniStrategy", recruit = "RecruitStrategy",
+            work = "WorkStrategyStrategy", djinni = "DjinniStrategy", recruit = "RecruitStrategy",
             middle = "middle", trainee = "trainee", junior = "junior", senior = "senior", expert = "expert",
             USDPLN = "USDPLN", USDEUR="USDEUR", USDGBP="USDGBP", USDBYR="USDBYR", USDUAH="USDUAH", USDKZT="USDKZT",
             USDCAD="USDCAD", USDCZK="USDCZK", USDBGN="USDBGN", USDUSD="USDUSD";

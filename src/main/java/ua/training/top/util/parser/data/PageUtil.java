@@ -10,8 +10,8 @@ public class PageUtil {
     public static String getPage(String site, String page) {
         return switch (site) {
             case djinni -> page.equals("1") ? "" : getJoin("&page=", page);
-            case work -> page.equals("1") ? "" : getJoin("page=", page);
             case recruit -> page.equals("1") ? "" : getJoin("page/", page, "/");
+            case work -> page.equals("1") ? "" : getJoin("page=", page);
             default -> "";
         };
     }
@@ -20,7 +20,6 @@ public class PageUtil {
         int pages = switch (workplace) {
             case "all" -> switch (site) {
                 case djinni -> 49;
-                case rabota -> 6;
                 case work -> 15;
                 default -> 1;
             };
@@ -29,42 +28,32 @@ public class PageUtil {
                 default -> 1;
             };
             case "remote" -> switch (site) {
-                case rabota -> 3;
                 case work -> 12;
                 default -> 1;
             };
             case "украина" -> switch (site) {
                 case djinni -> 32;
-                case rabota -> 6;
                 case work -> 30;
                 default -> 1;
             };
             case "киев" -> switch (site) {
                 case djinni, work  -> 15;
-                case rabota -> 3;
                 default -> 1;
             };
             case "одесса" -> switch (site) {
                 case djinni -> 3;
-                case rabota -> 2;
                 case work -> 4;
                 default -> 1;
             };
             case "харьков" -> switch (site) {
                 case djinni, work -> 5;
-                case rabota -> 2;
                 default -> 1;
             };
             case "минск" -> switch (site) {
-                case rabota -> 6;
-                default -> 1;
-            };
-            case "москва" -> switch (site) {
                 default -> 1;
             };
             case "львов" -> switch (site) {
                 case djinni -> 6;
-                case rabota -> 8;
                 case work -> 2;
                 default -> 1;
             };
