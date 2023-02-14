@@ -1,6 +1,5 @@
 package ua.training.top.web.rest.admin;
 
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,8 +17,11 @@ import java.util.List;
 public class UserRestController {
     static final String REST_URL = "/rest/admin/users";
 
-    @Autowired
-    private UserService service;
+    private final UserService service;
+
+    public UserRestController(UserService service) {
+        this.service = service;
+    }
 
     @GetMapping
     public List<User> getAll() {

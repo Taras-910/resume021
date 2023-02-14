@@ -7,18 +7,18 @@ import ua.training.top.aggregator.Provider;
 import ua.training.top.model.Freshen;
 import ua.training.top.repository.AggregatorInterface;
 import ua.training.top.to.ResumeTo;
-import ua.training.top.util.ResumeCheckUtil;
+import ua.training.top.util.ValidationUtil;
 
 import java.io.IOException;
 import java.util.*;
 import java.util.stream.Collectors;
 
 import static ua.training.top.aggregator.Installation.reasonDateLoading;
-import static ua.training.top.util.AggregatorUtil.createTo;
 import static ua.training.top.util.InformUtil.common_number;
 import static ua.training.top.util.InformUtil.error_select;
-import static ua.training.top.util.parser.data.CommonUtil.isMatch;
-import static ua.training.top.util.parser.data.ConstantsUtil.citiesRU;
+import static ua.training.top.util.ResumeUtil.createTo;
+import static ua.training.top.util.aggregateUtil.data.CommonUtil.isMatch;
+import static ua.training.top.util.aggregateUtil.data.ConstantsUtil.citiesRU;
 
 @Repository
 public class Dispatcher implements AggregatorInterface {
@@ -48,7 +48,7 @@ public class Dispatcher implements AggregatorInterface {
 
         List<ResumeTo> resumeTos = set.parallelStream()
                 .filter(rTo -> reasonDateLoading.isBefore(rTo.getReleaseDate()))
-                .filter(ResumeCheckUtil::checkNullDataResumeTo)
+                .filter(ValidationUtil::checkNullDataResumeTo)
                 .map(rTo -> createTo(rTo, freshen)).distinct()
                 .collect(Collectors.toList());
         log.info(common_number, resumeTos.size());

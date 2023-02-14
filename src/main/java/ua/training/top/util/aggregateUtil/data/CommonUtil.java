@@ -1,4 +1,4 @@
-package ua.training.top.util.parser.data;
+package ua.training.top.util.aggregateUtil.data;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -6,7 +6,7 @@ import java.util.List;
 
 import static ua.training.top.aggregator.Installation.maxAge;
 import static ua.training.top.aggregator.Installation.maxLengthText;
-import static ua.training.top.util.parser.data.ConstantsUtil.link;
+import static ua.training.top.util.aggregateUtil.data.ConstantsUtil.link;
 
 public class CommonUtil {
     private static StringBuilder builder;
@@ -62,7 +62,5 @@ public class CommonUtil {
         return text.indexOf(s) != -1;
     }
 
-    public static boolean isEquals(String workplace, List<String> list) {
-        return list.stream().anyMatch(workplace.toLowerCase()::equals);
-    }
+    public static boolean isCalibrated(String text, String field) { return text.matches(".*\\b" + field + "\\b.*"); }
 }

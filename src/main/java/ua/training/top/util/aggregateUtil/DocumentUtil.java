@@ -1,4 +1,4 @@
-package ua.training.top.util.parser;
+package ua.training.top.util.aggregateUtil;
 
 import org.jsoup.Jsoup;
 import org.jsoup.nodes.Document;
@@ -9,7 +9,7 @@ import java.io.IOException;
 
 import static ua.training.top.util.InformUtil.document_url;
 import static ua.training.top.util.InformUtil.internet_connection_error;
-import static ua.training.top.util.parser.data.ConstantsUtil.document_user_agent;
+import static ua.training.top.util.aggregateUtil.data.ConstantsUtil.document_user_agent;
 
 public class DocumentUtil {
     private static final Logger log = LoggerFactory.getLogger(DocumentUtil.class);

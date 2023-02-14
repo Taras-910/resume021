@@ -1,4 +1,4 @@
-package ua.training.top.util.parser.data;
+package ua.training.top.util.aggregateUtil.data;
 
 import ua.training.top.model.Rate;
 

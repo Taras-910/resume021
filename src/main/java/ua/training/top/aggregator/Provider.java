@@ -15,7 +15,7 @@ import java.util.stream.Collectors;
 
 import static ua.training.top.aggregator.Installation.baseCurrency;
 import static ua.training.top.util.InformUtil.number_inform;
-import static ua.training.top.util.parser.data.ConstantsUtil.ratesAria;
+import static ua.training.top.util.aggregateUtil.data.ConstantsUtil.ratesAria;
 
 public class Provider {
     private static final Logger log = LoggerFactory.getLogger(Provider.class);

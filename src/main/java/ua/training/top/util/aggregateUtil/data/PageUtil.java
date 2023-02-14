@@ -1,9 +1,9 @@
-package ua.training.top.util.parser.data;
+package ua.training.top.util.aggregateUtil.data;
 
 import static java.lang.Math.min;
 import static ua.training.top.aggregator.Installation.limitPages;
-import static ua.training.top.util.parser.data.CommonUtil.getJoin;
-import static ua.training.top.util.parser.data.ConstantsUtil.*;
+import static ua.training.top.util.aggregateUtil.data.CommonUtil.getJoin;
+import static ua.training.top.util.aggregateUtil.data.ConstantsUtil.*;
 
 public class PageUtil {
 

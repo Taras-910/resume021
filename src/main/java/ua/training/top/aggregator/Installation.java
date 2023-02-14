@@ -9,7 +9,7 @@ import java.time.LocalDateTime;
 
 import static ua.training.top.aggregator.Provider.getRates;
 import static ua.training.top.aggregator.dispatcher.Dispatcher.allProviders;
-import static ua.training.top.util.parser.data.ConstantsUtil.recall;
+import static ua.training.top.util.aggregateUtil.data.ConstantsUtil.recall;
 
 public class Installation {
     private static final Logger log = LoggerFactory.getLogger(Installation.class);

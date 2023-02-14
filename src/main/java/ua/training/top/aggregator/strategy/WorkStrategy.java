@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.training.top.model.Freshen;
 import ua.training.top.to.ResumeTo;
-import ua.training.top.util.parser.DocumentUtil;
+import ua.training.top.util.aggregateUtil.DocumentUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,14 +20,14 @@ import static java.lang.String.format;
 import static java.lang.String.valueOf;
 import static ua.training.top.aggregator.Installation.reCall;
 import static ua.training.top.util.InformUtil.get_resume;
-import static ua.training.top.util.parser.ElementUtil.getResumesWork;
-import static ua.training.top.util.parser.data.CommonUtil.getJoin;
-import static ua.training.top.util.parser.data.CommonUtil.isMatch;
-import static ua.training.top.util.parser.data.ConstantsUtil.*;
-import static ua.training.top.util.parser.data.LevelUtil.getLevel;
-import static ua.training.top.util.parser.data.PageUtil.getMaxPages;
-import static ua.training.top.util.parser.data.PageUtil.getPage;
-import static ua.training.top.util.parser.data.WorkplaceUtil.getUA_en;
+import static ua.training.top.util.aggregateUtil.ElementUtil.getResumesWork;
+import static ua.training.top.util.aggregateUtil.data.CommonUtil.getJoin;
+import static ua.training.top.util.aggregateUtil.data.CommonUtil.isMatch;
+import static ua.training.top.util.aggregateUtil.data.ConstantsUtil.*;
+import static ua.training.top.util.aggregateUtil.data.LevelUtil.getLevel;
+import static ua.training.top.util.aggregateUtil.data.PageUtil.getMaxPages;
+import static ua.training.top.util.aggregateUtil.data.PageUtil.getPage;
+import static ua.training.top.util.aggregateUtil.data.WorkplaceUtil.getUA_en;
 
 public class WorkStrategy implements Strategy {
     private final static Logger log = LoggerFactory.getLogger(WorkStrategy.class);

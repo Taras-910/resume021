@@ -8,11 +8,13 @@ import ua.training.top.to.ResumeTo;
 import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.stream.Collectors;
+import java.util.regex.Matcher;
+import java.util.regex.Pattern;
 
 import static java.util.List.of;
-import static ua.training.top.util.parser.data.CommonUtil.*;
-import static ua.training.top.util.parser.data.ConstantsUtil.*;
+import static ua.training.top.util.aggregateUtil.data.CommonUtil.getJoin;
+import static ua.training.top.util.aggregateUtil.data.CommonUtil.isMatch;
+import static ua.training.top.util.aggregateUtil.data.ConstantsUtil.*;
 
 public class ResumeUtil {
 
@@ -25,8 +27,7 @@ public class ResumeUtil {
     public static List<ResumeTo> getTos(List<Resume> resumes, List<Vote> votes) {
         return resumes.isEmpty() ? getEmpty() : resumes.stream()
                 .map(r -> getTo(r, votes))
-                .sorted(ResumeTo::compareTo)
-                .collect(Collectors.toList());
+                .sorted(ResumeTo::compareTo).toList();
     }
 
     public static ResumeTo getTo(Resume r, List<Vote> votes) {
@@ -37,7 +38,7 @@ public class ResumeUtil {
     }
 
     public static List<Resume> fromTos(List<ResumeTo> vTos) {
-        return vTos.stream().map(ResumeUtil::fromTo).collect(Collectors.toList());
+        return vTos.stream().map(ResumeUtil::fromTo).toList();
     }
 
     public static Resume fromTo(ResumeTo rTo) {
@@ -63,94 +64,49 @@ public class ResumeUtil {
         return resume;
     }
 
-    public static List<Resume> getFilter(List<Resume> resumes, Freshen f) {
-        return resumes.stream().
-                filter(r -> isSuit(r, f.getLanguage(), "language")
-                        && isSuit(r, f.getLevel(), "level") 
-                        && isSuit(r, f.getWorkplace(), "workplace"))
-                .collect(Collectors.toList());
+    public static ResumeTo createTo(ResumeTo resumeTo, Freshen freshen) {
+        resumeTo.setWorkplace(freshen.getWorkplace());
+        resumeTo.setLevel(freshen.getLevel());
+        resumeTo.setLanguage(freshen.getLanguage());
+        resumeTo.setToVote(false);
+        return resumeTo;
     }
 
-    public static boolean isSuit(Resume r, String field, String fieldKind) {
-        String text = fieldKind.equals("language") ?
-                getJoin(r.getSkills(), r.getTitle(), r.getFreshen().getLanguage()).toLowerCase():
-                fieldKind.equals("level") ?
-                        getJoin(r.getTitle(), r.getWorkBefore(), r.getFreshen().getLevel()).toLowerCase() :
-                        getJoin(r.getAddress(), r.getWorkBefore()).toLowerCase();
-        return switch (field.toLowerCase()) {
-            case "all" -> true;
-            case "java", "react", "ruby" -> text.matches(".*\\b" + field + "\\b.*");
-            case "trainee", "стажировка", "стажер", "internship", "интерн", "intern" -> getAria(field).stream()
-                    .anyMatch(a -> text.matches(".*\\b" + a + "\\b.*"));
-            default -> getAria(field).size() == 1 ? isContains(text, field) : getAria(field).stream()
-                    .anyMatch(a -> !isMatch(getForeign(), field) ? isContains(text, a) : isContains(text, a)
-                            && uaAria.stream().noneMatch(cityUA -> isContains(text.toLowerCase(), cityUA)));
-        };
+    public static String getAnchor(Resume r) {
+        String work = r.getWorkBefore();
+        for (String period : getWorkPeriod(work)) {
+            work = work.replaceAll(period, "");
+        }
+        return getJoin(r.getTitle(), " ", work).toLowerCase();
     }
 
-    private static List<String> getAria(String text) {
-        return switch (text) {
-            case "intern", "trainee", "интерн", "стажировка", "стажер" -> traineeAria;
-            case "junior" -> juniorAria;
-            case "middle" -> middleAria;
-            case "senior" -> seniorAria;
-            case "expert", "lead", "тимлид", "team lead" -> expertAria;
-            case "ukraine", "україна", "украина", "ua" -> citiesUA;
-            case "київ", "киев", "kiev", "kyiv" -> kievAria;
-            case "foreign", "за_рубежем", "за рубежем", "за кордоном", "другие страны" -> getForeign();
-            case "remote", "relocate", "релокейт", "удаленно", "віддалено" -> remoteAria;
-            case "харків", "харьков", "kharkiv" -> kharkivAria;
-            case "дніпро", "днепр", "dnipro" -> dniproAria;
-            case "одеса", "одесса", "odesa" -> odesaAria;
-            case "львів", "львов", "lviv" -> lvivAria;
-            case "запоріжжя", "запорожье", "zaporizhzhya" -> zaporizhzhyaAria;
-            case "миколаїв", "николаев", "mykolaiv" -> mykolaivAria;
-            case "чорновці", "черновцы", "chernivtsi" -> chernivtsiAria;
-            case "чернігів", "чернигов", "chernigiv" -> chernigivAria;
-            case "вінниця", "винница", "vinnitsia" -> vinnitsiaAria;
-            case "ужгород", "uzhgorod" -> uzhgorodAria;
-            case "івано-франківськ", "ивано-франковск", "ivano-frankivsk" -> ivano_frankivskAria;
-            case "польша", "poland", "polski" -> polandAria;
-            case "варшава", "warszawa" -> warszawaAria;
-            case "krakow", "краков" -> krakowAria;
-            case "wroclaw", "вроцлав" -> wroclawAria;
-            case "gdansk", "гданськ", "гданск" -> gdanskAria;
-            case "poznan", "познань" -> poznanAria;
-            case "minsk", "минск", "мінськ" -> minskAria;
-            default -> of(text);
-        };
+    public static Resume getForUpdate(Resume r, Resume resumeDb) {
+        r.setId(resumeDb.getId());
+        r.setTitle(resumeDb.getTitle().equals(link) ? r.getTitle() : resumeDb.getTitle());
+        r.setAge(resumeDb.getAge().equals(link) ? r.getAge() : resumeDb.getAge());
+        r.setAddress(resumeDb.getAddress().equals(link) ? r.getAddress() : resumeDb.getAddress());
+        r.setSalary(resumeDb.getSalary() == 1 ? r.getSalary() : resumeDb.getSalary());
+        r.setWorkBefore(resumeDb.getWorkBefore().equals(link) ? r.getWorkBefore() : resumeDb.getWorkBefore());
+        r.setSkills(resumeDb.getSkills().equals(link) ? r.getSkills() : resumeDb.getSkills());
+        return r;
     }
 
-    public static List<String> getForeign() {
-        List<String> foreign = new ArrayList<>(otherAria);
-        foreign.addAll(citiesPl);
-        foreign.addAll(foreignAria);
-        return foreign;
+    public static boolean isToValid(Freshen f, String text) {
+        String temp = text.toLowerCase();
+        return (allLanguages.stream().anyMatch(temp::contains) || temp.contains(f.getLanguage())
+                || isMatch(workersIT, temp)) && wasteSkills.stream().noneMatch(temp::contains);
     }
 
-    public static final List<String>
-            juniorAria = of("junior", "младший", "без опыта", "обучение"),
-            middleAria = of("middle", "средний"),
-            seniorAria = of("senior", "старший"),
-            expertAria = of("expert", "lead", "team lead", "ведущий", "тимлид"),
-            kievAria = of("kyiv", "kiev", "київ", "киев"),
-            dniproAria = of("дніпро", "днепр", "dnipro"),
-            kharkivAria = of("харків", "харьков", "kharkiv"),
-            lvivAria = of("львів", "львов", "lviv"),
-            odesaAria = of("одесса", "odesa", "одеса"),
-            mykolaivAria = of("mykolaiv", "миколаїв", "николаев"),
-            vinnitsiaAria = of("винница", "vinnitsia", "вінниця"),
-            zaporizhzhyaAria = of("запоріжжя", "запорожье", "zaporizhzhya"),
-            chernivtsiAria = of("chernivtsi", "чернівці", "черновцы"),
-            chernigivAria = of("чернігів", "чернигов", "chernigiv"),
-            ivano_frankivskAria = of("івано-франківськ", "ивано-франковск", "ivano-frankivsk"),
-            uzhgorodAria = of("ужгород", "uzhgorod"),
-            polandAria = of("польша", "poland", "polski"),
-            krakowAria = of("krakow", "краков"),
-            warszawaAria = of("варшава", "warszawa"),
-            wroclawAria = of("wroclaw", "вроцлав"),
-            gdanskAria = of("гданськ", "гданск"),
-            poznanAria = of("poznan", "познань"),
-            minskAria = of("minsk", "минск", "мінськ");
+    public static List<String> getWorkPeriod(String text) {
+        List<String> list = new ArrayList<>();
+        Matcher m = Pattern.compile(date_period_extract, Pattern.CASE_INSENSITIVE).matcher(text);
+        while (m.find()) {
+            String s = m.group();
+            if (s.matches(is_period_work)) {
+                list.add(s);
+            }
+        }
+        return list;
+    }
 
 }

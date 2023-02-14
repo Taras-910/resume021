@@ -92,7 +92,6 @@
               p:password="${database.password}"/>
     </beans>
 
-
     <beans profile="heroku">
         <context:property-placeholder location="classpath:/db/heroku.properties" system-properties-mode="OVERRIDE"/>
 

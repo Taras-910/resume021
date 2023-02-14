@@ -2,7 +2,6 @@ package ua.training.top.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import ua.training.top.model.AbstractBaseEntity;
@@ -26,8 +25,11 @@ public class RateService extends AbstractBaseEntity implements Serializable {
     private final static Logger log = LoggerFactory.getLogger(RateService.class);
     public final static Map<String, Rate> mapRates = new HashMap<>();
 
-    @Autowired
-    private RateRepository repository;
+    private final RateRepository repository;
+
+    public RateService(RateRepository repository) {
+        this.repository = repository;
+    }
 
     public Rate get(int id) {
         log.info("get by id {}", id);

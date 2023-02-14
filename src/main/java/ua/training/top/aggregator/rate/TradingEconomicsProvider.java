@@ -16,9 +16,9 @@ import java.util.Set;
 import static java.lang.String.format;
 import static ua.training.top.aggregator.Installation.reCallRate;
 import static ua.training.top.util.InformUtil.error;
-import static ua.training.top.util.parser.DocumentUtil.getDocument;
-import static ua.training.top.util.parser.data.ConstantsUtil.USDUSD;
-import static ua.training.top.util.parser.data.DateToUtil.getToLocalDate;
+import static ua.training.top.util.aggregateUtil.DocumentUtil.getDocument;
+import static ua.training.top.util.aggregateUtil.data.ConstantsUtil.USDUSD;
+import static ua.training.top.util.aggregateUtil.data.DateToUtil.getToLocalDate;
 import static ua.training.top.util.xss.XssUtil.xssClear;
 
 public class TradingEconomicsProvider implements RateProvider {

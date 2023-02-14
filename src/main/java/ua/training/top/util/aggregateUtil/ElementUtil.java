@@ -1,4 +1,4 @@
-package ua.training.top.util.parser;
+package ua.training.top.util.aggregateUtil;
 
 import org.jsoup.nodes.Element;
 import org.jsoup.select.Elements;
@@ -17,13 +17,13 @@ import static ua.training.top.aggregator.strategy.DjinniStrategy.getDjinniDate;
 import static ua.training.top.aggregator.strategy.DjinniStrategy.getInfo;
 import static ua.training.top.aggregator.strategy.RecruitStrategy.getRecDate;
 import static ua.training.top.aggregator.strategy.WorkStrategy.getInfoWork;
-import static ua.training.top.util.AggregatorUtil.isToValid;
 import static ua.training.top.util.InformUtil.error;
-import static ua.training.top.util.parser.data.CommonUtil.*;
-import static ua.training.top.util.parser.data.ConstantsUtil.*;
-import static ua.training.top.util.parser.data.DateToUtil.getToLocalDate;
-import static ua.training.top.util.parser.data.SalaryUtil.getToSalaries;
-import static ua.training.top.util.parser.data.ToUtil.getToUrl;
+import static ua.training.top.util.ResumeUtil.isToValid;
+import static ua.training.top.util.aggregateUtil.data.CommonUtil.*;
+import static ua.training.top.util.aggregateUtil.data.ConstantsUtil.*;
+import static ua.training.top.util.aggregateUtil.data.DateToUtil.getToLocalDate;
+import static ua.training.top.util.aggregateUtil.data.SalaryUtil.getToSalaries;
+import static ua.training.top.util.aggregateUtil.data.UrlUtil.getToUrl;
 import static ua.training.top.util.xss.XssUtil.xssClear;
 
 public class ElementUtil {

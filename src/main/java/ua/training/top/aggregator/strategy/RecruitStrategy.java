@@ -6,7 +6,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.training.top.model.Freshen;
 import ua.training.top.to.ResumeTo;
-import ua.training.top.util.parser.DocumentUtil;
+import ua.training.top.util.aggregateUtil.DocumentUtil;
 
 import java.io.IOException;
 import java.time.LocalDateTime;
@@ -18,13 +18,13 @@ import java.util.Set;
 import static java.lang.String.format;
 import static ua.training.top.aggregator.Installation.reCall;
 import static ua.training.top.util.InformUtil.get_resume;
-import static ua.training.top.util.parser.ElementUtil.getResumesRecruit;
-import static ua.training.top.util.parser.data.CommonUtil.*;
-import static ua.training.top.util.parser.data.ConstantsUtil.recruit;
-import static ua.training.top.util.parser.data.LevelUtil.getLevel;
-import static ua.training.top.util.parser.data.PageUtil.getMaxPages;
-import static ua.training.top.util.parser.data.PageUtil.getPage;
-import static ua.training.top.util.parser.data.WorkplaceUtil.getRec;
+import static ua.training.top.util.aggregateUtil.ElementUtil.getResumesRecruit;
+import static ua.training.top.util.aggregateUtil.data.CommonUtil.*;
+import static ua.training.top.util.aggregateUtil.data.ConstantsUtil.recruit;
+import static ua.training.top.util.aggregateUtil.data.LevelUtil.getLevel;
+import static ua.training.top.util.aggregateUtil.data.PageUtil.getMaxPages;
+import static ua.training.top.util.aggregateUtil.data.PageUtil.getPage;
+import static ua.training.top.util.aggregateUtil.data.WorkplaceUtil.getRec;
 
 public class RecruitStrategy implements Strategy {
     private final static Logger log = LoggerFactory.getLogger(RecruitStrategy.class);

@@ -2,7 +2,6 @@ package ua.training.top.web.ui;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.annotation.AuthenticationPrincipal;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.ModelMap;
@@ -26,8 +25,12 @@ import javax.validation.Valid;
 @RequestMapping("/profile")
 public class ProfileUIController extends AbstractUserController {
     public static final Logger log = LoggerFactory.getLogger(ProfileUIController.class);
-    @Autowired
-    UserService service;
+
+    public final UserService service;
+
+    public ProfileUIController(UserService service) {
+        this.service = service;
+    }
 
     @GetMapping
     public String profile(ModelMap model, @AuthenticationPrincipal AuthorizedUser authUser) {

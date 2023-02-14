@@ -2,7 +2,6 @@ package ua.training.top.web.ui;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.transaction.annotation.Transactional;
@@ -23,10 +22,13 @@ import static ua.training.top.util.FreshenUtil.asNewFreshen;
 @RequestMapping(value = "profile/resumes", produces = MediaType.APPLICATION_JSON_VALUE)
 public class ResumeUIController {
     public static final Logger log = LoggerFactory.getLogger(ResumeUIController.class);
-    @Autowired
-    private ResumeService resumeService;
-    @Autowired
-    private VoteService voteService;
+    private final ResumeService resumeService;
+    private final VoteService voteService;
+
+    public ResumeUIController(ResumeService resumeService, VoteService voteService) {
+        this.resumeService = resumeService;
+        this.voteService = voteService;
+    }
 
     @GetMapping("/{id}")
     public ResumeTo get(@PathVariable int id) {

@@ -15,7 +15,7 @@ import static java.util.Collections.singleton;
 import static ua.training.top.model.Goal.UPGRADE;
 import static ua.training.top.util.InformUtil.setting_delay;
 import static ua.training.top.util.UserUtil.asAdmin;
-import static ua.training.top.util.parser.data.ConstantsUtil.*;
+import static ua.training.top.util.aggregateUtil.data.ConstantsUtil.*;
 
 public class AutoRefreshUtil {
     private final static Logger log = LoggerFactory.getLogger(AutoRefreshUtil.class);

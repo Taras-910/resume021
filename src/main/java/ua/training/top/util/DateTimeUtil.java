@@ -7,7 +7,7 @@ import java.time.LocalDateTime;
 import java.time.LocalTime;
 import java.time.format.DateTimeFormatter;
 
-import static ua.training.top.util.parser.data.CommonUtil.isEmpty;
+import static ua.training.top.util.aggregateUtil.data.CommonUtil.isEmpty;
 
 public class DateTimeUtil {
     public static final String DATE_TIME_PATTERN = "yyyy-MM-dd HH:mm";

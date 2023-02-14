@@ -1,4 +1,4 @@
-package ua.training.top.util.parser.data;
+package ua.training.top.util.aggregateUtil.data;
 
 import java.util.List;
 
@@ -8,17 +8,11 @@ public class ConstantsUtil {
 
     public static final String
             all = "all",
-             link = "see the card",
+            link = "see the card",
             space_code = "\\p{Zs}",
             currency_code = "\\p{Sc}",
-            is_age = ".*[1-7]\\d\\s?[годалетрківи]{3,}.*",
             punctuation_code = "[kup\\p{Pd}до]",
             recall = "reCall repeatToCall={}",
-            url_matcher = "^(?!mailto:)(?:(?:http|https|ftp)://)(?:\\S+(?::\\S*)?@)?(?:(?:(?:[1-9]\\d?|1\\d\\d|2[01]" +
-                    "\\d|22[0-3])(?:\\.(?:1?\\d{1,2}|2[0-4]\\d|25[0-5])){2}(?:\\.(?:[0-9]\\d?|1\\d\\d|2[0-4]\\d|25[0-4]))|" +
-                    "(?:(?:[a-z\\u00a1-\\uffff0-9]+-?)*[a-z\\u00a1-\\uffff0-9]+)(?:\\.(?:[a-z\\u00a1-\\uffff0-9]+-?)*[a-z\\" +
-                    "u00a1-\\uffff0-9]+)*(?:\\.(?:[a-z\\u00a1-\\uffff]{2,})))|localhost)(?::\\d{2,5})?(?:(/|\\?|#)[^\\s]*)?$",
-            email_matcher = "^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+\\.[a-zA-Z0-9-.]+$",
             is_period_work = "(.*\\d?\\d\\s?[годалетрківи]{3,})?\\s?и?\\s?1?\\d\\s?[месяцевіь]{3,}.*",
             date_period_extract = "((?:\\s?\\d?\\d)\\s?\\(?\\s?([летгодаyears])+)?(\\s?[иі,]?\\s?)?(?:\\s?\\d?\\d)\\s?\\(?\\s?([месяцеваmonths])+\\.*?",
             document_user_agent = "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_14_6) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/12.1.2 Safari/605.1.15",
@@ -97,34 +91,6 @@ public class ConstantsUtil {
                     "wuppertal", "билефельд", "білефельд", "bielefeld", "бонн", "bonn", "мюнстер", "münster", "аугсбург",
                     "augsburg", "висбаден", "вісбаден", "wiesbaden", "гельзенкирхен", "гельзенкірхен", "gelsenkirchen",
                     "мёнхенгладбах", "mönchengladbach", "брауншвейг", "braunschweig"),
-            bgAria = of("bulgaria", "болгария", "болгарія"),
-            citiesBg = of("софия", "софія", "sofia",  "варна", "varna", "пловдив", "пловдів", "plovdiv", "бургас",
-                    "burgas", "русе", "rousse", "плевен", "pleven", "шумен", "shumen", "ямполь", "yampol", "добрич",
-                    "dobrich", "банско", "bansko", "силистра", "сілістра", "silistra", "ловеч", "lovech", "смолян",
-                    "smolyan", "благоевград", "bulgaria", "болгария", "blagoevgrad"),
-            ukAria = of("англія", "велика британія", "великобританія", "англия", "england", "united kingdom"),
-            citiesUK = of("st james", "moorgate", "shoreditch", "soho", "southwark", "aldersgate", "lee bank",
-                    "westminster", "milton", "clerkenwell", "bristol", "leeds", "birmingham", "glasgow", "london",
-                    "manchester", "avon", "yorkshire", "cambridgeshire", "lanarkshire", "hampshire", "berkshire",
-                    "nottinghamshire", "yorkshire", "scotland", "cент джеймс", "клеркенвелл", "мургейт", "шордітч",
-                    "шордитч", "сохо", "саутворк", "олдерсгейт", "лі бенк", "ли бенк", "бірмінгем", "вестмінстер",
-                    "мілтон", "вестминстер", "милтон",  "брістоль", "бристоль", "лидс", "бирмингем", "uk", "глазго",
-                    "лондон", "манчестер", "ейвон", "йоркшир", "кембріджшир", "кембриджшир", "лідс", "гемпшир",
-                    "ланаркшир", "беркшир", "ноттінгемшир", "ноттингемшир", "йоркшир", "шотландія", "шотландия"),
-            usAria = of("сша", "америка", "usa", "united states of america", "america"),
-            citiesUS = of("нью-йорк", "new york", "лос-анджелес", "лос анджелес",
-                    "los angeles", "чикаго", "чікаго", "chicago", "хьюстон", "houston", "финикс", "фінікс", "phoenix",
-                    "филадельфия", "філадельфія", "philadelphia", "сан-антонио", "сан антонио", "сан-антоніо",
-                    "сан антоніо", "san sntonio", "сан-диего", "сан диего", "сан-діего", "сан діего", "san diego",
-                    "даллас", "dallas", "сан-хосе", "san jose", "остин", "остін", "austin", "джэксонвилл", "джэксонвілл",
-                    "jacksonville", "форт-уэрт", "форт уэрт", "форт-уерт", "форт уерт", "fort worth", "колумбус",
-                    "columbus", "индианаполис", "індіанаполіс", "indianapolis", "шарлотт", "charlotte", "сан-франциско",
-                    "сан франциско", "сан-франціско", "сан франціско", "san francisco","сиэтл", "сіэтл", "seattle",
-                    "денвер", "denver","оклахома-сити", "оклахома сити", "оклахома-сіті", "оклахома сіті",
-                    "oklahoma city", "нашвилл", "нашвілл", "nashville", "эль-пасо", "el paso", "вашингтон", "вашінгтон",
-                    "washington", "бостон", "boston", "лас-вегас", "лас вегас", "las vegas", "портленд", "portland",
-                    "детройт", "detroit", "луисвилл", "луісвілл", "louisville", "мемфис", "мемфіс", "memphis", "балтимор",
-                    "балтімор", "baltimore", "сакраменто", "sacramento"),
             foreignAria = of("другие страны", "foreign", "за_рубежем", "за рубежом", "за рубежем", "за кордоном"),
             remoteAria = of("remote", "relocate", "удаленно", "віддалено", "віддалена робота", "дистанционна работа", "релокейт"),
             otherAria = of("france", "франция", "франція", "франкфурт", "frankfurt", "minsk", "минск", "мінськ", "israel",

@@ -1,23 +1,8 @@
-package ua.training.top.util.parser.data;
+package ua.training.top.util.aggregateUtil.data;
 
-import static java.util.List.of;
-import static ua.training.top.util.parser.data.CommonUtil.isMatch;
-import static ua.training.top.util.parser.data.CommonUtil.isMatches;
-import static ua.training.top.util.parser.data.ConstantsUtil.*;
+import static ua.training.top.util.aggregateUtil.data.ConstantsUtil.all;
 
 public class WorkplaceUtil {
-
-    public static String getRabota(String workplace) {
-        return switch (workplace) {
-            case "київ", "киев" -> "киев";
-            case "львів", "львов" -> "львов";
-            case "дніпро", "днепр" -> "днепр";
-            case "одеса", "одесса" -> "одесса";
-            case "харків", "харьков" -> "харьков";
-            default -> isMatches(of(foreignAria, otherAria), workplace) || isMatch(otherAria, workplace) ?
-                    "другие_страны" : "вся_украина";
-        };
-    }
 
     public static String getRec(String workplace) {
         return switch (workplace) {
@@ -63,7 +48,4 @@ public class WorkplaceUtil {
             default -> "";
         };
     }
-
-
-
 }

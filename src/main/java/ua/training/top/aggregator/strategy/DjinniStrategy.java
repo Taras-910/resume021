@@ -7,7 +7,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import ua.training.top.model.Freshen;
 import ua.training.top.to.ResumeTo;
-import ua.training.top.util.parser.DocumentUtil;
+import ua.training.top.util.aggregateUtil.DocumentUtil;
 
 import java.io.IOException;
 import java.util.ArrayList;
@@ -20,12 +20,12 @@ import static java.lang.String.format;
 import static java.util.List.of;
 import static ua.training.top.aggregator.Installation.reCall;
 import static ua.training.top.util.InformUtil.get_resume;
-import static ua.training.top.util.parser.ElementUtil.getResumesDjinni;
-import static ua.training.top.util.parser.data.CommonUtil.*;
-import static ua.training.top.util.parser.data.ConstantsUtil.*;
-import static ua.training.top.util.parser.data.PageUtil.getMaxPages;
-import static ua.training.top.util.parser.data.PageUtil.getPage;
-import static ua.training.top.util.parser.data.WorkplaceUtil.getUA_en;
+import static ua.training.top.util.aggregateUtil.ElementUtil.getResumesDjinni;
+import static ua.training.top.util.aggregateUtil.data.CommonUtil.*;
+import static ua.training.top.util.aggregateUtil.data.ConstantsUtil.*;
+import static ua.training.top.util.aggregateUtil.data.PageUtil.getMaxPages;
+import static ua.training.top.util.aggregateUtil.data.PageUtil.getPage;
+import static ua.training.top.util.aggregateUtil.data.WorkplaceUtil.getUA_en;
 
 public class DjinniStrategy implements Strategy {
     private final static Logger log = LoggerFactory.getLogger(DjinniStrategy.class);

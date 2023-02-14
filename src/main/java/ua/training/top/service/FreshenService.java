@@ -2,7 +2,6 @@ package ua.training.top.service;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 import org.springframework.util.Assert;
@@ -21,10 +20,14 @@ import static ua.training.top.util.ValidationUtil.*;
 @Service
 public class FreshenService {
     protected final Logger log = LoggerFactory.getLogger(getClass());
-    @Autowired
-    private FreshenRepository repository;
-    @Autowired
-    private AggregatorService aggregatorService;
+
+    private final FreshenRepository repository;
+    private final AggregatorService aggregatorService;
+
+    public FreshenService(FreshenRepository repository, AggregatorService aggregatorService) {
+        this.repository = repository;
+        this.aggregatorService = aggregatorService;
+    }
 
     public Freshen get(int id) {
         log.info("get by id {}", id);

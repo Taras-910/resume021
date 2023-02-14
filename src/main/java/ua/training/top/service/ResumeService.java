@@ -16,11 +16,10 @@ import java.util.List;
 import static ua.training.top.SecurityUtil.authUserId;
 import static ua.training.top.aggregator.Installation.reasonPeriodKeeping;
 import static ua.training.top.model.Goal.FILTER;
+import static ua.training.top.util.FilterUtil.getFilter;
 import static ua.training.top.util.FreshenUtil.getFreshenFromTo;
-import static ua.training.top.util.ResumeCheckUtil.*;
 import static ua.training.top.util.ResumeUtil.*;
-import static ua.training.top.util.ValidationUtil.checkNotFoundWithId;
-import static ua.training.top.util.ValidationUtil.checkValidUrl;
+import static ua.training.top.util.ValidationUtil.*;
 
 @Service
 public class ResumeService {
@@ -66,7 +65,6 @@ public class ResumeService {
     @Transactional
     public Resume updateTo(ResumeTo resumeTo) {
         log.info("update resumeTo {}", resumeTo);
-        checkValidUrl(resumeTo.getUrl());
         Resume resumeDb = get(resumeTo.id());
         Resume resume = fromToForUpdate(resumeTo, resumeDb);
         checkNotOwnUpdate(resumeDb.getFreshen().getUserId());
@@ -81,7 +79,6 @@ public class ResumeService {
         log.info("create resumeTo={}", resumeTo);
         isNullPointerException(resumeTo);
         checkExistResumeForUser(repository.getByUserId(authUserId()));
-        checkValidUrl(resumeTo.getUrl());
         Freshen newFreshen = freshenService.create(getFreshenFromTo(resumeTo));
         Resume resume = new Resume(fromTo(resumeTo));
         resume.setFreshen(newFreshen);

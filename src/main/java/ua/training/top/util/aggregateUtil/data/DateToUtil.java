@@ -1,4 +1,4 @@
-package ua.training.top.util.parser.data;
+package ua.training.top.util.aggregateUtil.data;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -13,9 +13,9 @@ import static java.time.LocalDate.now;
 import static java.time.LocalDate.parse;
 import static java.util.List.of;
 import static ua.training.top.util.InformUtil.error;
-import static ua.training.top.util.parser.data.CommonUtil.*;
-import static ua.training.top.util.parser.data.ConstantsUtil.*;
-import static ua.training.top.util.parser.data.PatternUtil.*;
+import static ua.training.top.util.aggregateUtil.data.CommonUtil.*;
+import static ua.training.top.util.aggregateUtil.data.ConstantsUtil.*;
+import static ua.training.top.util.aggregateUtil.data.PatternUtil.*;
 
 public class DateToUtil {
     private final static Logger log = LoggerFactory.getLogger(DateToUtil.class);
@@ -56,10 +56,10 @@ public class DateToUtil {
     static LocalDate getLocalDate(int number, String name) {
         return isMatch(monthsOfYearAria, name) ? LocalDate.of(now().getYear(), getMonth(name), number) :
                 isMatch(minuteAriaDate, name) ? LocalDateTime.now().minusMinutes(number).toLocalDate() :
-                        isMatch(hourAria, name) ? LocalDateTime.now().minusHours(number).toLocalDate() :
-                                isMatch(weekAriaDate, name) ? now().minusWeeks(number) :
-                                        isMatch(dayAria, name) ? now().minusDays(number) :
-                                                isMatch(monthAriaDate, name) ? now().minusMonths(number) : defaultDate;
+                isMatch(hourAria, name) ? LocalDateTime.now().minusHours(number).toLocalDate() :
+                isMatch(weekAriaDate, name) ? now().minusWeeks(number) :
+                isMatch(dayAria, name) ? now().minusDays(number) :
+                isMatch(monthAriaDate, name) ? now().minusMonths(number) : defaultDate;
     }
 
     static String formatToNumAndWord(String originText) {

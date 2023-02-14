@@ -1,10 +1,8 @@
-package ua.training.top.util.parser.data;
+package ua.training.top.util.aggregateUtil.data;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import ua.training.top.model.Rate;
 
-import java.time.LocalDate;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.regex.Matcher;
@@ -13,11 +11,11 @@ import static java.util.List.of;
 import static ua.training.top.service.RateService.mapRates;
 import static ua.training.top.util.InformUtil.error;
 import static ua.training.top.util.InformUtil.wrong_salary_value;
-import static ua.training.top.util.parser.data.CommonUtil.*;
-import static ua.training.top.util.parser.data.ConstantsUtil.*;
-import static ua.training.top.util.parser.data.PatternUtil.pattern_find_salary;
-import static ua.training.top.util.parser.data.PatternUtil.pattern_salary_transform_points;
-import static ua.training.top.util.parser.data.RateUtil.mapRatesTest;
+import static ua.training.top.util.aggregateUtil.data.CommonUtil.*;
+import static ua.training.top.util.aggregateUtil.data.ConstantsUtil.*;
+import static ua.training.top.util.aggregateUtil.data.PatternUtil.pattern_find_salary;
+import static ua.training.top.util.aggregateUtil.data.PatternUtil.pattern_salary_transform_points;
+import static ua.training.top.util.aggregateUtil.data.RateUtil.mapRatesTest;
 
 public class SalaryUtil {
     public static final Logger log = LoggerFactory.getLogger(SalaryUtil.class);
@@ -126,12 +124,7 @@ public class SalaryUtil {
             case "₭" -> USDCZK;
             default -> USDUSD;
         };
-        Rate r = mapRates.getOrDefault(name, new Rate(null, 1.0, LocalDate.now()));
-        if(r.getName() == null){
-            r = mapRatesTest.get(name);
-//            log.error("don't found a rate of currency {}\nso use default rate from rateTest {}", name, r);
-        }
-        return r.getValueRate();
+        return mapRates.getOrDefault(name, mapRatesTest.get(name)).getValueRate();
     }
 
     public static boolean isFrom(String originText) {

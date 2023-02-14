@@ -2,7 +2,6 @@ package ua.training.top.web.rest.admin;
 
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -18,15 +17,18 @@ import java.net.URI;
 import java.util.List;
 
 import static ua.training.top.util.FreshenUtil.asNewFreshen;
-import static ua.training.top.util.FreshenUtil.getFreshenFromTo;
 
 @RestController
 @RequestMapping(value = ResumeRestController.REST_URL, produces = MediaType.APPLICATION_JSON_VALUE)
 public class ResumeRestController {
     static final String REST_URL = "/rest/admin/resumes";
     public static final Logger log = LoggerFactory.getLogger(ResumeRestController.class);
-    @Autowired
-    private ResumeService resumeService;
+
+    private final ResumeService resumeService;
+
+    public ResumeRestController(ResumeService resumeService) {
+        this.resumeService = resumeService;
+    }
 
     @GetMapping("/{id}")
     public ResumeTo get(@PathVariable int id) {

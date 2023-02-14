@@ -88,7 +88,6 @@ public class UserService implements UserDetailsService {
         checkModificationAllowed(id);
         assureIdConsistent(user, id);
         Assert.notNull(user, must_not_null);
-        checkValidEmail(user.getEmail());
         User userDb = user.getId() == null ? null : repository.get(user.getId());
         checkNotFoundWithId(prepareAndSave(user, userDb), user.id());
     }
