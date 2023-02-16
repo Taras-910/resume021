@@ -6,6 +6,7 @@ Specification
 Design and implement:
 - REST API using Hibernate/Spring/SpringMVC 
 - UI API using additionally JSP, JSTL, DataTables plugin, jQuery, jQuery notification, Bootstrap, Ajax
+- Swagger Api Documentation
 
 The task is:
 Build a vacancies search, choice and store in dataBase, which are filling from public resources
