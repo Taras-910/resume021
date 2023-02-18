@@ -91,7 +91,7 @@ class ResumeServiceTest extends AbstractServiceTest {
 
     @Test
     void updateInvalid() {
-        validateRootCause(NullPointerException.class, () -> resumeService.updateTo(new ResumeTo()));
+        validateRootCause(IllegalArgumentException.class, () -> resumeService.updateTo(new ResumeTo()));
     }
 
     @Test

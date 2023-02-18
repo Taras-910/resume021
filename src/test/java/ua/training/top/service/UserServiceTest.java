@@ -80,8 +80,8 @@ class UserServiceTest extends AbstractServiceTest {
     void updateInvalid(){
         validateRootCause(ConstraintViolationException.class, () -> service.update(new User(null, null, "mail@yandex.ru", "password", USER), user_id));
         validateRootCause(ConstraintViolationException.class, () -> service.update(new User(null, "  ", "mail@yandex.ru", "password", USER), user_id));
+        validateRootCause(ConstraintViolationException.class, () -> service.update(new User(null, "user", "  ", "password", USER), user_id));
         validateRootCause(NullPointerException.class, () -> service.update(new User(null, "user", null, "password", USER), user_id));
-        validateRootCause(IllegalArgumentException.class, () -> service.update(new User(null, "user", "  ", "password", USER), user_id));
         validateRootCause(IllegalArgumentException.class, () -> service.update(new User(null, "user", "mail@yandex.ru", null, USER), user_id));
     }
 
